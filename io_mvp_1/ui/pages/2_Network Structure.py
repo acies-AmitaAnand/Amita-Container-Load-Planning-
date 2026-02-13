@@ -1,0 +1,274 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.express as px
+from pathlib import Path
+
+# ------------------- PATH CONFIG -------------------
+base_dir = Path(__file__).resolve().parent
+data_dir = base_dir / ".." / ".." / "server" / "data"
+
+leadtime_file = data_dir / "Leadtime_MultiSKU.xlsx"
+cost_file = data_dir / "Node_Costs.xlsx"
+
+# ------------------- VISUAL CONSTANTS -------------------
+ECHELON_COLORS = {
+    "DC": "#6B5B95",          # Purple
+    "Warehouse": "#88B04B",   # Green
+    "Store": "#FF6F61"        # Pink
+}
+
+# ------------------- DATA LOADER -------------------
+def load_network_data():
+    try:
+        network_links = pd.read_excel(leadtime_file)
+        location_master = pd.read_excel(cost_file)
+    except Exception as error:
+        st.error(f"Error loading Excel files: {error}")
+        return None, None
+
+    # --- Standardize Columns ---
+    network_links = network_links.rename(columns={
+        "Source Code": "From_Location_ID",
+        "Target Code": "To_Location_ID",
+        "Lead Time": "Transport_Time_Days"
+    })
+    if "Transport_Cost" not in network_links.columns:
+        network_links["Transport_Cost"] = np.random.randint(200, 800, size=len(network_links))
+
+    location_master = location_master.rename(columns={"Node": "Location_ID"})
+
+    if "Location_Name" not in location_master.columns:
+        location_master["Location_Name"] = location_master["Location_ID"].astype(str).str.extract(r'_(.*)')[0]
+
+    if "Echelon_Type" not in location_master.columns:
+        location_master["Echelon_Type"] = location_master["Location_ID"].apply(
+            lambda x: "Store" if "Store" in x else ("DC" if "DC" in x else "Warehouse")
+        )
+
+    if "Latitude" not in location_master.columns or "Longitude" not in location_master.columns:
+        np.random.seed(42)
+        location_master["Latitude"] = np.random.uniform(8, 28, size=len(location_master)).round(4)
+        location_master["Longitude"] = np.random.uniform(70, 90, size=len(location_master)).round(4)
+
+    if "Country" not in location_master.columns:
+        location_master["Country"] = "India"
+
+    return location_master, network_links
+
+# ------------------- ECHELON ORDER & ICONS -------------------
+def get_echelon_order():
+    return ["Factory", "DC", "Warehouse", "Store"]
+
+def get_echelon_icon(echelon_name):
+    echelon_icon_map = {
+        "Factory": "🏭",
+        "DC": "🏬",
+        "Warehouse": "🏚️",
+        "Store": "🏪"
+    }
+    return echelon_icon_map.get(echelon_name, "📍")
+
+# ------------------- FLOW LAYOUT -------------------
+def build_flow_layout(location_master):
+    echelon_tiers = get_echelon_order()
+    node_layout = {}
+    spacing_x = 450
+    spacing_y = 200
+
+    for tier_idx, tier_name in enumerate(echelon_tiers):
+        tier_nodes = location_master[location_master['Echelon_Type'].str.lower() == tier_name.lower()]
+        for node_idx, (_, node_row) in enumerate(tier_nodes.iterrows()):
+            numeric_label = node_row['Location_ID'].split('_')[-1]
+            node_layout[node_row['Location_ID']] = {
+                'x': node_idx * spacing_x,
+                'y': tier_idx * spacing_y,
+                'label': f"{get_echelon_icon(node_row['Echelon_Type'])} {numeric_label}",
+                'echelon': node_row['Echelon_Type'],
+                'country': node_row.get('Country', '')
+            }
+    return node_layout
+
+# ------------------- FLOWCHART -------------------
+def build_flowchart_figure(node_layout, network_links):
+    figure = go.Figure()
+
+    # Add nodes
+    for location_id, node_info in node_layout.items():
+        figure.add_trace(go.Scatter(
+            x=[node_info['x']], y=[-node_info['y']],
+            mode="markers+text",
+            marker=dict(size=18, color=ECHELON_COLORS.get(node_info['echelon'], "lightblue")),
+            text=[node_info['label']],
+            textposition="top center",
+            hoverinfo="text",
+            hovertext=(f"Location ID: {location_id}<br>"
+                       f"Label: {node_info['label']}<br>"
+                       f"Echelon: {node_info['echelon']}<br>"
+                       f"Country: {node_info['country']}")
+        ))
+
+    # Add connections
+    for _, row in network_links.iterrows():
+        from_id = row['From_Location_ID']
+        to_id = row['To_Location_ID']
+        if from_id in node_layout and to_id in node_layout:
+            from_x, from_y = node_layout[from_id]['x'], -node_layout[from_id]['y']
+            to_x, to_y = node_layout[to_id]['x'], -node_layout[to_id]['y']
+
+            figure.add_annotation(
+                x=to_x, y=to_y,
+                ax=from_x, ay=from_y,
+                xref="x", yref="y",
+                axref="x", ayref="y",
+                showarrow=True,
+                arrowhead=3,
+                arrowsize=1,
+                arrowwidth=2,
+                arrowcolor="gray",
+                opacity=0.8
+            )
+
+    # Legend
+    legend_x = max([v['x'] for v in node_layout.values()] + [0]) + 200
+    legend_y_start = 0
+    spacing = 20
+    for i, (echelon_name, color) in enumerate(ECHELON_COLORS.items()):
+        figure.add_trace(go.Scatter(
+            x=[legend_x], y=[legend_y_start - i * spacing],
+            mode="markers+text",
+            marker=dict(size=15, color=color),
+            text=[echelon_name],
+            textposition="middle right",
+            hoverinfo="skip",
+            showlegend=False
+        ))
+
+    figure.update_layout(
+        showlegend=False,
+        height=650,
+        width=1200,
+        margin=dict(l=20, r=20, t=20, b=20),
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+    )
+
+    return figure
+
+# ------------------- MAIN DASHBOARD -------------------
+def show_network_structure():
+    st.title("Supply Chain Network Structure")
+
+    location_master, network_links = load_network_data()
+    if location_master is None or network_links is None:
+        st.warning("Please check your Excel files in the data folder.")
+        return
+
+    st.markdown("### 🔎 Global Filters")
+
+    col_country, col_echelon, col_location = st.columns(3)
+
+    # Country Filter
+    with col_country:
+        all_countries = sorted(location_master['Country'].unique())
+        selected_countries = st.multiselect(
+            "Country",
+            ["Select All"] + all_countries,
+            default=["Select All"]
+        )
+        if "Select All" in selected_countries:
+            selected_countries = all_countries
+
+    # Echelon Filter
+    with col_echelon:
+        all_echelons = sorted(location_master['Echelon_Type'].unique())
+        selected_echelons = st.multiselect(
+            "Echelon Type",
+            ["Select All"] + all_echelons,
+            default=["Select All"]
+        )
+        if "Select All" in selected_echelons:
+            selected_echelons = all_echelons
+
+    # Location Filter
+    with col_location:
+        all_locations = sorted(location_master['Location_ID'].unique())
+        selected_locations = st.multiselect(
+            "Location ID",
+            ["Select All"] + all_locations,
+            default=["Select All"]
+        )
+        if "Select All" in selected_locations:
+            selected_locations = all_locations
+
+    # Apply Filters
+    filtered_locations = location_master[
+        location_master['Country'].isin(selected_countries) &
+        location_master['Echelon_Type'].isin(selected_echelons) &
+        location_master['Location_ID'].isin(selected_locations)
+    ]
+
+    valid_location_ids = filtered_locations['Location_ID'].unique()
+    filtered_links = network_links[
+        (network_links['From_Location_ID'].isin(valid_location_ids)) &
+        (network_links['To_Location_ID'].isin(valid_location_ids))
+    ]
+
+    # Flowchart View
+    st.subheader("Flowchart View by Echelon Tier")
+    node_layout = build_flow_layout(filtered_locations)
+    flowchart_figure = build_flowchart_figure(node_layout, filtered_links)
+    st.plotly_chart(flowchart_figure, use_container_width=True)
+
+    # Geographical Map View
+    st.subheader("Geographical Location Map")
+    st.caption("Interactive globe — drag to rotate, zoom to explore.")
+    map_projection_choice = st.radio("Select Map View Type", options=["3D Globe", "2D Map"], horizontal=True)
+    projection_type = "orthographic" if "3D" in map_projection_choice else "equirectangular"
+
+    map_figure = px.scatter_geo(
+        filtered_locations,
+        lat="Latitude",
+        lon="Longitude",
+        text="Location_Name",
+        color="Echelon_Type",
+        hover_name="Location_Name",
+        hover_data={
+            "Location_ID": True,
+            "Echelon_Type": True,
+            "Country": True,
+            "Latitude": False,
+            "Longitude": False
+        },
+        projection=projection_type,
+        template="none"
+    )
+
+    map_figure.update_traces(
+        marker=dict(size=10),
+        textfont=dict(color='black', size=12),
+        textposition='top center'
+    )
+
+    map_figure.update_layout(
+        height=600,
+        margin=dict(l=0, r=0, t=30, b=0),
+        geo=dict(
+            showland=True,
+            landcolor="rgb(218, 194,160)",
+            showocean=True,
+            oceancolor="rgb(85,160,246)",
+            showcoastlines=True,
+            coastlinecolor="gray",
+            showframe=False,
+            bgcolor="rgba(0,0,0,0)"
+        )
+    )
+
+    st.plotly_chart(map_figure, use_container_width=True)
+
+# ------------------- RUN APP -------------------
+if __name__ == "__main__":
+    show_network_structure()
+  
