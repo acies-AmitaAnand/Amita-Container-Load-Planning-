@@ -1,0 +1,14 @@
+# Web server
+streamlit
+
+# Data Processing
+numpy
+pandas
+openxlrd
+# Data Visualization
+matplotlib
+plotly
+networkx
+
+# Map
+osmnx
