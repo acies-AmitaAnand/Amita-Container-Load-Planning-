@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+
+	"configurations": [
+		{
+			"request": "launch",
+			"name": "Launch React App",
+			"program": "${workspaceFolder}/ui/src/main.jsx",
+			// "url": "http://localhost:5173",
+			// "webRoot": "${workspaceFolder}/ui/src",
+			"type": "node"
+		}
+	]
+}
