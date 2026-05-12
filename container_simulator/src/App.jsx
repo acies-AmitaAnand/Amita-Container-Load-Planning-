@@ -36,7 +36,7 @@ function getPayload() {
 
 		return {
 
-			truck: {
+			container: {
 				length: 40,
 				width: 8,
 				height: 8
@@ -54,7 +54,7 @@ function getPayload() {
 // Side measurement
 // =====================================================
 
-function MeasurementScales({ truck }) {
+function MeasurementScales({ container }) {
 
 	const elements = [];
 
@@ -62,10 +62,10 @@ function MeasurementScales({ truck }) {
 	// FRONT + BACK LENGTH SCALES
 	// =====================================================
 
-	for (let i = 0; i <= truck.length; i++) {
+	for (let i = 0; i <= container.length; i++) {
 
 		const x =
-			i - truck.length / 2;
+			i - container.length / 2;
 
 		// =========================================
 		// FRONT SCALE
@@ -77,8 +77,8 @@ function MeasurementScales({ truck }) {
 				key={`front-line-${i}`}
 
 				points={[
-					[x, 0, truck.width / 2 + 0.2],
-					[x, 0, truck.width / 2 + 0.5]
+					[x, 0, container.width / 2 + 0.2],
+					[x, 0, container.width / 2 + 0.5]
 				]}
 
 				color="black"
@@ -95,8 +95,8 @@ function MeasurementScales({ truck }) {
 				key={`back-line-${i}`}
 
 				points={[
-					[x, 0, -truck.width / 2 - 0.2],
-					[x, 0, -truck.width / 2 - 0.5]
+					[x, 0, -container.width / 2 - 0.2],
+					[x, 0, -container.width / 2 - 0.5]
 				]}
 
 				color="black"
@@ -120,7 +120,7 @@ function MeasurementScales({ truck }) {
 					position={[
 						x,
 						0,
-						truck.width / 2 + 1
+						container.width / 2 + 1
 					]}
 
 					rotation={[
@@ -153,7 +153,7 @@ function MeasurementScales({ truck }) {
 					position={[
 						x,
 						0,
-						-truck.width / 2 - 1
+						-container.width / 2 - 1
 					]}
 
 					rotation={[
@@ -182,10 +182,10 @@ function MeasurementScales({ truck }) {
 	// LEFT + RIGHT WIDTH SCALES
 	// =====================================================
 
-	for (let i = 0; i <= truck.width; i++) {
+	for (let i = 0; i <= container.width; i++) {
 
 		const z =
-			i - truck.width / 2;
+			i - container.width / 2;
 
 		// =========================================
 		// LEFT SCALE
@@ -197,8 +197,8 @@ function MeasurementScales({ truck }) {
 				key={`left-line-${i}`}
 
 				points={[
-					[-truck.length / 2 - 0.2, 0, z],
-					[-truck.length / 2 - 0.5, 0, z]
+					[-container.length / 2 - 0.2, 0, z],
+					[-container.length / 2 - 0.5, 0, z]
 				]}
 
 				color="black"
@@ -215,8 +215,8 @@ function MeasurementScales({ truck }) {
 				key={`right-line-${i}`}
 
 				points={[
-					[truck.length / 2 + 0.2, 0, z],
-					[truck.length / 2 + 0.5, 0, z]
+					[container.length / 2 + 0.2, 0, z],
+					[container.length / 2 + 0.5, 0, z]
 				]}
 
 				color="black"
@@ -236,7 +236,7 @@ function MeasurementScales({ truck }) {
 				key={`left-text-${i}`}
 
 				position={[
-					-truck.length / 2 - 1.2,
+					-container.length / 2 - 1.2,
 					0,
 					z
 				]}
@@ -269,7 +269,7 @@ function MeasurementScales({ truck }) {
 				key={`right-text-${i}`}
 
 				position={[
-					truck.length / 2 + 1.2,
+					container.length / 2 + 1.2,
 					0,
 					z
 				]}
@@ -303,22 +303,22 @@ function MeasurementScales({ truck }) {
 // FLOOR GRID
 // =====================================================
 
-function FloorGrid({ truck }) {
+function FloorGrid({ container }) {
 
 	const tiles = [];
 
-	for (let x = 0; x < truck.length; x++) {
+	for (let x = 0; x < container.length; x++) {
 
-		for (let z = 0; z < truck.width; z++) {
+		for (let z = 0; z < container.width; z++) {
 
 			tiles.push(
 
 				<mesh
 					key={`${x}-${z}`}
 					position={[
-						x - truck.length / 2 + 0.5,
+						x - container.length / 2 + 0.5,
 						-0.01,
-						z - truck.width / 2 + 0.5
+						z - container.width / 2 + 0.5
 					]}
 				>
 
@@ -345,23 +345,23 @@ function FloorGrid({ truck }) {
 // BOUNDARY BOX
 // =====================================================
 
-function BoundaryBox({ truck }) {
+function BoundaryBox({ container }) {
 
 	const points = [
 
 		// bottom
-		[-truck.length / 2, 0, -truck.width / 2],
-		[truck.length / 2, 0, -truck.width / 2],
-		[truck.length / 2, 0, truck.width / 2],
-		[-truck.length / 2, 0, truck.width / 2],
-		[-truck.length / 2, 0, -truck.width / 2],
+		[-container.length / 2, 0, -container.width / 2],
+		[container.length / 2, 0, -container.width / 2],
+		[container.length / 2, 0, container.width / 2],
+		[-container.length / 2, 0, container.width / 2],
+		[-container.length / 2, 0, -container.width / 2],
 
 		// top
-		[-truck.length / 2, truck.height, -truck.width / 2],
-		[truck.length / 2, truck.height, -truck.width / 2],
-		[truck.length / 2, truck.height, truck.width / 2],
-		[-truck.length / 2, truck.height, truck.width / 2],
-		[-truck.length / 2, truck.height, -truck.width / 2]
+		[-container.length / 2, container.height, -container.width / 2],
+		[container.length / 2, container.height, -container.width / 2],
+		[container.length / 2, container.height, container.width / 2],
+		[-container.length / 2, container.height, container.width / 2],
+		[-container.length / 2, container.height, -container.width / 2]
 	];
 
 	return (
@@ -375,17 +375,17 @@ function BoundaryBox({ truck }) {
 			{/* verticals */}
 
 			{[
-				[-truck.length / 2, -truck.width / 2],
-				[truck.length / 2, -truck.width / 2],
-				[truck.length / 2, truck.width / 2],
-				[-truck.length / 2, truck.width / 2]
+				[-container.length / 2, -container.width / 2],
+				[container.length / 2, -container.width / 2],
+				[container.length / 2, container.width / 2],
+				[-container.length / 2, container.width / 2]
 			].map((p, idx) => (
 
 				<Line
 					key={idx}
 					points={[
 						[p[0], 0, p[1]],
-						[p[0], truck.height, p[1]]
+						[p[0], container.height, p[1]]
 					]}
 					color="#38bdf8"
 				/>
@@ -399,7 +399,7 @@ function BoundaryBox({ truck }) {
 // CONTAINER WALLS
 // =====================================================
 
-function TruckWalls({ truck }) {
+function ContainerWalls({ container }) {
 
 	const transparentMat =
 		new THREE.MeshPhysicalMaterial({
@@ -418,14 +418,14 @@ function TruckWalls({ truck }) {
 			<mesh
 				position={[
 					0,
-					truck.height / 2,
-					-truck.width / 2
+					container.height / 2,
+					-container.width / 2
 				]}
 			>
 
 				<boxGeometry args={[
-					truck.length,
-					truck.height,
+					container.length,
+					container.height,
 					0.05
 				]} />
 
@@ -442,14 +442,14 @@ function TruckWalls({ truck }) {
 			<mesh
 				position={[
 					0,
-					truck.height / 2,
-					truck.width / 2
+					container.height / 2,
+					container.width / 2
 				]}
 			>
 
 				<boxGeometry args={[
-					truck.length,
-					truck.height,
+					container.length,
+					container.height,
 					0.05
 				]} />
 
@@ -465,16 +465,16 @@ function TruckWalls({ truck }) {
 
 			<mesh
 				position={[
-					truck.length / 2,
-					truck.height / 2,
+					container.length / 2,
+					container.height / 2,
 					0
 				]}
 			>
 
 				<boxGeometry args={[
 					0.05,
-					truck.height,
-					truck.width
+					container.height,
+					container.width
 				]} />
 
 				<primitive
@@ -489,16 +489,16 @@ function TruckWalls({ truck }) {
 
 			<mesh
 				position={[
-					-truck.length / 2,
-					truck.height / 2,
+					-container.length / 2,
+					container.height / 2,
 					0
 				]}
 			>
 
 				<boxGeometry args={[
 					0.2,
-					truck.height,
-					truck.width
+					container.height,
+					container.width
 				]} />
 
 				<meshStandardMaterial
@@ -705,7 +705,7 @@ export default function App() {
 
 	const payload = getPayload();
 
-	const truck = payload.truck;
+	const container = payload.container;
 
 	const pallets =
 		payload.pallets || [];
@@ -769,13 +769,13 @@ export default function App() {
 					/>
 
 					{showGrid &&
-						<FloorGrid truck={truck} />
+						<FloorGrid container={container} />
 					}
 
-					<TruckWalls truck={truck} />
+					<ContainerWalls container={container} />
 
 					{showBoundary &&
-						<BoundaryBox truck={truck} />
+						<BoundaryBox container={container} />
 					}
 
 					{pallets.map(
@@ -787,7 +787,7 @@ export default function App() {
 						/>
 
 					))}
-                    <MeasurementScales truck={truck} />
+                    <MeasurementScales container={container} />
 					<AxisHelper />
 
 				</Canvas>
@@ -808,7 +808,7 @@ export default function App() {
 			>
 
 				<h2>
-					Truck / Container Viewer
+					Container / Container Viewer
 				</h2>
 
 				<hr />
@@ -823,17 +823,17 @@ export default function App() {
 
 					<p>
 						Length:
-						{truck.length} ft
+						{container.length} ft
 					</p>
 
 					<p>
 						Width:
-						{truck.width} ft
+						{container.width} ft
 					</p>
 
 					<p>
 						Height:
-						{truck.height} ft
+						{container.height} ft
 					</p>
 
 				</div>
