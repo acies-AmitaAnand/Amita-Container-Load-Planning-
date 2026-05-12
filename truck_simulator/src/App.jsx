@@ -405,7 +405,9 @@ function TruckWalls({ truck }) {
 		new THREE.MeshPhysicalMaterial({
 			color: "#bfdbfe",
 			transparent: true,
-			opacity: 0.12
+			opacity: 0.12,
+			depthWrite: false,
+			side: THREE.DoubleSide
 		});
 
 	return (
