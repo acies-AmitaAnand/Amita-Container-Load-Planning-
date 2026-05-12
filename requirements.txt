@@ -1,5 +1,5 @@
 # Web server
-streamlit
+fastapi
 
 # Data Processing
 numpy
@@ -10,7 +10,6 @@ python-dotenv
 requests
 stockpyl
 py3dbp
-fastapi
 # Data Visualization
 matplotlib
 plotly
