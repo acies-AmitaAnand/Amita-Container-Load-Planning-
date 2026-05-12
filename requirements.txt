@@ -5,6 +5,11 @@ streamlit
 numpy
 pandas
 openxlrd
+openpyxl
+xlsxwriter
+python-dotenv
+requests
+stockpyl
 # Data Visualization
 matplotlib
 plotly
@@ -12,3 +17,6 @@ networkx
 
 # Map
 osmnx
+
+
+
