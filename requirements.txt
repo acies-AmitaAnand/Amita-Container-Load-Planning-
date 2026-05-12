@@ -4,12 +4,13 @@ streamlit
 # Data Processing
 numpy
 pandas
-openxlrd
 openpyxl
 xlsxwriter
 python-dotenv
 requests
 stockpyl
+py3dbp
+fastapi
 # Data Visualization
 matplotlib
 plotly
