@@ -26,16 +26,6 @@ const menus = [
 	},
 
 	{
-		label: "Master Data",
-		path: "/master-data"
-	},
-
-	{
-		label: "Customer & Warehouse",
-		path: "/customer-warehouse"
-	},
-
-	{
 		label: "Container Visualization",
 		path: "/container-visualization"
 	},
