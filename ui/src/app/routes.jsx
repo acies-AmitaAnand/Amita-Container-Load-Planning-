@@ -15,9 +15,9 @@ import ItemMaster from "../pages/item-master/ItemMaster";
 
 import RouteView from "../pages/route-view/RouteView";
 
-import MasterData from "../pages/master-data/MasterData";
+// import MasterData from "../pages/master-data/MasterData";
 
-import CustomerWarehouse from "../pages/customer-warehouse/CustomerWarehouse";
+// import CustomerWarehouse from "../pages/customer-warehouse/CustomerWarehouse";
 
 import ContainerVisualization from "../pages/container-visualization/ContainerVisualization";
 
@@ -59,15 +59,15 @@ return (
         element={<RouteView />}
         />
 
-        <Route
+        {/* <Route
         path="master-data"
         element={<MasterData />}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
         path="customer-warehouse"
         element={<CustomerWarehouse />}
-        />
+        /> */}
 
         <Route
         path="container-visualization"

@@ -1,4 +1,4 @@
-import TruckViewer from "../../components/visualization/TruckViewer";
+import ContainerSimulator from "../../components/visualization/ContainerSimulator";
 
 export default function ContainerVisualization() {
 
@@ -10,7 +10,7 @@ export default function ContainerVisualization() {
 				Container Visualization
 			</h1>
 
-			<TruckViewer />
+			<ContainerSimulator />
 
 		</div>
 	);

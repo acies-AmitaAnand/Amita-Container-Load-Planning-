@@ -701,7 +701,7 @@ function CameraController({
 // MAIN APP
 // =====================================================
 
-export default function App() {
+export default function ContainerSimulator() {
 
 	const payload = getPayload();
 
