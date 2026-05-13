@@ -81,7 +81,7 @@ export default function MetricsPanel({
 		>
 
 			<h2 style={{ color: "#000000" }}>
-				Optimization Metrics
+				Container Metrics
 			</h2>
 
 			<hr />

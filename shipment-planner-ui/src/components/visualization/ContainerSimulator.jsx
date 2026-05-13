@@ -34,7 +34,7 @@ import * as THREE from "three";
 // =====================================================
 
 
-function getPayload() {
+function getPayloadFromUrl() {
 
 	const params = new URLSearchParams(
 		window.location.search
@@ -140,9 +140,7 @@ function MeasurementScales({ container }) {
 					]}
 
 					fontSize={0.35}
-
 					color="black"
-
 					anchorX="center"
 					anchorY="middle"
 				>
@@ -713,7 +711,8 @@ function CameraController({
 
 export default function ContainerSimulator() {
 
-	const payload = getPayload();
+	const payload = getPayloadFromUrl();
+	// const payloads = getPayloadFromTable();
 
 	const container = payload.container;
 
@@ -829,7 +828,7 @@ export default function ContainerSimulator() {
 			>
 
 				<h2>
-					Container / Container Viewer
+					Container Details
 				</h2>
 
 				<hr />
