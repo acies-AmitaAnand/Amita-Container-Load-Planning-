@@ -16,6 +16,16 @@ import {
 	Line
 } from "@react-three/drei";
 
+
+import MetricsPanel
+	from "../../components/visualization/MetricsPanel";
+
+import {
+	calculateMetrics
+}
+	from "../../components/visualization/utils/calculateMetrics";
+
+
 import * as THREE from "three";
 
 
@@ -727,12 +737,23 @@ export default function ContainerSimulator() {
 			0
 		);
 
+
+	// =========================================
+	// CALCULATE METRICS
+	// =========================================
+
+	const metrics =
+		calculateMetrics(
+			container,
+			pallets
+		);
+
 	return (
 
 		<div
 			style={{
 				display: "flex",
-				width: "100vw",
+				width: "75w",
 				height: "100vh",
 				background: "#e5e7eb"
 			}}
@@ -749,7 +770,7 @@ export default function ContainerSimulator() {
 				<Canvas
 					shadows
 					camera={{
-						position: [30, 20, 30],
+						position: [25, 20, 30],
 						fov: 50
 					}}
 				>
@@ -781,13 +802,13 @@ export default function ContainerSimulator() {
 					{pallets.map(
 						(pallet, idx) => (
 
-						<Pallet
-							key={idx}
-							pallet={pallet}
-						/>
+							<Pallet
+								key={idx}
+								pallet={pallet}
+							/>
 
-					))}
-                    <MeasurementScales container={container} />
+						))}
+					<MeasurementScales container={container} />
 					<AxisHelper />
 
 				</Canvas>
@@ -799,7 +820,7 @@ export default function ContainerSimulator() {
 
 			<div
 				style={{
-					width: "340px",
+					width: "25vh",
 					background: "#111827",
 					color: "white",
 					padding: "20px",
@@ -939,29 +960,29 @@ export default function ContainerSimulator() {
 					{pallets.map(
 						(p, idx) => (
 
-						<div
-							key={idx}
-							style={{
-								display: "flex",
-								alignItems: "center",
-								marginBottom: "8px"
-							}}
-						>
-
 							<div
+								key={idx}
 								style={{
-									width: "20px",
-									height: "20px",
-									background: p.color,
-									marginRight: "10px"
+									display: "flex",
+									alignItems: "center",
+									marginBottom: "8px"
 								}}
-							/>
+							>
 
-							{p.label}
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+										background: p.color,
+										marginRight: "10px"
+									}}
+								/>
 
-						</div>
+								{p.label}
 
-					))}
+							</div>
+
+						))}
 
 				</div>
 
@@ -986,6 +1007,13 @@ export default function ContainerSimulator() {
 					</p>
 
 				</div>
+
+				{/* METRICS */}
+
+				<MetricsPanel
+					metrics={metrics}
+				/>
+
 
 			</div>
 
