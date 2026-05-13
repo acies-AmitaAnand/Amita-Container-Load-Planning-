@@ -14,30 +14,20 @@ export function calculateMetrics(container, pallets) {
 	// =========================================
 
 	let totalVolume = 0;
-
 	let totalWeight = 0;
-
 	let totalFloorArea = 0;
-
 	let weightedX = 0;
-
 	let weightedZ = 0;
-
 	let maxStackHeight = 0;
 
 	pallets.forEach((p) => {
 		const volume = p.depth * p.width * p.height;
 
 		totalVolume += volume;
-
 		totalWeight += p.weight || 0;
-
 		totalFloorArea += p.depth * p.width;
-
 		weightedX += p.x * (p.weight || 0);
-
 		weightedZ += p.z * (p.weight || 0);
-
 		if (p.height > maxStackHeight) {
 			maxStackHeight = p.height;
 		}
@@ -82,29 +72,17 @@ export function calculateMetrics(container, pallets) {
 
 	return {
 		cubicUtilization: cubicUtilization.toFixed(2),
-
 		weightUtilization: weightUtilization.toFixed(2),
-
 		floorCoverage: floorCoverage.toFixed(2),
-
 		avgStackHeight: avgStackHeight.toFixed(2),
-
 		stackDensity: stackDensity.toFixed(2),
-
 		centerGravityX: centerGravityX.toFixed(2),
-
 		centerGravityZ: centerGravityZ.toFixed(2),
-
 		stabilityIndex: stabilityIndex.toFixed(2),
-
 		voidRatio: voidRatio.toFixed(2),
-
 		palletsPerContainer,
-
 		utilizationScore: utilizationScore.toFixed(2),
-
 		totalWeight: totalWeight.toFixed(2),
-
 		totalVolume: totalVolume.toFixed(2),
 	};
 }

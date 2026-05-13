@@ -1,0 +1,16 @@
+{
+	"palletId":"",
+	"label":"",
+	"position":{"x":"", "y":"", "z":""},
+	"dimensions":{
+	"length":"", "width":"", "height":""
+	},
+	"weight":"",
+	"stackable":"",
+	"fragile":"", 
+	"hazmat":"",
+	"deliveryPriority":"",
+	"stopSequence":"",
+	"color":"",
+	"tooltipHtml":""
+}
