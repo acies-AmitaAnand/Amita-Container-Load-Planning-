@@ -1503,9 +1503,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -1188.274120490234,
-			"y": -1829.399580917177,
-			"z": 0.7180935966614475,
+			"x": -559.7616974293305,
+			"y": -1118.3756953119412,
+			"z": 0.47328658683040603,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2682,15 +2682,9 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Pallet - Unit --> I can load Y-Units of l*b*h"
+									"text": "Pallet - Unit --> I can load Y-Units"
 								}
 							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
 						}
 					]
 				}
@@ -2842,12 +2836,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:ST7eXgqhkX1m01l-AONkm",
+			"editingShapeId": "shape:0lpOY_82cBTdc2oMNvZrH",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:ST7eXgqhkX1m01l-AONkm"
+				"shape:0lpOY_82cBTdc2oMNvZrH"
 			],
-			"hoveredShapeId": "shape:ST7eXgqhkX1m01l-AONkm",
+			"hoveredShapeId": "shape:0lpOY_82cBTdc2oMNvZrH",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -5956,6 +5950,96 @@
 			"typeName": "binding"
 		},
 		{
+			"x": 2397.9714084341963,
+			"y": 2519.417966238433,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:0lpOY_82cBTdc2oMNvZrH",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "s",
+				"w": 262.45831298828125,
+				"font": "sans",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1,
+				"richText": {
+					"type": "doc",
+					"attrs": {
+						"dir": "auto"
+					},
+					"content": [
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Parameter admin"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Lane transmode constraint type"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "pallet area%"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "weight thtreshold%"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						}
+					]
+				}
+			},
+			"parentId": "page:page",
+			"index": "aTd8eu2V",
+			"typeName": "shape"
+		},
+		{
 			"meta": {},
 			"id": "binding:C8GLDWYf0CSXsIWegvldj",
 			"type": "arrow",
@@ -6332,7 +6416,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1551.6666259765625,
+				"w": 1240,
 				"h": 845.8333129882812
 			},
 			"insets": [
