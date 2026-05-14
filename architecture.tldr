@@ -64,7 +64,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 233.9296875,
+				"w": 290.85675048828125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -100,7 +100,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Order_Line_ID"
+									"text": "Order_Line_ID: int"
 								}
 							]
 						},
@@ -112,7 +112,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Shipment_ID"
+									"text": "Shipment_ID: int"
 								}
 							]
 						},
@@ -124,7 +124,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item_Confirmation_ID"
+									"text": "sku_id: int"
 								}
 							]
 						},
@@ -136,7 +136,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item_ID"
+									"text": "Destination_ID: int"
 								}
 							]
 						},
@@ -148,7 +148,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Destination_ID"
+									"text": "Estimated Delivery Date: Date"
 								}
 							]
 						},
@@ -160,7 +160,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Estimated Delivery Date"
+									"text": "Actual Delivery Date: Date"
 								}
 							]
 						},
@@ -172,19 +172,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Actual Delivery Date"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Weight in Kg"
+									"text": "Weight in Kg: Float"
 								}
 							]
 						},
@@ -201,7 +189,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Planned Quantity"
+									"text": "Planned Quantity: int"
 								}
 							]
 						},
@@ -218,25 +206,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Shipped Quantity"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Add-ons:"
+									"text": "Shipped Quantity: int"
 								}
 							]
 						},
@@ -248,22 +218,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Shipment_ID"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									},
-									"marks": [
-										{
-											"type": "code"
-										}
-									]
-								},
-								{
-									"type": "text",
-									"text": "Customer_ID"
+									"text": "Priority: Int"
 								},
 								{
 									"type": "hardBreak",
@@ -273,7 +228,7 @@
 								},
 								{
 									"type": "text",
-									"text": "Origin_ID"
+									"text": "Temperature_Requirement: bool"
 								},
 								{
 									"type": "hardBreak",
@@ -283,7 +238,7 @@
 								},
 								{
 									"type": "text",
-									"text": "Priority"
+									"text": "Special_Handling: Bool"
 								},
 								{
 									"type": "hardBreak",
@@ -293,7 +248,7 @@
 								},
 								{
 									"type": "text",
-									"text": "Delivery_Window_Start"
+									"text": "Requested_Transport_Mode: string"
 								},
 								{
 									"type": "hardBreak",
@@ -303,7 +258,7 @@
 								},
 								{
 									"type": "text",
-									"text": "Delivery_Window_End"
+									"text": "Max_Transit_Time_in_days: Int"
 								},
 								{
 									"type": "hardBreak",
@@ -313,67 +268,7 @@
 								},
 								{
 									"type": "text",
-									"text": "Order_ID"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Route_Group ???"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Temperature_Requirement"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Special_Handling"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Requested_Transport_Mode"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Max_Transit_Time"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Service_Level"
+									"text": "Service_Level: Int"
 								}
 							]
 						},
@@ -778,7 +673,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_ID (UUID) "
+									"text": "Equipment_mode_ID: int "
 								}
 							]
 						},
@@ -790,19 +685,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment Name (Container)"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Status"
+									"text": "Status: string"
 								}
 							]
 						},
@@ -820,12 +703,7 @@
 							"content": [
 								{
 									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons:"
+									"text": "Assigned_Route_ID: Int"
 								}
 							]
 						},
@@ -837,7 +715,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport_Mode"
+									"text": "Departure_Time: "
 								}
 							]
 						},
@@ -849,7 +727,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Assigned_Route_ID"
+									"text": "Capacity_Used: Float"
 								}
 							]
 						},
@@ -861,79 +739,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Current_Status"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Current_Location"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Departure_Time"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Arrival_Time"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Driver_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Capacity_Used"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Optimizer_Run_ID"
+									"text": "total_weight: float"
 								}
 							]
 						},
@@ -942,6 +748,42 @@
 							"attrs": {
 								"dir": "auto"
 							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Date of Shipment: date"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Estimated Arrival: Date"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Optimizer_Run_ID: int"
+								}
+							]
 						},
 						{
 							"type": "paragraph",
@@ -1311,7 +1153,7 @@
 				"fill": "none",
 				"color": "yellow",
 				"labelColor": "black",
-				"bend": 84.16658082408973,
+				"bend": -159.49520046764937,
 				"start": {
 					"x": 0,
 					"y": 0
@@ -1503,9 +1345,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -559.7616974293305,
-			"y": -1118.3756953119412,
-			"z": 0.47328658683040603,
+			"x": -734.4594403749954,
+			"y": -2421.3452186246677,
+			"z": 0.733964110930889,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1698,7 +1540,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 294.41143798828125,
+				"w": 240.5833282470703,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -1734,7 +1576,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Handling_Unit_ID (Pallet)"
+									"text": "Handling_Unit_ID:int (Pallet)"
 								}
 							]
 						},
@@ -1746,7 +1588,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Date of Shipment"
+									"text": "Equipment_id: int"
 								}
 							]
 						},
@@ -1758,7 +1600,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Estimated Arrival Date"
+									"text": "length: Float"
 								}
 							]
 						},
@@ -1770,7 +1612,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "length"
+									"text": "width: Float"
 								}
 							]
 						},
@@ -1782,7 +1624,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "width"
+									"text": "height: Float"
 								}
 							]
 						},
@@ -1794,7 +1636,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "height"
+									"text": "weight: Float"
 								}
 							]
 						},
@@ -1806,7 +1648,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "weight"
+									"text": "label: string"
 								}
 							]
 						},
@@ -1818,7 +1660,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "label"
+									"text": "is_homogeneous: bool"
 								}
 							]
 						},
@@ -1830,234 +1672,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_homogeneous"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Handling_Unit_Status"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Parent_Equipment_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Optimizer_Run_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Load_Sequence"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Unload_Sequence"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Current_Location"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "RFID_Tag"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Barcode"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Seal_NumberHandling_Unit_Status"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Parent_Equipment_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Optimizer_Run_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Load_Sequence"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Unload_Sequence"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Current_Location"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "RFID_Tag"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Barcode"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Seal_Number"
+									"text": "Optimizer_Run_ID: int"
 								}
 							]
 						},
@@ -2426,7 +2041,7 @@
 		},
 		{
 			"x": -109.3742189753327,
-			"y": 2958.1731302688636,
+			"y": 2429.385377682218,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2436,7 +2051,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 200.140625,
+				"w": 303.6171875,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2472,7 +2087,12 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transportation_ID"
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "route_id: Int"
 								}
 							]
 						},
@@ -2484,7 +2104,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Leg_Sequence"
+									"text": "Transportation_mode_ID: Int"
 								}
 							]
 						},
@@ -2496,7 +2116,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Origin_ID"
+									"text": "Leg_Sequence: json"
 								}
 							]
 						},
@@ -2508,7 +2128,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Destination_ID"
+									"text": "Origin_ID: int"
 								}
 							]
 						},
@@ -2520,7 +2140,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Distance_KM"
+									"text": "Destination_ID: int"
 								}
 							]
 						},
@@ -2532,7 +2152,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Estimated_Transit_Time"
+									"text": "Distance_KM: Float"
 								}
 							]
 						},
@@ -2544,7 +2164,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Planned_Departure"
+									"text": "Estimated_Transit_Time_in_days: int"
 								}
 							]
 						},
@@ -2556,7 +2176,31 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Planned_Arrival"
+									"text": "Planned_Departure: date"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Planned_Arrival: Date"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Optimizer_Run_ID: int"
 								}
 							]
 						}
@@ -2836,12 +2480,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:0lpOY_82cBTdc2oMNvZrH",
+			"editingShapeId": "shape:k_yuMOLnZ-vly4Sefxy-u",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:0lpOY_82cBTdc2oMNvZrH"
+				"shape:k_yuMOLnZ-vly4Sefxy-u"
 			],
-			"hoveredShapeId": "shape:0lpOY_82cBTdc2oMNvZrH",
+			"hoveredShapeId": "shape:k_yuMOLnZ-vly4Sefxy-u",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -3160,7 +2804,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 253.0442657470703,
+				"w": 457.4453125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -3196,7 +2840,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment ID(Container)"
+									"text": "Equipment ID: int (Container)"
 								}
 							]
 						},
@@ -3208,7 +2852,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Handling_Unit_ID (Pallet)"
+									"text": "Handling_Unit_ID: int  (Pallet)"
 								}
 							]
 						},
@@ -3220,7 +2864,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Rotation"
+									"text": "Rotation: string"
 								}
 							]
 						},
@@ -3232,7 +2876,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Orientation"
+									"text": "Orientation: string"
 								}
 							]
 						},
@@ -3244,7 +2888,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Position_x"
+									"text": "Position_x: float"
 								},
 								{
 									"type": "hardBreak",
@@ -3254,7 +2898,7 @@
 								},
 								{
 									"type": "text",
-									"text": "Position_y"
+									"text": "Position_y: float"
 								}
 							]
 						},
@@ -3266,7 +2910,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Position_z"
+									"text": "Position_z: float"
 								}
 							]
 						},
@@ -3278,7 +2922,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "stop_sequence"
+									"text": "stop_sequence: int"
 								}
 							]
 						},
@@ -3290,7 +2934,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "delivery_priority"
+									"text": "delivery_priority: int"
 								}
 							]
 						},
@@ -3302,7 +2946,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "stack_number"
+									"text": "stack_number: int"
 								}
 							]
 						},
@@ -3314,7 +2958,55 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "color"
+									"text": "Is_Stacked: bool"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Stack_Parent_ID: int (equipment_id, Handling_unit_id)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "color; string"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Load_Order: string"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Unload_Order: string"
 								}
 							]
 						},
@@ -3323,138 +3015,6 @@
 							"attrs": {
 								"dir": "auto"
 							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Add-ons:"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Rotation"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Orientation"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Is_Stacked"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Stack_Parent_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Layer_Number"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Load_Order"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Unload_Order"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Axle_Zone"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Weight_Distribution_Zone"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Collision_Flag"
-								}
-							]
 						},
 						{
 							"type": "paragraph",
@@ -3778,6 +3338,18 @@
 								{
 									"type": "text",
 									"text": "is_fragile"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Optimizer_Run_ID: int"
 								}
 							]
 						},
@@ -4262,7 +3834,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 217.7578125,
+				"w": 258.9166564941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -4298,7 +3870,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport Type"
+									"text": "Transport_Mode_ID: int"
 								}
 							]
 						},
@@ -4310,7 +3882,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport Name"
+									"text": "Transport Type: String"
 								}
 							]
 						},
@@ -4322,7 +3894,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Axle_Count"
+									"text": "Transport Name: String"
 								}
 							]
 						},
@@ -4334,30 +3906,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Axle_Positions"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons:"
+									"text": "Axle_Count: Int"
 								}
 							]
 						},
@@ -4369,7 +3918,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport_Mode_ID"
+									"text": "Supports_Refrigeration: Bool"
 								}
 							]
 						},
@@ -4381,7 +3930,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Supports_Refrigeration"
+									"text": "Supports_Hazmat: Bool"
 								}
 							]
 						},
@@ -4393,7 +3942,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Supports_Hazmat"
+									"text": "Max_Weight: Float"
 								}
 							]
 						},
@@ -4405,7 +3954,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_Weight"
+									"text": "Max_Volume: Float"
 								}
 							]
 						},
@@ -4417,7 +3966,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_Volume"
+									"text": "Cost_Per_KM: Float"
 								}
 							]
 						},
@@ -4429,7 +3978,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Cost_Per_KM"
+									"text": "Average_Speed: Float"
 								}
 							]
 						},
@@ -4441,19 +3990,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Average_Speed"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Carbon_Emission_Factor"
+									"text": "Carbon_Emission_Factor: Float"
 								}
 							]
 						}
@@ -5151,7 +4688,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 385.23175048828125,
+				"w": 432.3541564941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -5187,7 +4724,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Location type (WH / DC / INV)"
+									"text": "Location type: String (WH / DC / INV)"
 								}
 							]
 						},
@@ -5199,7 +4736,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Latitude"
+									"text": "Latitude: String"
 								}
 							]
 						},
@@ -5211,7 +4748,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Longitude"
+									"text": "Longitude: String"
 								}
 							]
 						},
@@ -5223,7 +4760,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Geo-fencing flag (True = Take Optimized route)"
+									"text": "Location_ID: int"
 								}
 							]
 						},
@@ -5235,12 +4772,7 @@
 							"content": [
 								{
 									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons"
+									"text": "Location_Name: string"
 								}
 							]
 						},
@@ -5252,7 +4784,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Location_ID"
+									"text": "Address: string"
 								}
 							]
 						},
@@ -5264,7 +4796,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Location_Name"
+									"text": "City: string"
 								}
 							]
 						},
@@ -5276,7 +4808,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Address"
+									"text": "State: string"
 								}
 							]
 						},
@@ -5288,7 +4820,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "City"
+									"text": "Country: string"
 								}
 							]
 						},
@@ -5300,7 +4832,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "State"
+									"text": "Postal_Code: string"
 								}
 							]
 						},
@@ -5312,7 +4844,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Country"
+									"text": "Dock_Count: int"
 								}
 							]
 						},
@@ -5324,7 +4856,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Postal_Code"
+									"text": "Storage_Type: string"
 								}
 							]
 						},
@@ -5336,7 +4868,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Dock_Count"
+									"text": "Temperature_Capability: Bool"
 								}
 							]
 						},
@@ -5348,9 +4880,15 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Storage_Type"
+									"text": "Operating_Hours: string"
 								}
 							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
 						},
 						{
 							"type": "paragraph",
@@ -5360,7 +4898,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Temperature_Capability"
+									"text": "Geo-fencing flag: Bool (True = Take Optimized route)"
 								}
 							]
 						},
@@ -5368,13 +4906,7 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Operating_Hours"
-								}
-							]
+							}
 						}
 					]
 				}
@@ -6105,7 +5637,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment Name"
+									"text": "Equipment_ID: Int"
 								}
 							]
 						},
@@ -6117,7 +5649,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Length"
+									"text": "Equipment Name: String"
 								}
 							]
 						},
@@ -6129,7 +5661,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "width"
+									"text": "Length: Float"
 								}
 							]
 						},
@@ -6141,7 +5673,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Height"
+									"text": "width: Float"
 								}
 							]
 						},
@@ -6153,7 +5685,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_payload_weight"
+									"text": "Height: Float"
 								}
 							]
 						},
@@ -6165,7 +5697,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "tare_weight"
+									"text": "Max_payload_weight: Float"
 								}
 							]
 						},
@@ -6177,7 +5709,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "max_volume"
+									"text": "tare_weight: Float"
 								}
 							]
 						},
@@ -6189,30 +5721,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "units"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons"
+									"text": "max_volume: Float"
 								}
 							]
 						},
@@ -6224,7 +5733,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_Type"
+									"text": "units: int"
 								}
 							]
 						},
@@ -6236,7 +5745,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Door_Width"
+									"text": "Equipment_Type: String"
 								}
 							]
 						},
@@ -6248,7 +5757,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Door_Height"
+									"text": "Door_Width: Float"
 								}
 							]
 						},
@@ -6260,7 +5769,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Refrigeration_Capable"
+									"text": "Door_Height: Float"
 								}
 							]
 						},
@@ -6272,7 +5781,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Temperature_Range"
+									"text": "Refrigeration_Capable: Bool"
 								}
 							]
 						},
@@ -6284,7 +5793,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_Stack_Height"
+									"text": "Temperature_Range: string"
 								}
 							]
 						},
@@ -6296,43 +5805,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Internal_Clearance"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Fuel_Type"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Carrier_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Ownership_Type"
+									"text": "Max_Stack_Height: Float"
 								}
 							]
 						}
@@ -6416,7 +5889,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1240,
+				"w": 1551.6666259765625,
 				"h": 845.8333129882812
 			},
 			"insets": [
@@ -6553,7 +6026,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 154.89321899414062,
+				"w": 197.9921875,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -6589,7 +6062,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item_Id"
+									"text": "SKU_ID: int"
 								}
 							]
 						},
@@ -6601,7 +6074,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item Name"
+									"text": "sku Name: String"
 								}
 							]
 						},
@@ -6613,7 +6086,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Height"
+									"text": "Height: float"
 								}
 							]
 						},
@@ -6625,7 +6098,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "length"
+									"text": "length: float"
 								}
 							]
 						},
@@ -6637,7 +6110,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "weight"
+									"text": "weight: float"
 								}
 							]
 						},
@@ -6649,7 +6122,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_frozen"
+									"text": "Volume: float"
 								}
 							]
 						},
@@ -6661,7 +6134,67 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "need_refrigeration"
+									"text": "Temperature_Min: float"
+								},
+								{
+									"type": "hardBreak",
+									"attrs": {
+										"dir": "auto"
+									}
+								},
+								{
+									"type": "text",
+									"text": "Temperature_Max: float"
+								},
+								{
+									"type": "hardBreak",
+									"attrs": {
+										"dir": "auto"
+									}
+								},
+								{
+									"type": "text",
+									"text": "Hazmat_Class: Int"
+								},
+								{
+									"type": "hardBreak",
+									"attrs": {
+										"dir": "auto"
+									}
+								},
+								{
+									"type": "text",
+									"text": "Fragility_Rating: Int"
+								},
+								{
+									"type": "hardBreak",
+									"attrs": {
+										"dir": "auto"
+									}
+								},
+								{
+									"type": "text",
+									"text": "Shelf_Life_Days: Int"
+								},
+								{
+									"type": "hardBreak",
+									"attrs": {
+										"dir": "auto"
+									}
+								},
+								{
+									"type": "text",
+									"text": "Is_Food_Grade: Bool"
+								},
+								{
+									"type": "hardBreak",
+									"attrs": {
+										"dir": "auto"
+									}
+								},
+								{
+									"type": "text",
+									"text": "Is_Regulated: Bool"
 								}
 							]
 						}
@@ -7184,7 +6717,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transportation_ID"
+									"text": "Transport_Mode_ID: int"
 								}
 							]
 						},
@@ -7196,7 +6729,19 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_ID"
+									"text": "Equipment_ID: int"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Transfer_Points: json"
 								}
 							]
 						},
@@ -7205,89 +6750,6 @@
 							"attrs": {
 								"dir": "auto"
 							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons:"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Transfer_Point"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Load_Time"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Unload_Time"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Carrier_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Notes:"
-								}
-							]
 						},
 						{
 							"type": "paragraph",
