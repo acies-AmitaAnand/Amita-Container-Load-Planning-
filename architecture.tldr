@@ -53,8 +53,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 1774.9825206859734,
-			"y": 1443.8083903116153,
+			"x": 2124.872654345483,
+			"y": 1190.0859357559668,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -64,7 +64,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 276.01300048828125,
+				"w": 233.9296875,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -88,7 +88,31 @@
 											"type": "bold"
 										}
 									],
-									"text": "Confirmed Units For Shipping [2]"
+									"text": "Shipment Plans [2]"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Order_Line_ID"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Shipment_ID"
 								}
 							]
 						},
@@ -136,7 +160,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Quantity"
+									"text": "Estimated Delivery Date"
 								}
 							]
 						},
@@ -148,7 +172,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Delivery Date"
+									"text": "Actual Delivery Date"
 								}
 							]
 						},
@@ -168,7 +192,35 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
-							}
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "Planned Quantity"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "Shipped Quantity"
+								}
+							]
 						},
 						{
 							"type": "paragraph",
@@ -511,7 +563,7 @@
 				"fill": "none",
 				"color": "black",
 				"labelColor": "black",
-				"bend": 0,
+				"bend": -170.00740165766217,
 				"start": {
 					"x": 0,
 					"y": 0
@@ -679,8 +731,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 38.701624742418176,
-			"y": 1462.849885191418,
+			"x": 465.5894395451965,
+			"y": 2958.1731302688636,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -714,7 +766,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Equipment In Use [3]"
+									"text": "Equipment In Use Container [3]"
 								}
 							]
 						},
@@ -768,6 +820,142 @@
 							"content": [
 								{
 									"type": "text",
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "Add-ons:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Transport_Mode"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Assigned_Route_ID"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Current_Status"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Current_Location"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Departure_Time"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Arrival_Time"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Driver_ID"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Capacity_Used"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Optimizer_Run_ID"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
 									"text": "Notes:"
 								}
 							]
@@ -792,8 +980,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1442.7541739360206,
-			"y": 2140.3001276005198,
+			"x": 2184.427219216987,
+			"y": 1936.4568212448553,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1123,7 +1311,7 @@
 				"fill": "none",
 				"color": "yellow",
 				"labelColor": "black",
-				"bend": -268.65036035259914,
+				"bend": 84.16658082408973,
 				"start": {
 					"x": 0,
 					"y": 0
@@ -1315,9 +1503,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 707.2189101629128,
-			"y": -813.3310216572498,
-			"z": 0.4776211972338794,
+			"x": -1188.274120490234,
+			"y": -1829.399580917177,
+			"z": 0.7180935966614475,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1458,7 +1646,7 @@
 		},
 		{
 			"x": 1061.564571458444,
-			"y": 1924.3148944794134,
+			"y": 1912.1599462448553,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1467,8 +1655,8 @@
 			"type": "text",
 			"props": {
 				"color": "yellow",
-				"size": "s",
-				"w": 329.25518798828125,
+				"size": "l",
+				"w": 657.4973754882812,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -1499,8 +1687,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 691.1002490330476,
-			"y": 1140.3785083357488,
+			"x": 1008.8010050955775,
+			"y": 2772.677261802225,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1534,7 +1722,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Handling Unit"
+									"text": "Handling Unit (Pallet)"
 								}
 							]
 						},
@@ -1546,7 +1734,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "UOM_ID (equipment)"
+									"text": "Handling_Unit_ID (Pallet)"
 								}
 							]
 						},
@@ -1945,8 +2133,8 @@
 					"y": 0
 				},
 				"end": {
-					"x": -341.3249516551854,
-					"y": -416.1897408808643
+					"x": -51.77712655903383,
+					"y": 919.0685315443229
 				},
 				"arrowheadStart": "none",
 				"arrowheadEnd": "arrow",
@@ -2081,24 +2269,6 @@
 			"typeName": "shape"
 		},
 		{
-			"meta": {},
-			"id": "binding:zSWfUq7p8liQUTq4Yp5Ib",
-			"type": "arrow",
-			"fromId": "shape:X9vGV8oYWEmHaite-QtIM",
-			"toId": "shape:iixq4_JM6k4BVT_YCad5L",
-			"props": {
-				"isPrecise": true,
-				"isExact": false,
-				"normalizedAnchor": {
-					"x": 0.2774482392840055,
-					"y": 0.1547196491488829
-				},
-				"snap": "none",
-				"terminal": "end"
-			},
-			"typeName": "binding"
-		},
-		{
 			"x": 923.6676043180262,
 			"y": 1338.68964272788,
 			"rotation": 0,
@@ -2141,6 +2311,18 @@
 								{
 									"type": "text",
 									"text": "Pallet & Pallet Contents"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "1..m"
 								}
 							]
 						}
@@ -2243,8 +2425,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -324.06264563587195,
-			"y": 2445.9529737932144,
+			"x": -109.3742189753327,
+			"y": 2958.1731302688636,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2278,7 +2460,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Route Planned ()"
+									"text": "Route Planned"
 								}
 							]
 						},
@@ -2386,22 +2568,136 @@
 			"typeName": "shape"
 		},
 		{
+			"x": 2262.71087841189,
+			"y": 2158.789564314182,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
 			"meta": {},
-			"id": "binding:NYVP71glz1_568W4kq13v",
-			"type": "arrow",
-			"fromId": "shape:DDQXd_wc_FZE3ImdRS33n",
-			"toId": "shape:8PGxrWTsR_ncTQyKy6Kcr",
+			"id": "shape:ST7eXgqhkX1m01l-AONkm",
+			"type": "text",
 			"props": {
-				"isPrecise": true,
-				"isExact": false,
-				"normalizedAnchor": {
-					"x": 0.9202751819473828,
-					"y": 0.9074143867970562
-				},
-				"snap": "none",
-				"terminal": "end"
+				"color": "black",
+				"size": "s",
+				"w": 445.23175048828125,
+				"font": "sans",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1,
+				"richText": {
+					"type": "doc",
+					"attrs": {
+						"dir": "auto"
+					},
+					"content": [
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "(UOM master) Pre-computed Pallet Size for each item "
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Unit"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Unit of measure"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Pieces"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "cases"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "pallets"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Note:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Pallet - Unit --> I can load Y-Units of l*b*h"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						}
+					]
+				}
 			},
-			"typeName": "binding"
+			"parentId": "page:page",
+			"index": "aSC3zJ9G",
+			"typeName": "shape"
 		},
 		{
 			"meta": {},
@@ -2546,12 +2842,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:cu2_AJn3biVOBj-vyIbEC",
+			"editingShapeId": "shape:ST7eXgqhkX1m01l-AONkm",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:cu2_AJn3biVOBj-vyIbEC"
+				"shape:ST7eXgqhkX1m01l-AONkm"
 			],
-			"hoveredShapeId": "shape:cu2_AJn3biVOBj-vyIbEC",
+			"hoveredShapeId": "shape:ST7eXgqhkX1m01l-AONkm",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2579,8 +2875,8 @@
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
-					"x": 0,
-					"y": 0
+					"x": 378.57983934842565,
+					"y": 1393.4957320268672
 				},
 				"end": {
 					"x": -132.69631152431998,
@@ -2698,53 +2994,6 @@
 			},
 			"parentId": "shape:2EqfdOUREKSIgc0U4TLGr",
 			"index": "a4QiHNXV",
-			"typeName": "shape"
-		},
-		{
-			"x": -891.3130589474013,
-			"y": 1608.5530006546749,
-			"rotation": 0,
-			"isLocked": false,
-			"opacity": 1,
-			"meta": {},
-			"id": "shape:QcLIDzNd4jb2P943itNfq",
-			"type": "text",
-			"props": {
-				"color": "yellow",
-				"size": "s",
-				"w": 269.6744689941406,
-				"font": "sans",
-				"textAlign": "middle",
-				"autoSize": true,
-				"scale": 1,
-				"richText": {
-					"type": "doc",
-					"attrs": {
-						"dir": "auto"
-					},
-					"content": [
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Transported Content"
-								}
-							]
-						}
-					]
-				}
-			},
-			"parentId": "page:page",
-			"index": "aQhoqz8G",
 			"typeName": "shape"
 		},
 		{
@@ -2906,8 +3155,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 586.4010302830476,
-			"y": 1528.8018748086856,
+			"x": 2124.9493597199166,
+			"y": 2772.677261802225,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2917,7 +3166,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 217.9270782470703,
+				"w": 253.0442657470703,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2941,7 +3190,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "UOM Position"
+									"text": "UOM Position (Pallet Position)"
 								}
 							]
 						},
@@ -2965,7 +3214,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "UOM_ID (Pallet)"
+									"text": "Handling_Unit_ID (Pallet)"
 								}
 							]
 						},
@@ -3385,8 +3634,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 1293.6205406967254,
-			"y": 1159.3017131943477,
+			"x": 1657.3938086742762,
+			"y": 2809.988302446689,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -3396,7 +3645,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 211.49478149414062,
+				"w": 338.1875,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -3420,7 +3669,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Handling_Unit_Content"
+									"text": "Handling_Unit_Content (Items in Pallet)"
 								}
 							]
 						},
@@ -3444,7 +3693,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item_Confirmation_id"
+									"text": "Item_Confirmation_id (Item)"
 								}
 							]
 						},
@@ -3543,6 +3792,210 @@
 							"attrs": {
 								"dir": "auto"
 							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "Add-ons:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Handling_Unit_Type"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Length"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Width"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Height"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Volume"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Center_Of_Gravity"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Temperature_Zone"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Load_Bearing_Capacity"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Parent_Handling_Unit_ID"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Packing_Pattern"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "italic"
+										}
+									],
+									"text": "Optimizer_Run_ID"
+								}
+							]
 						},
 						{
 							"type": "paragraph",
@@ -3804,8 +4257,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 679,
-			"y": 2643.772070910999,
+			"x": 1594.2733004019638,
+			"y": 1190.0859357559668,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -3864,6 +4317,30 @@
 								{
 									"type": "text",
 									"text": "Transport Name"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Axle_Count"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Axle_Positions"
 								}
 							]
 						},
@@ -4515,9 +4992,21 @@
 				"arrowheadEnd": "arrow",
 				"richText": {
 					"type": "doc",
+					"attrs": {
+						"dir": "auto"
+					},
 					"content": [
 						{
-							"type": "paragraph"
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "1...m"
+								}
+							]
 						}
 					]
 				},
@@ -4622,6 +5111,24 @@
 		},
 		{
 			"meta": {},
+			"id": "binding:AbtV5LTcspsAXD7SFk95e",
+			"type": "arrow",
+			"fromId": "shape:DDQXd_wc_FZE3ImdRS33n",
+			"toId": "shape:8PGxrWTsR_ncTQyKy6Kcr",
+			"props": {
+				"isPrecise": true,
+				"isExact": false,
+				"normalizedAnchor": {
+					"x": 0.415436896124403,
+					"y": 0.03189926465273064
+				},
+				"snap": "none",
+				"terminal": "end"
+			},
+			"typeName": "binding"
+		},
+		{
+			"meta": {},
 			"id": "binding:mS7pmv6SGyk0rpgLde3LA",
 			"type": "arrow",
 			"fromId": "shape:pUeO9sphViXU9Si0fzmcL",
@@ -4639,8 +5146,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 1116.2585717025845,
-			"y": 2488.3271975168045,
+			"x": 1061.564571458444,
+			"y": 1190.0859357559668,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -4650,7 +5157,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 219.8671875,
+				"w": 385.23175048828125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -4674,7 +5181,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Store Location"
+									"text": "Location"
 								}
 							]
 						},
@@ -4686,7 +5193,43 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Store type (WH / DC / INV)"
+									"text": "Location type (WH / DC / INV)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Latitude"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Longitude"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Geo-fencing flag (True = Take Optimized route)"
 								}
 							]
 						},
@@ -4799,30 +5342,6 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Latitude"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Longitude"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
 									"text": "Dock_Count"
 								}
 							]
@@ -4867,7 +5386,7 @@
 				}
 			},
 			"parentId": "page:page",
-			"index": "aEg7nCxV",
+			"index": "aQ8dl1rV",
 			"typeName": "shape"
 		},
 		{
@@ -5124,24 +5643,6 @@
 		},
 		{
 			"meta": {},
-			"id": "binding:FXZdJt-cA3XI-Fs1ddYgN",
-			"type": "arrow",
-			"fromId": "shape:X9vGV8oYWEmHaite-QtIM",
-			"toId": "shape:cu2_AJn3biVOBj-vyIbEC",
-			"props": {
-				"isPrecise": false,
-				"isExact": false,
-				"normalizedAnchor": {
-					"x": 0.5,
-					"y": 0.5
-				},
-				"snap": "center",
-				"terminal": "start"
-			},
-			"typeName": "binding"
-		},
-		{
-			"meta": {},
 			"id": "binding:vVtsuq5bZ4ib9QHOAuHGX",
 			"type": "arrow",
 			"fromId": "shape:VAWZzpt1EVRCwSsqq0TCO",
@@ -5150,8 +5651,8 @@
 				"isPrecise": true,
 				"isExact": false,
 				"normalizedAnchor": {
-					"x": 0.6554327755675442,
-					"y": 0.41738118872555807
+					"x": 0.7334810376760684,
+					"y": 0.9092846902509819
 				},
 				"snap": "none",
 				"terminal": "end"
@@ -5168,8 +5669,8 @@
 				"isPrecise": true,
 				"isExact": false,
 				"normalizedAnchor": {
-					"x": 0.34718680068053187,
-					"y": 0.7013551203670428
+					"x": 0.04223456080313828,
+					"y": 0.025216859213464088
 				},
 				"snap": "none",
 				"terminal": "end"
@@ -5473,8 +5974,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": -398.88034888294226,
-			"y": 1225.2537028116153,
+			"x": 608.6285020451966,
+			"y": 1190.0859357559668,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -5612,6 +6113,12 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
 							},
 							"content": [
 								{
@@ -5634,30 +6141,6 @@
 								{
 									"type": "text",
 									"text": "Equipment_Type"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Axle_Count"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Axle_Positions"
 								}
 							]
 						},
@@ -5830,7 +6313,7 @@
 			"followingUserId": null,
 			"opacityForNextShape": 1,
 			"stylesForNextShape": {
-				"tldraw:color": "yellow",
+				"tldraw:color": "black",
 				"tldraw:font": "sans",
 				"tldraw:size": "s",
 				"tldraw:dash": "dotted",
@@ -5849,7 +6332,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 751.6666259765625,
+				"w": 1551.6666259765625,
 				"h": 845.8333129882812
 			},
 			"insets": [
@@ -5957,64 +6440,26 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 388.57257423546434,
-			"y": 1318.511466187147,
-			"rotation": 0,
-			"isLocked": false,
-			"opacity": 1,
 			"meta": {},
-			"id": "shape:X9vGV8oYWEmHaite-QtIM",
+			"id": "binding:lPYFsasY33USNa5kvu43Z",
 			"type": "arrow",
+			"fromId": "shape:VAWZzpt1EVRCwSsqq0TCO",
+			"toId": "shape:iixq4_JM6k4BVT_YCad5L",
 			"props": {
-				"kind": "arc",
-				"elbowMidPoint": 0.5,
-				"dash": "draw",
-				"size": "s",
-				"fill": "none",
-				"color": "black",
-				"labelColor": "black",
-				"bend": -94.78232488178229,
-				"start": {
-					"x": 0,
-					"y": 0
+				"isPrecise": true,
+				"isExact": false,
+				"normalizedAnchor": {
+					"x": 0.2561324168256991,
+					"y": 0.08846208492357832
 				},
-				"end": {
-					"x": 212.24436648737924,
-					"y": 106.4141492064
-				},
-				"arrowheadStart": "none",
-				"arrowheadEnd": "arrow",
-				"richText": {
-					"type": "doc",
-					"attrs": {
-						"dir": "auto"
-					},
-					"content": [
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Create Container"
-								}
-							]
-						}
-					]
-				},
-				"labelPosition": 0.5,
-				"font": "sans",
-				"scale": 1
+				"snap": "none",
+				"terminal": "start"
 			},
-			"parentId": "page:page",
-			"index": "a9x8amnK",
-			"typeName": "shape"
+			"typeName": "binding"
 		},
 		{
-			"x": 2251.2452923541414,
-			"y": 1159.3017131943477,
+			"x": 2749.078567401026,
+			"y": 1190.0859357559668,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -6200,6 +6645,18 @@
 									"text": "Via Populates (3)"
 								}
 							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "m...m"
+								}
+							]
 						}
 					]
 				},
@@ -6332,24 +6789,6 @@
 			"typeName": "binding"
 		},
 		{
-			"meta": {},
-			"id": "binding:7nXJGmlDnj3OlJDRBoEBg",
-			"type": "arrow",
-			"fromId": "shape:VAWZzpt1EVRCwSsqq0TCO",
-			"toId": "shape:iixq4_JM6k4BVT_YCad5L",
-			"props": {
-				"isPrecise": false,
-				"isExact": false,
-				"normalizedAnchor": {
-					"x": 0.5,
-					"y": 0.5
-				},
-				"snap": "center",
-				"terminal": "start"
-			},
-			"typeName": "binding"
-		},
-		{
 			"x": 368.1471073609319,
 			"y": 1926.5607746251644,
 			"rotation": 0,
@@ -6402,7 +6841,7 @@
 				"scale": 1
 			},
 			"parentId": "page:page",
-			"index": "aJazBy4Q4",
+			"index": "aRrWhSvV",
 			"typeName": "shape"
 		},
 		{
@@ -6614,8 +7053,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -398.88034888294226,
-			"y": 1802.8956230102972,
+			"x": 90.7664060246673,
+			"y": 1912.1599462448553,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -6697,18 +7136,6 @@
 										}
 									],
 									"text": "Add-ons:"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Leg_Sequence"
 								}
 							]
 						},
