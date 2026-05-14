@@ -88,7 +88,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Shipment Plans [2]"
+									"text": "Table: Shipment Plans [2]"
 								}
 							]
 						},
@@ -637,7 +637,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 286.078125,
+				"w": 322.53643798828125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -661,7 +661,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Equipment In Use Container [3]"
+									"text": "Table: Equipment In Use Container [3]"
 								}
 							]
 						},
@@ -747,7 +747,13 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
-							}
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Optimizer_Run_ID: int"
+								}
+							]
 						},
 						{
 							"type": "paragraph",
@@ -1345,9 +1351,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -734.4594403749954,
-			"y": -2421.3452186246677,
-			"z": 0.733964110930889,
+			"x": -1274.9434770148139,
+			"y": -2489.2702276186983,
+			"z": 0.7169568038521452,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1564,7 +1570,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Handling Unit (Pallet)"
+									"text": "Table: Handling Unit (Pallet)"
 								}
 							]
 						},
@@ -2075,7 +2081,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Route Planned"
+									"text": "Table: Route Planned"
 								}
 							]
 						},
@@ -2828,7 +2834,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "UOM Position (Pallet Position)"
+									"text": "Table: UOM Position (Pallet Position)"
 								}
 							]
 						},
@@ -3199,7 +3205,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 338.1875,
+				"w": 394.37237548828125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -3223,7 +3229,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Handling_Unit_Content (Items in Pallet)"
+									"text": "Table: Handling_Unit_Content (Items in Pallet)"
 								}
 							]
 						},
@@ -3235,7 +3241,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Handling_Unit_Id (Pallet)"
+									"text": "Handling_Unit_Id: int (Pallet)"
 								}
 							]
 						},
@@ -3247,7 +3253,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item_Confirmation_id (Item)"
+									"text": "SKU_ID: int"
 								}
 							]
 						},
@@ -3259,7 +3265,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Destination_ID"
+									"text": "shipment_id: int (Item)"
 								}
 							]
 						},
@@ -3271,7 +3277,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Item_ID"
+									"text": "Destination_ID: int"
 								}
 							]
 						},
@@ -3289,7 +3295,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Shipment Units"
+									"text": "actual Units: int"
 								}
 							]
 						},
@@ -3301,7 +3307,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Total_Weight"
+									"text": "Total_Weight: float"
 								}
 							]
 						},
@@ -3313,7 +3319,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_stackable"
+									"text": "is_stackable: bool"
 								}
 							]
 						},
@@ -3325,7 +3331,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_hazmat"
+									"text": "is_hazmat: bool"
 								}
 							]
 						},
@@ -3337,7 +3343,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_fragile"
+									"text": "is_fragile: bool"
 								}
 							]
 						},
@@ -3350,216 +3356,6 @@
 								{
 									"type": "text",
 									"text": "Optimizer_Run_ID: int"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Add-ons:"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Handling_Unit_Type"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Length"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Width"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Height"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Volume"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Center_Of_Gravity"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Temperature_Zone"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Load_Bearing_Capacity"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Parent_Handling_Unit_ID"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Packing_Pattern"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"marks": [
-										{
-											"type": "italic"
-										}
-									],
-									"text": "Optimizer_Run_ID"
 								}
 							]
 						},
@@ -3834,7 +3630,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 258.9166564941406,
+				"w": 273.9557189941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -3858,7 +3654,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Transport Mode Metadata"
+									"text": "Table: Transport Mode Metadata"
 								}
 							]
 						},
@@ -4712,7 +4508,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Location"
+									"text": "Table: Location"
 								}
 							]
 						},
@@ -4975,6 +4771,137 @@
 			},
 			"parentId": "shape:rTLdQ1hShT952-hRjbE7X",
 			"index": "aAUBRAvd",
+			"typeName": "shape"
+		},
+		{
+			"x": 2616.101984685428,
+			"y": 2675.54184767869,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:gngQWA7F5eUOoB_n4hcau",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "s",
+				"w": 223.3567657470703,
+				"font": "sans",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1,
+				"richText": {
+					"type": "doc",
+					"attrs": {
+						"dir": "auto"
+					},
+					"content": [
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "Table: UNIT_OF_MEASURE"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "SKU_id: int"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "case_dimensions: json"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "pallet_dimensions: json"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "box_dimensions: json"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "unit_count_in_case: int"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "unit_count_in_pallet: int"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "unit_count_in_box: int"
+								}
+							]
+						}
+					]
+				}
+			},
+			"parentId": "page:page",
+			"index": "aUbPqpWV",
 			"typeName": "shape"
 		},
 		{
@@ -5482,8 +5409,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 2397.9714084341963,
-			"y": 2519.417966238433,
+			"x": 2589.3685930658244,
+			"y": 2523.1121208890822,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -5493,7 +5420,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 262.45831298828125,
+				"w": 204.0598907470703,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -5512,7 +5439,12 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Parameter admin"
+									"marks": [
+										{
+											"type": "bold"
+										}
+									],
+									"text": "Table: Parameter admin"
 								}
 							]
 						},
@@ -5524,7 +5456,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Lane transmode constraint type"
+									"text": "constraint id: int"
 								}
 							]
 						},
@@ -5536,27 +5468,9 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "pallet area%"
+									"text": "Constraint: json"
 								}
 							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "weight thtreshold%"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
 						},
 						{
 							"type": "paragraph",
@@ -5601,7 +5515,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 277.2109375,
+				"w": 333.4088439941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -5625,7 +5539,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Equipment Metadata (Container)"
+									"text": "Table: Equipment Metadata (Container)"
 								}
 							]
 						},
@@ -5889,7 +5803,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1551.6666259765625,
+				"w": 1240,
 				"h": 845.8333129882812
 			},
 			"insets": [
@@ -6050,7 +5964,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Item Master [1]"
+									"text": "Table: Item Master [1]"
 								}
 							]
 						},
@@ -6705,7 +6619,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Transported Content"
+									"text": "Table: Transported Content"
 								}
 							]
 						},
