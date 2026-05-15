@@ -64,7 +64,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 290.85675048828125,
+				"w": 326.625,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -100,7 +100,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Order_Line_ID: int"
+									"text": "order_line_id BIGINT"
 								}
 							]
 						},
@@ -112,7 +112,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Shipment_ID: int"
+									"text": "shipment_id BIGINT"
 								}
 							]
 						},
@@ -124,7 +124,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "sku_id: int"
+									"text": "sku_id BIGINT"
 								}
 							]
 						},
@@ -136,7 +136,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Destination_ID: int"
+									"text": "origin_id BIGINT"
 								}
 							]
 						},
@@ -148,7 +148,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Estimated Delivery Date: Date"
+									"text": "destination_id BIGINT"
 								}
 							]
 						},
@@ -160,7 +160,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Actual Delivery Date: Date"
+									"text": "estimated_delivery_date DATE"
 								}
 							]
 						},
@@ -172,7 +172,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Weight in Kg: Float"
+									"text": "actual_delivery_date DATE"
 								}
 							]
 						},
@@ -184,12 +184,7 @@
 							"content": [
 								{
 									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Planned Quantity: int"
+									"text": "planned_quantity INTEGER"
 								}
 							]
 						},
@@ -201,12 +196,7 @@
 							"content": [
 								{
 									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "Shipped Quantity: int"
+									"text": "shipped_quantity INTEGER"
 								}
 							]
 						},
@@ -218,57 +208,115 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Priority: Int"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Temperature_Requirement: bool"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
+									"text": "weight_in_kg NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
 								{
 									"type": "text",
-									"text": "Special_Handling: Bool"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Requested_Transport_Mode: string"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
+									"text": "priority INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
 								{
 									"type": "text",
-									"text": "Max_Transit_Time_in_days: Int"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
+									"text": "temperature_requirement BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
 								{
 									"type": "text",
-									"text": "Service_Level: Int"
+									"text": "special_handling BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "requested_transport_mode TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "max_transit_time_in_days INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "service_level INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "unload_sequence_preference INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "created_at TIMESTAMP"
 								}
 							]
 						},
@@ -673,7 +721,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_mode_ID: int "
+									"text": "equipment_mode_id BIGINT"
 								}
 							]
 						},
@@ -685,7 +733,103 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Status: string"
+									"text": "equipment_id BIGINT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "status TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "assigned_route_id BIGINT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "departure_time TIMESTAMP"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "capacity_used NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "total_weight NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "shipment_date DATE"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "estimated_arrival DATE"
 								}
 							]
 						},
@@ -694,102 +838,6 @@
 							"attrs": {
 								"dir": "auto"
 							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Assigned_Route_ID: Int"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Departure_Time: "
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Capacity_Used: Float"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "total_weight: float"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Optimizer_Run_ID: int"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Date of Shipment: date"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Estimated Arrival: Date"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "Optimizer_Run_ID: int"
-								}
-							]
 						},
 						{
 							"type": "paragraph",
@@ -1351,9 +1399,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -1274.9434770148139,
-			"y": -2489.2702276186983,
-			"z": 0.7169568038521452,
+			"x": -2432.149251445012,
+			"y": -2398.392591292284,
+			"z": 1.007666654718923,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1546,7 +1594,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 240.5833282470703,
+				"w": 281.4947814941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -1582,7 +1630,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Handling_Unit_ID:int (Pallet)"
+									"text": "handling_unit_id BIGINT"
 								}
 							]
 						},
@@ -1594,7 +1642,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_id: int"
+									"text": "equipment_id BIGINT"
 								}
 							]
 						},
@@ -1606,7 +1654,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "length: Float"
+									"text": "handling_unit_type TEXT"
 								}
 							]
 						},
@@ -1618,7 +1666,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "width: Float"
+									"text": "length NUMERIC"
 								}
 							]
 						},
@@ -1630,7 +1678,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "height: Float"
+									"text": "width NUMERIC"
 								}
 							]
 						},
@@ -1642,7 +1690,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "weight: Float"
+									"text": "height NUMERIC"
 								}
 							]
 						},
@@ -1654,7 +1702,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "label: string"
+									"text": "weight NUMERIC"
 								}
 							]
 						},
@@ -1666,7 +1714,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_homogeneous: bool"
+									"text": "max_supported_weight NUMERIC"
 								}
 							]
 						},
@@ -1678,7 +1726,31 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Optimizer_Run_ID: int"
+									"text": "label TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "is_homogeneous BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
 								}
 							]
 						},
@@ -2057,7 +2129,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 303.6171875,
+				"w": 346.6900939941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2093,12 +2165,7 @@
 							"content": [
 								{
 									"type": "text",
-									"marks": [
-										{
-											"type": "bold"
-										}
-									],
-									"text": "route_id: Int"
+									"text": "route_id BIGINT"
 								}
 							]
 						},
@@ -2110,7 +2177,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transportation_mode_ID: Int"
+									"text": "transportation_mode_id BIGINT"
 								}
 							]
 						},
@@ -2122,7 +2189,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Leg_Sequence: json"
+									"text": "leg_sequence JSONB"
 								}
 							]
 						},
@@ -2134,7 +2201,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Origin_ID: int"
+									"text": "origin_id BIGINT"
 								}
 							]
 						},
@@ -2146,7 +2213,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Destination_ID: int"
+									"text": "destination_id BIGINT"
 								}
 							]
 						},
@@ -2158,7 +2225,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Distance_KM: Float"
+									"text": "distance_km NUMERIC"
 								}
 							]
 						},
@@ -2170,7 +2237,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Estimated_Transit_Time_in_days: int"
+									"text": "estimated_transit_time_in_days INTEGER"
 								}
 							]
 						},
@@ -2182,7 +2249,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Planned_Departure: date"
+									"text": "planned_departure TIMESTAMP"
 								}
 							]
 						},
@@ -2194,7 +2261,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Planned_Arrival: Date"
+									"text": "planned_arrival TIMESTAMP"
 								}
 							]
 						},
@@ -2206,9 +2273,15 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Optimizer_Run_ID: int"
+									"text": "optimizer_run_id BIGINT"
 								}
 							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
 						}
 					]
 				}
@@ -2486,12 +2559,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:k_yuMOLnZ-vly4Sefxy-u",
+			"editingShapeId": "shape:aE2GBw5PqrOt2XbNWXstn",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:k_yuMOLnZ-vly4Sefxy-u"
+				"shape:aE2GBw5PqrOt2XbNWXstn"
 			],
-			"hoveredShapeId": "shape:k_yuMOLnZ-vly4Sefxy-u",
+			"hoveredShapeId": "shape:aE2GBw5PqrOt2XbNWXstn",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2810,7 +2883,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 457.4453125,
+				"w": 380.1275939941406,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2834,7 +2907,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Table: UOM Position (Pallet Position)"
+									"text": "Table: Handled Unit Position (Pallet Position)"
 								}
 							]
 						},
@@ -2846,7 +2919,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment ID: int (Container)"
+									"text": "handling_unit_position_id BIGSERIAL"
 								}
 							]
 						},
@@ -2858,7 +2931,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Handling_Unit_ID: int  (Pallet)"
+									"text": "equipment_id BIGINT"
 								}
 							]
 						},
@@ -2870,7 +2943,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Rotation: string"
+									"text": "handling_unit_id BIGINT"
 								}
 							]
 						},
@@ -2882,7 +2955,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Orientation: string"
+									"text": "rotation TEXT"
 								}
 							]
 						},
@@ -2894,17 +2967,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Position_x: float"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Position_y: float"
+									"text": "orientation TEXT"
 								}
 							]
 						},
@@ -2916,7 +2979,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Position_z: float"
+									"text": "position_x NUMERIC"
 								}
 							]
 						},
@@ -2928,7 +2991,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "stop_sequence: int"
+									"text": "position_y NUMERIC"
 								}
 							]
 						},
@@ -2940,7 +3003,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "delivery_priority: int"
+									"text": "position_z NUMERIC"
 								}
 							]
 						},
@@ -2952,7 +3015,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "stack_number: int"
+									"text": "stop_sequence INTEGER"
 								}
 							]
 						},
@@ -2964,7 +3027,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Is_Stacked: bool"
+									"text": "delivery_priority INTEGER"
 								}
 							]
 						},
@@ -2976,7 +3039,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Stack_Parent_ID: int (equipment_id, Handling_unit_id)"
+									"text": "stack_number INTEGER"
 								}
 							]
 						},
@@ -2988,7 +3051,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "color; string"
+									"text": "is_stacked BOOLEAN"
 								}
 							]
 						},
@@ -3000,7 +3063,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Load_Order: string"
+									"text": "stack_parent_id BIGINT"
 								}
 							]
 						},
@@ -3012,7 +3075,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Unload_Order: string"
+									"text": "color TEXT"
 								}
 							]
 						},
@@ -3020,7 +3083,49 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
-							}
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "load_order INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "unload_order INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "axle_zone TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
+								}
+							]
 						},
 						{
 							"type": "paragraph",
@@ -3241,7 +3346,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Handling_Unit_Id: int (Pallet)"
+									"text": "handling_unit_content_id BIGSERIAL"
 								}
 							]
 						},
@@ -3253,7 +3358,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "SKU_ID: int"
+									"text": "handling_unit_id BIGINT"
 								}
 							]
 						},
@@ -3265,7 +3370,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "shipment_id: int (Item)"
+									"text": "sku_id BIGINT"
 								}
 							]
 						},
@@ -3277,25 +3382,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Destination_ID: int"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "actual Units: int"
+									"text": "shipment_id BIGINT"
 								}
 							]
 						},
@@ -3307,7 +3394,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Total_Weight: float"
+									"text": "destination_id BIGINT"
 								}
 							]
 						},
@@ -3319,7 +3406,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_stackable: bool"
+									"text": "actual_units INTEGER"
 								}
 							]
 						},
@@ -3331,7 +3418,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_hazmat: bool"
+									"text": "total_weight NUMERIC"
 								}
 							]
 						},
@@ -3343,7 +3430,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "is_fragile: bool"
+									"text": "is_stackable BOOLEAN"
 								}
 							]
 						},
@@ -3355,7 +3442,31 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Optimizer_Run_ID: int"
+									"text": "is_hazmat BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "is_fragile BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
 								}
 							]
 						},
@@ -3630,7 +3741,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 273.9557189941406,
+				"w": 284.76300048828125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -3666,7 +3777,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport_Mode_ID: int"
+									"text": "transport_mode_id BIGINT"
 								}
 							]
 						},
@@ -3678,7 +3789,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport Type: String"
+									"text": "transport_type TEXT"
 								}
 							]
 						},
@@ -3690,7 +3801,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport Name: String"
+									"text": "transport_name TEXT"
 								}
 							]
 						},
@@ -3702,7 +3813,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Axle_Count: Int"
+									"text": "axle_count INTEGER"
 								}
 							]
 						},
@@ -3714,7 +3825,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Supports_Refrigeration: Bool"
+									"text": "supports_refrigeration BOOLEAN"
 								}
 							]
 						},
@@ -3726,7 +3837,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Supports_Hazmat: Bool"
+									"text": "supports_hazmat BOOLEAN"
 								}
 							]
 						},
@@ -3738,7 +3849,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_Weight: Float"
+									"text": "max_weight NUMERIC"
 								}
 							]
 						},
@@ -3750,7 +3861,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_Volume: Float"
+									"text": "max_volume NUMERIC"
 								}
 							]
 						},
@@ -3762,7 +3873,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Cost_Per_KM: Float"
+									"text": "cost_per_km NUMERIC"
 								}
 							]
 						},
@@ -3774,7 +3885,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Average_Speed: Float"
+									"text": "average_speed NUMERIC"
 								}
 							]
 						},
@@ -3786,7 +3897,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Carbon_Emission_Factor: Float"
+									"text": "carbon_emission_factor NUMERIC"
 								}
 							]
 						}
@@ -4364,6 +4475,132 @@
 			"typeName": "binding"
 		},
 		{
+			"x": 3033.373188102191,
+			"y": 2733.2646967532814,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:aE2GBw5PqrOt2XbNWXstn",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "s",
+				"w": 290.21875,
+				"font": "sans",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1,
+				"richText": {
+					"type": "doc",
+					"attrs": {
+						"dir": "auto"
+					},
+					"content": [
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Table: optimizer_run"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_name TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimization_goal TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "execution_time_seconds NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimization_score NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "status TEXT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "created_at TIMESTAMP"
+								}
+							]
+						}
+					]
+				}
+			},
+			"parentId": "page:page",
+			"index": "aVgXLOWV",
+			"typeName": "shape"
+		},
+		{
 			"meta": {},
 			"id": "binding:0Qw8qex8zuPMnwehIF0Vd",
 			"type": "arrow",
@@ -4520,7 +4757,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Location type: String (WH / DC / INV)"
+									"text": "location_id BIGINT"
 								}
 							]
 						},
@@ -4532,7 +4769,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Latitude: String"
+									"text": "location_type TEXT"
 								}
 							]
 						},
@@ -4544,7 +4781,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Longitude: String"
+									"text": "latitude NUMERIC"
 								}
 							]
 						},
@@ -4556,7 +4793,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Location_ID: int"
+									"text": "longitude NUMERIC"
 								}
 							]
 						},
@@ -4568,7 +4805,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Location_Name: string"
+									"text": "location_name TEXT"
 								}
 							]
 						},
@@ -4580,7 +4817,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Address: string"
+									"text": "address TEXT"
 								}
 							]
 						},
@@ -4592,7 +4829,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "City: string"
+									"text": "city TEXT"
 								}
 							]
 						},
@@ -4604,7 +4841,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "State: string"
+									"text": "state TEXT"
 								}
 							]
 						},
@@ -4616,7 +4853,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Country: string"
+									"text": "country TEXT"
 								}
 							]
 						},
@@ -4628,7 +4865,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Postal_Code: string"
+									"text": "postal_code TEXT"
 								}
 							]
 						},
@@ -4640,7 +4877,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Dock_Count: int"
+									"text": "dock_count INTEGER"
 								}
 							]
 						},
@@ -4652,7 +4889,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Storage_Type: string"
+									"text": "storage_type TEXT"
 								}
 							]
 						},
@@ -4664,7 +4901,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Temperature_Capability: Bool"
+									"text": "temperature_capability BOOLEAN"
 								}
 							]
 						},
@@ -4676,7 +4913,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Operating_Hours: string"
+									"text": "operating_hours TEXT"
 								}
 							]
 						},
@@ -4785,7 +5022,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 223.3567657470703,
+				"w": 267.10675048828125,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -4809,7 +5046,7 @@
 											"type": "bold"
 										}
 									],
-									"text": "Table: UNIT_OF_MEASURE"
+									"text": "Table: SKU_UNIT_OF_MEASURE"
 								}
 							]
 						},
@@ -4821,7 +5058,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "SKU_id: int"
+									"text": "sku_id BIGINT"
 								}
 							]
 						},
@@ -4833,7 +5070,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "case_dimensions: json"
+									"text": "case_dimensions JSONB"
 								}
 							]
 						},
@@ -4845,7 +5082,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "pallet_dimensions: json"
+									"text": "pallet_dimensions JSONB"
 								}
 							]
 						},
@@ -4857,7 +5094,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "box_dimensions: json"
+									"text": "box_dimensions JSONB"
 								}
 							]
 						},
@@ -4869,7 +5106,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "unit_count_in_case: int"
+									"text": "unit_count_in_case INTEGER"
 								}
 							]
 						},
@@ -4881,7 +5118,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "unit_count_in_pallet: int"
+									"text": "unit_count_in_pallet INTEGER"
 								}
 							]
 						},
@@ -4893,7 +5130,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "unit_count_in_box: int"
+									"text": "unit_count_in_box INTEGER"
 								}
 							]
 						}
@@ -5551,7 +5788,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_ID: Int"
+									"text": "equipment_id BIGINT"
 								}
 							]
 						},
@@ -5563,7 +5800,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment Name: String"
+									"text": "equipment_name TEXT"
 								}
 							]
 						},
@@ -5575,7 +5812,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Length: Float"
+									"text": "equipment_type TEXT"
 								}
 							]
 						},
@@ -5587,7 +5824,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "width: Float"
+									"text": "length NUMERIC"
 								}
 							]
 						},
@@ -5599,7 +5836,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Height: Float"
+									"text": "width NUMERIC"
 								}
 							]
 						},
@@ -5611,7 +5848,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_payload_weight: Float"
+									"text": "height NUMERIC"
 								}
 							]
 						},
@@ -5623,7 +5860,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "tare_weight: Float"
+									"text": "internal_length NUMERIC"
 								}
 							]
 						},
@@ -5635,7 +5872,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "max_volume: Float"
+									"text": "internal_width NUMERIC"
 								}
 							]
 						},
@@ -5647,7 +5884,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "units: int"
+									"text": "internal_height NUMERIC"
 								}
 							]
 						},
@@ -5659,7 +5896,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_Type: String"
+									"text": "max_payload_weight NUMERIC"
 								}
 							]
 						},
@@ -5671,7 +5908,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Door_Width: Float"
+									"text": "tare_weight NUMERIC"
 								}
 							]
 						},
@@ -5683,7 +5920,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Door_Height: Float"
+									"text": "max_volume NUMERIC"
 								}
 							]
 						},
@@ -5695,7 +5932,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Refrigeration_Capable: Bool"
+									"text": "unit TEXT"
 								}
 							]
 						},
@@ -5707,7 +5944,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Temperature_Range: string"
+									"text": "door_width NUMERIC"
 								}
 							]
 						},
@@ -5719,7 +5956,79 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Max_Stack_Height: Float"
+									"text": "door_height NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "refrigeration_capable BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "temperature_min NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "temperature_max NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "max_stack_height NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "axle_configuration JSONB"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "created_at TIMESTAMP"
 								}
 							]
 						}
@@ -5803,7 +6112,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1240,
+				"w": 775.8333129882812,
 				"h": 845.8333129882812
 			},
 			"insets": [
@@ -5940,7 +6249,7 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 197.9921875,
+				"w": 234.34634399414062,
 				"font": "sans",
 				"textAlign": "start",
 				"autoSize": true,
@@ -5976,7 +6285,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "SKU_ID: int"
+									"text": "sku_id BIGINT"
 								}
 							]
 						},
@@ -5988,7 +6297,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "sku Name: String"
+									"text": "sku_name TEXT"
 								}
 							]
 						},
@@ -6000,7 +6309,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Height: float"
+									"text": "length NUMERIC"
 								}
 							]
 						},
@@ -6012,7 +6321,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "length: float"
+									"text": "width NUMERIC"
 								}
 							]
 						},
@@ -6024,7 +6333,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "weight: float"
+									"text": "height NUMERIC"
 								}
 							]
 						},
@@ -6036,7 +6345,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Volume: float"
+									"text": "weight NUMERIC"
 								}
 							]
 						},
@@ -6048,67 +6357,127 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Temperature_Min: float"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Temperature_Max: float"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
+									"text": "volume NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
 								{
 									"type": "text",
-									"text": "Hazmat_Class: Int"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Fragility_Rating: Int"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
+									"text": "stacking_limit INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
 								{
 									"type": "text",
-									"text": "Shelf_Life_Days: Int"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
-								{
-									"type": "text",
-									"text": "Is_Food_Grade: Bool"
-								},
-								{
-									"type": "hardBreak",
-									"attrs": {
-										"dir": "auto"
-									}
-								},
+									"text": "can_rotate BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
 								{
 									"type": "text",
-									"text": "Is_Regulated: Bool"
+									"text": "temperature_min NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "temperature_max NUMERIC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "hazmat_class INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "fragility_rating INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "shelf_life_days INTEGER"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "is_food_grade BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "is_regulated BOOLEAN"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "created_at TIMESTAMP"
 								}
 							]
 						}
@@ -6631,7 +7000,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transport_Mode_ID: int"
+									"text": "transported_content_id BIGSERIAL"
 								}
 							]
 						},
@@ -6643,7 +7012,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Equipment_ID: int"
+									"text": "transport_mode_id BIGINT"
 								}
 							]
 						},
@@ -6655,7 +7024,31 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "Transfer_Points: json"
+									"text": "equipment_id BIGINT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "transfer_points JSONB"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "optimizer_run_id BIGINT"
 								}
 							]
 						},
