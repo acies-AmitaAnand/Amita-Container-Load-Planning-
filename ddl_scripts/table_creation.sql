@@ -34,8 +34,8 @@ CREATE TABLE
         shipment_id TEXT DEFAULT '', --?
         sku_id BIGINT NOT NULL, --ok
         actual_delivery_date DATE, --ok
-        from_location_id TEXT NOT NULL, --ok
-        to_location_id TEXT NOT NULL, --ok
+        origin_location_id TEXT NOT NULL, --ok
+        destination_location_id TEXT NOT NULL, --ok
         estimated_delivery_date DATE, --ok
         planned_quantity INTEGER NOT NULL,
         shipped_quantity INTEGER DEFAULT 0,

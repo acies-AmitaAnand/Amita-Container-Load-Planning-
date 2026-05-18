@@ -18,5 +18,5 @@ networkx
 # Map
 osmnx
 
-
-
+sqlalchemy
+psycopg2-binary
