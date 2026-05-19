@@ -10,7 +10,7 @@ CREATE TABLE
         width_mm NUMERIC(10, 2) NOT NULL DEFAULT 0, -- COMMENT 'In millimeter (mm)', --ok
         height_mm NUMERIC(10, 2) NOT NULL DEFAULT 0, -- COMMENT 'In millimeter (mm)', --ok
         weight_kg NUMERIC(10, 3) NOT NULL DEFAULT 0, -- COMMENT 'In kilograms (kg)', --ok
-        volume_mm3 NUMERIC(12, 4) DEFAULT 0, -- COMMENT 'In cubic millimeter', --ok
+        -- volume_mm3 BIGINT DEFAULT 0, -- COMMENT 'In cubic millimeter', --ok
         stacking_limit INTEGER DEFAULT 0, --ok
         can_rotate BOOLEAN DEFAULT TRUE, --ok
         temperature_min_c NUMERIC(10, 2) DEFAULT 20, -- COMMENT 'In Celsius', --ok
@@ -110,7 +110,7 @@ CREATE TABLE
         internal_height_mm NUMERIC(10, 2) DEFAULT 0, -- COMMENT 'In millimeter (mm)',
         max_payload_weight_kg NUMERIC(12, 3) DEFAULT 0, -- COMMENT 'In kilograms (kg)',
         tare_weight_kg NUMERIC(12, 3) DEFAULT 0, -- COMMENT 'In kilograms (kg)',
-        max_volume_mm3 NUMERIC(12, 2), -- COMMENT 'In Cubic millimeter',
+        -- max_volume_mm3 BIGINT, -- COMMENT 'In Cubic millimeter',
         door_width_mm NUMERIC(10, 2) default 0, -- COMMENT 'In millimeter (mm)',
         door_height_mm NUMERIC(10, 2) default 0, -- COMMENT 'In millimeter (mm)',
         refrigeration_capable BOOLEAN DEFAULT FALSE,
@@ -294,7 +294,7 @@ Comment on column PUBLIC.item_master.height_mm is 'In millimeter (mm)';
 
 Comment on column PUBLIC.item_master.weight_kg is 'In kilograms (kg)';
 
-Comment on column PUBLIC.item_master.volume_mm3 is 'In cubic millimeter';
+-- Comment on column PUBLIC.item_master.volume_mm3 is 'In cubic millimeter';
 
 Comment on column PUBLIC.item_master.temperature_min_c is 'In Celsius';
 
@@ -322,7 +322,7 @@ Comment on column PUBLIC.load_equipment_metadata.max_payload_weight_kg is 'In ki
 
 Comment on column PUBLIC.load_equipment_metadata.tare_weight_kg is 'In kilograms (kg)';
 
-Comment on column PUBLIC.load_equipment_metadata.max_volume_mm3 is 'In Cubic millimeter';
+-- Comment on column PUBLIC.load_equipment_metadata.max_volume_mm3 is 'In Cubic millimeter';
 
 Comment on column PUBLIC.load_equipment_metadata.door_width_mm is 'In millimeter (mm)';
 
