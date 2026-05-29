@@ -1189,6 +1189,18 @@
 									"text": "created_at TIMESTAMP"
 								}
 							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "costQ11111111111111111111"
+								}
+							]
 						}
 					]
 				}
@@ -1613,9 +1625,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -457.15107700376666,
-			"y": -2175.0323984052125,
-			"z": 0.9477195649845163,
+			"x": 336.98152877603655,
+			"y": -1905.62455435162,
+			"z": 0.7336077587038563,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2560,6 +2572,18 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Prioirty"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
 							}
 						}
 					]
@@ -2712,12 +2736,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:8PGxrWTsR_ncTQyKy6Kcr",
+			"editingShapeId": "shape:jeR2m0cWzmDKvzFnvNxPD",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:8PGxrWTsR_ncTQyKy6Kcr"
+				"shape:jeR2m0cWzmDKvzFnvNxPD"
 			],
-			"hoveredShapeId": "shape:8PGxrWTsR_ncTQyKy6Kcr",
+			"hoveredShapeId": "shape:jeR2m0cWzmDKvzFnvNxPD",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -4013,6 +4037,30 @@
 									"text": "created_at TIMESTAMP"
 								}
 							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Transmode Extension - yes/no"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Type of extension"
+								}
+							]
 						}
 					]
 				}
@@ -5266,8 +5314,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 3097.467803763391,
-			"y": 1681.4167865394181,
+			"x": 3147.5963204319864,
+			"y": 1742.2109450523951,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -6378,6 +6426,18 @@
 									"text": "created_at TIMESTAMP"
 								}
 							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "UOM"
+								}
+							]
 						}
 					]
 				}
@@ -6421,14 +6481,7 @@
 		{
 			"followingUserId": null,
 			"opacityForNextShape": 1,
-			"stylesForNextShape": {
-				"tldraw:color": "black",
-				"tldraw:font": "sans",
-				"tldraw:size": "s",
-				"tldraw:dash": "draw",
-				"tldraw:arrowheadEnd": "arrow",
-				"tldraw:arrowheadStart": "none"
-			},
+			"stylesForNextShape": {},
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
@@ -6442,7 +6495,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1560,
+				"w": 1632,
 				"h": 1038
 			},
 			"insets": [
@@ -6460,7 +6513,7 @@
 			"isFocused": true,
 			"devicePixelRatio": 1,
 			"isCoarsePointer": false,
-			"isHoveringCanvas": true,
+			"isHoveringCanvas": false,
 			"openMenus": [],
 			"isChangingStyle": false,
 			"isReadonly": false,
@@ -6808,6 +6861,18 @@
 								{
 									"type": "text",
 									"text": "created_at TIMESTAMP"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Sku_type"
 								}
 							]
 						}
