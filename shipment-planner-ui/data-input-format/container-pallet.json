@@ -1,0 +1,46 @@
+{
+	"container": {
+		"containerId": "CONT_001",
+		"containerType": "53FT_DRY_VAN",
+		"length": 53, // ft
+		"width": 8, // ft
+		"height": 9, // ft
+		"maxPayloadWeight": 45000,
+		"tareWeight": 15000,
+		"maxVolume": 3816,
+		"unit": "ft",
+		"axles": [
+			{
+				"axleId": "AXLE_FRONT",
+				"maxWeight": 12000,
+				"positionX": -20
+			},
+
+			{
+				"axleId": "AXLE_REAR",
+				"maxWeight": 34000,
+				"positionX": 20
+			}
+		]
+	},
+
+	"loadingRules": {
+		"allowStacking": true,
+		"maxStackHeight": 8,
+		"lifoEnabled": true,
+		"fragileSeparation": true,
+		"hazmatSegregation": true,
+		"centerGravityThreshold": 15
+	},
+
+	"summary": {
+		"shipmentId": "SHIPMENT_1001",
+		"routeId": "ROUTE_CHI_NY",
+		"origin": "Chicago",
+        "destinationInSequence": ["New York"],
+		"totalPallets": 6,
+		"totalWeight": 11200,
+		"totalVolume": 864
+	},
+	"pallets": []
+}

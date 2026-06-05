@@ -1,15 +1,15 @@
 # Web server
-streamlit
+fastapi
 
 # Data Processing
 numpy
 pandas
-openxlrd
 openpyxl
 xlsxwriter
 python-dotenv
 requests
 stockpyl
+py3dbp
 # Data Visualization
 matplotlib
 plotly
@@ -18,5 +18,5 @@ networkx
 # Map
 osmnx
 
-
-
+sqlalchemy
+psycopg2-binary
