@@ -11,5 +11,5 @@ class Pallet(PydanticBaseModel):
     dimensions: Dimension
     position: Position
     label: str = Field(default="", description="Label for displaying")
-    color: str = Field(description="Hex color code")
+    color: str = Field(default="FF0000", description="Hex color code")
     
