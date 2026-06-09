@@ -30,6 +30,16 @@ import * as THREE from "three";
 
 
 // =====================================================
+// HELPER FUNCTIONS
+// =====================================================
+
+const MM_TO_FEET = 0.00328084;
+
+function mmToFeet(value) {
+	return Math.round(value * MM_TO_FEET);
+}
+
+// =====================================================
 // READ JSON FROM URL
 // =====================================================
 
@@ -47,12 +57,26 @@ function getPayloadFromUrl() {
 		return {
 
 			container: {
-				length: 40,
-				width: 8,
-				height: 8
+				length: 16154,
+				width: 2438,
+				height: 2743
 			},
 
-			pallets: []
+			pallets: [
+				{
+					"palletId": "P1",
+					"position": {
+						"x": 1200,
+						"y": 0,
+						"z": 1000
+					},
+					"dimensions": {
+						"depth": 1200,
+						"width": 1000,
+						"height": 1500
+					}, "weight": 200
+				}
+			]
 		};
 	}
 
@@ -72,10 +96,10 @@ function MeasurementScales({ container }) {
 	// FRONT + BACK LENGTH SCALES
 	// =====================================================
 
-	for (let i = 0; i <= container.length; i++) {
+	for (let i = 0; i <= mmToFeet(container.length); i++) {
 
 		const x =
-			i - container.length / 2;
+			i - mmToFeet(container.length) / 2;
 
 		// =========================================
 		// FRONT SCALE
@@ -87,8 +111,8 @@ function MeasurementScales({ container }) {
 				key={`front-line-${i}`}
 
 				points={[
-					[x, 0, container.width / 2 + 0.2],
-					[x, 0, container.width / 2 + 0.5]
+					[x, 0, mmToFeet(container.width) / 2 + 0.2],
+					[x, 0, mmToFeet(container.width) / 2 + 0.5]
 				]}
 
 				color="black"
@@ -105,8 +129,8 @@ function MeasurementScales({ container }) {
 				key={`back-line-${i}`}
 
 				points={[
-					[x, 0, -container.width / 2 - 0.2],
-					[x, 0, -container.width / 2 - 0.5]
+					[x, 0, -mmToFeet(container.width) / 2 - 0.2],
+					[x, 0, -mmToFeet(container.width) / 2 - 0.5]
 				]}
 
 				color="black"
@@ -130,7 +154,7 @@ function MeasurementScales({ container }) {
 					position={[
 						x,
 						0,
-						container.width / 2 + 1
+						mmToFeet(container.width) / 2 + 1
 					]}
 
 					rotation={[
@@ -161,7 +185,7 @@ function MeasurementScales({ container }) {
 					position={[
 						x,
 						0,
-						-container.width / 2 - 1
+						-mmToFeet(container.width) / 2 - 1
 					]}
 
 					rotation={[
@@ -190,10 +214,10 @@ function MeasurementScales({ container }) {
 	// LEFT + RIGHT WIDTH SCALES
 	// =====================================================
 
-	for (let i = 0; i <= container.width; i++) {
+	for (let i = 0; i <= mmToFeet(container.width); i++) {
 
 		const z =
-			i - container.width / 2;
+			i - mmToFeet(container.width) / 2;
 
 		// =========================================
 		// LEFT SCALE
@@ -205,8 +229,8 @@ function MeasurementScales({ container }) {
 				key={`left-line-${i}`}
 
 				points={[
-					[-container.length / 2 - 0.2, 0, z],
-					[-container.length / 2 - 0.5, 0, z]
+					[-mmToFeet(container.length) / 2 - 0.2, 0, z],
+					[-mmToFeet(container.length) / 2 - 0.5, 0, z]
 				]}
 
 				color="black"
@@ -223,8 +247,8 @@ function MeasurementScales({ container }) {
 				key={`right-line-${i}`}
 
 				points={[
-					[container.length / 2 + 0.2, 0, z],
-					[container.length / 2 + 0.5, 0, z]
+					[mmToFeet(container.length) / 2 + 0.2, 0, z],
+					[mmToFeet(container.length) / 2 + 0.5, 0, z]
 				]}
 
 				color="black"
@@ -244,7 +268,7 @@ function MeasurementScales({ container }) {
 				key={`left-text-${i}`}
 
 				position={[
-					-container.length / 2 - 1.2,
+					-mmToFeet(container.length) / 2 - 1.2,
 					0,
 					z
 				]}
@@ -277,7 +301,7 @@ function MeasurementScales({ container }) {
 				key={`right-text-${i}`}
 
 				position={[
-					container.length / 2 + 1.2,
+					mmToFeet(container.length) / 2 + 1.2,
 					0,
 					z
 				]}
@@ -315,18 +339,18 @@ function FloorGrid({ container }) {
 
 	const tiles = [];
 
-	for (let x = 0; x < container.length; x++) {
+	for (let x = 0; x < mmToFeet(container.length); x++) {
 
-		for (let z = 0; z < container.width; z++) {
+		for (let z = 0; z < mmToFeet(container.width); z++) {
 
 			tiles.push(
 
 				<mesh
 					key={`${x}-${z}`}
 					position={[
-						x - container.length / 2 + 0.5,
+						x - mmToFeet(container.length) / 2 + 0.5,
 						-0.01,
-						z - container.width / 2 + 0.5
+						z - mmToFeet(container.width) / 2 + 0.5
 					]}
 				>
 
@@ -358,18 +382,18 @@ function BoundaryBox({ container }) {
 	const points = [
 
 		// bottom
-		[-container.length / 2, 0, -container.width / 2],
-		[container.length / 2, 0, -container.width / 2],
-		[container.length / 2, 0, container.width / 2],
-		[-container.length / 2, 0, container.width / 2],
-		[-container.length / 2, 0, -container.width / 2],
+		[-mmToFeet(container.length) / 2, 0, -mmToFeet(container.width) / 2],
+		[mmToFeet(container.length) / 2, 0, -mmToFeet(container.width) / 2],
+		[mmToFeet(container.length) / 2, 0, mmToFeet(container.width) / 2],
+		[-mmToFeet(container.length) / 2, 0, mmToFeet(container.width) / 2],
+		[-mmToFeet(container.length) / 2, 0, -mmToFeet(container.width) / 2],
 
 		// top
-		[-container.length / 2, container.height, -container.width / 2],
-		[container.length / 2, container.height, -container.width / 2],
-		[container.length / 2, container.height, container.width / 2],
-		[-container.length / 2, container.height, container.width / 2],
-		[-container.length / 2, container.height, -container.width / 2]
+		[-mmToFeet(container.length) / 2, mmToFeet(mmToFeet(container.height)), -mmToFeet(container.width) / 2],
+		[mmToFeet(container.length) / 2, mmToFeet(mmToFeet(container.height)), -mmToFeet(container.width) / 2],
+		[mmToFeet(container.length) / 2, mmToFeet(mmToFeet(container.height)), mmToFeet(container.width) / 2],
+		[-mmToFeet(container.length) / 2, mmToFeet(mmToFeet(container.height)), mmToFeet(container.width) / 2],
+		[-mmToFeet(container.length) / 2, mmToFeet(mmToFeet(container.height)), -mmToFeet(container.width) / 2]
 	];
 
 	return (
@@ -383,17 +407,17 @@ function BoundaryBox({ container }) {
 			{/* verticals */}
 
 			{[
-				[-container.length / 2, -container.width / 2],
-				[container.length / 2, -container.width / 2],
-				[container.length / 2, container.width / 2],
-				[-container.length / 2, container.width / 2]
+				[-mmToFeet(container.length) / 2, -mmToFeet(container.width) / 2],
+				[mmToFeet(container.length) / 2, -mmToFeet(container.width) / 2],
+				[mmToFeet(container.length) / 2, mmToFeet(container.width) / 2],
+				[-mmToFeet(container.length) / 2, mmToFeet(container.width) / 2]
 			].map((p, idx) => (
 
 				<Line
 					key={idx}
 					points={[
 						[p[0], 0, p[1]],
-						[p[0], container.height, p[1]]
+						[p[0], mmToFeet(container.height), p[1]]
 					]}
 					color="#38bdf8"
 				/>
@@ -426,14 +450,14 @@ function ContainerWalls({ container }) {
 			<mesh
 				position={[
 					0,
-					container.height / 2,
-					-container.width / 2
+					mmToFeet(container.height) / 2,
+					-mmToFeet(container.width) / 2
 				]}
 			>
 
 				<boxGeometry args={[
-					container.length,
-					container.height,
+					mmToFeet(container.length),
+					mmToFeet(container.height),
 					0.05
 				]} />
 
@@ -450,14 +474,14 @@ function ContainerWalls({ container }) {
 			<mesh
 				position={[
 					0,
-					container.height / 2,
-					container.width / 2
+					mmToFeet(container.height) / 2,
+					mmToFeet(container.width) / 2
 				]}
 			>
 
 				<boxGeometry args={[
-					container.length,
-					container.height,
+					mmToFeet(container.length),
+					mmToFeet(container.height),
 					0.05
 				]} />
 
@@ -473,16 +497,16 @@ function ContainerWalls({ container }) {
 
 			<mesh
 				position={[
-					container.length / 2,
-					container.height / 2,
+					mmToFeet(container.length) / 2,
+					mmToFeet(container.height) / 2,
 					0
 				]}
 			>
 
 				<boxGeometry args={[
 					0.05,
-					container.height,
-					container.width
+					mmToFeet(container.height),
+					mmToFeet(container.width)
 				]} />
 
 				<primitive
@@ -497,16 +521,16 @@ function ContainerWalls({ container }) {
 
 			<mesh
 				position={[
-					-container.length / 2,
-					container.height / 2,
+					-mmToFeet(container.length) / 2,
+					mmToFeet(container.height) / 2,
 					0
 				]}
 			>
 
 				<boxGeometry args={[
 					0.2,
-					container.height,
-					container.width
+					mmToFeet(container.height),
+					mmToFeet(container.width)
 				]} />
 
 				<meshStandardMaterial
@@ -534,15 +558,15 @@ function Pallet({ pallet }) {
 
 			<Box
 				args={[
-					pallet.depth,
-					pallet.height,
-					pallet.width
+					mmToFeet(pallet.dimensions.depth),
+					mmToFeet(pallet.dimensions.height),
+					mmToFeet(pallet.dimensions.width)
 				]}
 
 				position={[
-					pallet.x,
-					pallet.height / 2,
-					pallet.z
+					mmToFeet(pallet.position.x),
+					mmToFeet(pallet.dimensions.height) / 2,
+					mmToFeet(pallet.position.z),
 				]}
 
 				castShadow
@@ -569,9 +593,9 @@ function Pallet({ pallet }) {
 
 			<Text
 				position={[
-					pallet.x,
-					pallet.height + 0.1,
-					pallet.z
+					mmToFeet(pallet.position.x),
+					mmToFeet(pallet.dimensions.height) + 0.1,
+					mmToFeet(pallet.position.z)
 				]}
 
 				fontSize={0.4}
@@ -589,9 +613,9 @@ function Pallet({ pallet }) {
 
 				<Html
 					position={[
-						pallet.x,
-						pallet.height + 1,
-						pallet.z
+						mmToFeet(pallet.position.x),
+						mmToFeet(pallet.dimensions.height) + 1,
+						mmToFeet(pallet.position.z)
 					]}
 				>
 
@@ -843,17 +867,17 @@ export default function ContainerSimulator() {
 
 					<p>
 						Length:
-						{container.length} ft
+						{mmToFeet(container.length)} ft
 					</p>
 
 					<p>
 						Width:
-						{container.width} ft
+						{mmToFeet(container.width)} ft
 					</p>
 
 					<p>
 						Height:
-						{container.height} ft
+						{mmToFeet(mmToFeet(container.height))} ft
 					</p>
 
 				</div>
