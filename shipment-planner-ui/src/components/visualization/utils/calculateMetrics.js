@@ -3,9 +3,9 @@ export function calculateMetrics(container, pallets) {
 	// CONTAINER DIMENSIONS
 	// =========================================
 
-	const containerVolume = container.length * container.width * container.height;
+	const containerVolume = container.depth * container.width * container.height;
 
-	const containerFloorArea = container.length * container.width;
+	const containerFloorArea = container.depth * container.width;
 
 	const maxPayload = container.maxWeight || 40000;
 

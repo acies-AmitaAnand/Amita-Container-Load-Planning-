@@ -14,10 +14,10 @@ from objects.Pallet import Pallet
 class Container(PydanticBaseModel):
 	containerId: str = Field(default='2', description="Container ID. Example: CONT_001")
 	containerType: str = Field(default='CONTAINER 40FT GP', description="Container type. Example: `53FT_DRY_VAN`") # "53FT_DRY_VAN"
-	length: float = Field(default=12192, description="Outer measure of `length` in mm")
+	depth: float = Field(default=12192, description="Outer measure of `length` in mm")
 	width: float = Field(default=2438, description="Outer measure of `width` in mm")
 	height: float = Field(default=2591, description="Outer measure of `height` in mm")
-	internal_length: float = Field(default=12031, description="Internal length. Measurement in mm")
+	internal_depth: float = Field(default=12031, description="Internal length. Measurement in mm")
 	internal_width: float = Field(default=2352, description="Internal width. Measurement in mm")
 	internal_height: float = Field(default=2393, description="Internal height. Measurement in mm")
 	maxPayloadWeight: float = Field(default=25000, description="Maximum payload weight. Measurement in kg")
