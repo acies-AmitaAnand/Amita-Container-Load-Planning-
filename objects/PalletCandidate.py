@@ -16,3 +16,4 @@ class PalletCandidate(Pallet):
     isPartialPallet: bool = False
     fillPct: float = 1.0
     loadedToContainer: bool = False
+    rejectionReason: str = ""
