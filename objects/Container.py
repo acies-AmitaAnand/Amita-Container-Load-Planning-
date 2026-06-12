@@ -20,8 +20,8 @@ class Container(PydanticBaseModel):
 	internalDepth: float = Field(default=11836, description="Internal length. Measurement in mm")
 	internalWidth: float = Field(default=2352, description="Internal width. Measurement in mm")
 	internalHeight: float = Field(default=2391, description="Internal height. Measurement in mm")
-	maxPayloadWeight: float = Field(default=25000, description="Maximum payload weight. Measurement in kg")
-	tareWeight: float = Field(default=0, description="Measurement in kg")
+	maxPayloadWeightIn_kg: float = Field(default=25000, description="Maximum payload weight. Measurement in kg")
+	tareWeightIn_kg: float = Field(default=0, description="Measurement in kg")
 	maxVolume_m3: float = Field(default=0, description="Measurement in {m^3}") # 3816,
 	currentVolume_m3: float = Field(default=0, description="Measurement in {m^3}") # 3816,
 	unit: str = Field(default='mm', description="Unit of measure mm")
