@@ -236,9 +236,10 @@ CREATE TABLE
         box_dimensions JSONB DEFAULT NULL,
         unit_count_in_case INTEGER DEFAULT 0,
         unit_count_in_pallet INTEGER DEFAULT 0,
-        unit_count_in_box INTEGER DEFAULT 0
+        unit_count_in_box INTEGER DEFAULT 0,
+        item_weight_in_kg float default 0,
+        pallet_weight_in_kg float default 0
     );
-
 CREATE TABLE
     PUBLIC.optimizer_run (
         optimizer_run_id BIGSERIAL PRIMARY KEY,

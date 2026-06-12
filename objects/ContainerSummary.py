@@ -13,7 +13,6 @@ class ContainerSummary(PydanticBaseModel):
     origin: str = Field(default='', description='Origin location. Example: "Chicago",')
     destinationInSequence: List[str] = Field(default_factory=list, description='Delivery Destinations in sequence. Example: ["New York"],')
     totalPallets: float = Field(default=0, description='Total pallets loaded in the container. Example: 6')
-    totalWeight: float = Field(default=0, description='Total weight of units loaded in kg (kilogram). Example: 11200')
-    totalVolume: float = Field(default=0, description='Total volume occupancy in {m^3} (meter cubic). Example: 864')
-
+    totalWeightIn_kg: float = Field(default=0, description='Total weight of units loaded in kg (kilogram). Example: 11200')
+    totalVolumeIn_m3: float = Field(default=0, description='Total volume occupancy in {m^3} (meter cubic). Example: 864')
 
