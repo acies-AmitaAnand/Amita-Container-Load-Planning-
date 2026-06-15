@@ -22,7 +22,7 @@ class Container(PydanticBaseModel):
 	internalHeight: float = Field(default=2391, description="Internal height. Measurement in mm")
 	maxPayloadWeightIn_kg: float = Field(default=25000, description="Maximum payload weight. Measurement in kg")
 	tareWeightIn_kg: float = Field(default=0, description="Measurement in kg")
-	maxVolume_m3: float = Field(default=0, description="Measurement in {m^3}") # 3816,
+
 	currentVolume_m3: float = Field(default=0, description="Measurement in {m^3}") # 3816,
 	unit: str = Field(default='mm', description="Unit of measure mm")
 	doorWidth: float = Field(default=2352, description="Door width. Measurement in mm")
@@ -31,3 +31,31 @@ class Container(PydanticBaseModel):
 	pallets: List[Pallet]
 	summary: ContainerSummary = ContainerSummary()
 	loadingRules: ContainerLoadingRules = ContainerLoadingRules()
+
+	maxFloorArea_m2: float = Field(default=0)
+	maxVolume_m3: float = Field(default=0, description="Measurement in {m^3}") # 3816,
+
+	# State management
+	usedWeightIn_kg: float = 0
+	usedFloorArea_m2: float = 0
+	usedVolume_m3: float = 0
+	currentDepthPosition_mm: int = 0
+	currentWidthPosition_mm: int = 0
+	currentRowDepth_mm: int = 0
+	loadedPallets: int = 0
+
+	def model_post_init(self, __context) -> None:
+
+		self.maxFloorArea_m2 = (
+			self.internalDepth
+			*
+			self.internalWidth
+		) / 1_000_000
+
+		self.maxVolume_m3 = (
+			self.internalDepth
+			*
+			self.internalWidth
+			*
+			self.internalHeight
+		) / 1_000_000_000

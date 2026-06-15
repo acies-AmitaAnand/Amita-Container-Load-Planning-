@@ -46,13 +46,16 @@ function mmToFeet(value) {
 
 function getPayloadFromUrl() {
 
-	const params = new URLSearchParams(
-		window.location.search
-	);
+	// const params = new URLSearchParams(
+	// 	window.location.search
+	// );
 
-	const raw = params.get("data");
+	// const raw = params.get("data");
 
-	if (!raw) {
+	const rawData = localStorage.getItem(`res`);
+	console.log(rawData);
+
+	if (!rawData) {
 
 		return {
 
@@ -79,14 +82,56 @@ function getPayloadFromUrl() {
 	}
 
 	const data = JSON.parse(
-			decodeURIComponent(
-				raw
-			)
+			// decodeURIComponent(
+				rawData
+			// )
 		)
 	
 	console.log(data);
 	return data;
 }
+
+// =====================================================
+// READ JSON
+// =====================================================
+
+
+
+
+// function getPayload() {
+
+// 	const response = await fetch(`/api/container/${container_id}`);
+// 	const data = await response.json();
+
+// 	if (!response) {
+
+// 		return {
+
+// 			depth: 16154,
+// 			width: 2438,
+// 			height: 2743,
+
+// 			pallets: [
+// 				{
+// 					"palletId": "P1",
+// 					"position": {
+// 						"x": 0,
+// 						"y": 0,
+// 						"z": 1000
+// 					},
+// 					"dimensions": {
+// 						"depth": 1200,
+// 						"width": 1000,
+// 						"height": 1500
+// 					}, "weight": 200
+// 				}
+// 			]
+// 		};
+// 	}
+	
+// 	console.log(data);
+// 	return data;
+// }
 
 
 // =====================================================
@@ -786,6 +831,8 @@ function CameraController({
 export default function ContainerSimulator() {
 
 	const payload = getPayloadFromUrl();
+	// const payload = getPayload();
+
 	// const payloads = getPayloadFromTable();
 	console.log(payload);
 

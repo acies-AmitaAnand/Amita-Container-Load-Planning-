@@ -1,10 +1,9 @@
-from dataclasses import dataclass
+from utils.PydanticBaseModel import PydanticBaseModel
 
 from objects.Container import Container
 
 
-@dataclass
-class ContainerOptimizationResult:
+class ContainerOptimizationResult(PydanticBaseModel):
 
     container: Container
 
