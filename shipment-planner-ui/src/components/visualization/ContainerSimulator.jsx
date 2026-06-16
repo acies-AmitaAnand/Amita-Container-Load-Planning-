@@ -62,6 +62,9 @@ function getPayloadFromUrl() {
 			depth: 16154,
 			width: 2438,
 			height: 2743,
+			internalDepth: 16154,
+			internalWidth: 2438,
+			internalHeight: 2743,
 
 			pallets: [
 				{
@@ -619,7 +622,7 @@ function Pallet({ pallet, container }) {
 		mmToFeet(
 			pallet.position.z +
 			pallet.dimensions.width / 2 -
-			container.internal_width / 2
+			container.internalWidth / 2
 		);
 
 	const palletY =
