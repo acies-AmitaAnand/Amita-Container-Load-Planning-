@@ -1,6 +1,7 @@
 
 
-from typing import List
+from typing import List, Optional
+import uuid
 
 from pydantic import Field
 from objects.ContainerSummary import ContainerSummary
@@ -27,13 +28,18 @@ class Container(PydanticBaseModel):
 	unit: str = Field(default='mm', description="Unit of measure mm")
 	doorWidth: float = Field(default=2352, description="Door width. Measurement in mm")
 	doorHeight: float = Field(default=2391, description="Door height. Measurement in mm")
-	axles: List[Axle] = Field(default=[Axle()], description="Container axle positions")
-	pallets: List[Pallet]
-	summary: ContainerSummary = ContainerSummary()
-	loadingRules: ContainerLoadingRules = ContainerLoadingRules()
+	axles: List[Axle] = Field(default_factory=lambda: [Axle()], description="Container axle positions")
+	pallets: List[Pallet] = Field(default_factory=list)
+	summary: ContainerSummary = Field(default_factory=ContainerSummary)
+	loadingRules: ContainerLoadingRules = Field(default_factory=ContainerLoadingRules)
 
 	maxFloorArea_m2: float = Field(default=0)
 	maxVolume_m3: float = Field(default=0, description="Measurement in {m^3}") # 3816,
+
+
+	refrigerationCapable: bool = False
+	temperatureMin_c: Optional[float] = None
+	temperatureMax_c: Optional[float] = None
 
 	# State management
 	usedWeightIn_kg: float = 0
