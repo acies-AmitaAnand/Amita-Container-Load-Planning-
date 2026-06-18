@@ -6,7 +6,13 @@ from utils.PydanticBaseModel import PydanticBaseModel
 
 
 class Position(PydanticBaseModel):
-    x: int = Field(default=-1, description="Position `x` in millimeter")
-    y: int = Field(default=-1, description="Position `y` in millimeter")
-    z: int = Field(default=-1, description="Position `z` in millimeter")
-    orientation: str = Field(default='FRONT_FACING', description='Options: `["FRONT_FACING", "SIDE_FACING_LEFT", "SIDE_FACING_RIGHT", "REAR_FACING", "TOP_UP", "DOOR_ACCESS"]')
+    x: int = Field(default=-1, description="Width axis (left→right) in mm")   # Three.js x
+    y: int = Field(default=-1, description="Height axis (floor→ceiling) in mm") # Three.js y  
+    z: int = Field(default=-1, description="Depth axis (door→back) in mm")    # Three.js z
+    orientation: str = Field(default='FRONT_FACING')
+    
+    # Effective placed dimensions after orientation is applied.
+    # React MUST use these for Box args and centre-offset math, NOT pallet.dimensions.*
+    effectiveWidth: int = Field(default=-1, description="Actual x-axis footprint in mm after rotation")
+    effectiveDepth: int = Field(default=-1, description="Actual z-axis footprint in mm after rotation")
+    effectiveHeight: int = Field(default=-1, description="Actual y-axis footprint in mm (unchanged)")

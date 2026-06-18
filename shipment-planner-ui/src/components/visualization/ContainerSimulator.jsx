@@ -95,10 +95,10 @@ function MeasurementScales({ container }) {
 	// FRONT + BACK LENGTH SCALES
 	// =====================================================
 
-	for (let i = 0; i <= mmToFeetDisplay(container.depth); i++) {
+	for (let i = 0; i <= mmToFeetDisplay(container.containerDepth); i++) {
 
 		const x =
-			i - mmToFeetDisplay(container.depth) / 2;
+			i - mmToFeetDisplay(container.containerDepth) / 2;
 
 		// =========================================
 		// FRONT SCALE
@@ -110,8 +110,8 @@ function MeasurementScales({ container }) {
 				key={`front-line-${i}`}
 
 				points={[
-					[x, 0, mmToFeetDisplay(container.width) / 2 + 0.2],
-					[x, 0, mmToFeetDisplay(container.width) / 2 + 0.5]
+					[x, 0, mmToFeetDisplay(container.containerWidth) / 2 + 0.2],
+					[x, 0, mmToFeetDisplay(container.containerWidth) / 2 + 0.5]
 				]}
 
 				color="black"
@@ -128,8 +128,8 @@ function MeasurementScales({ container }) {
 				key={`back-line-${i}`}
 
 				points={[
-					[x, 0, -mmToFeetDisplay(container.width) / 2 - 0.2],
-					[x, 0, -mmToFeetDisplay(container.width) / 2 - 0.5]
+					[x, 0, -mmToFeetDisplay(container.containerWidth) / 2 - 0.2],
+					[x, 0, -mmToFeetDisplay(container.containerWidth) / 2 - 0.5]
 				]}
 
 				color="black"
@@ -153,7 +153,7 @@ function MeasurementScales({ container }) {
 					position={[
 						x,
 						0,
-						mmToFeetDisplay(container.width) / 2 + 1
+						mmToFeetDisplay(container.containerWidth) / 2 + 1
 					]}
 
 					rotation={[
@@ -184,7 +184,7 @@ function MeasurementScales({ container }) {
 					position={[
 						x,
 						0,
-						-mmToFeetDisplay(container.width) / 2 - 1
+						-mmToFeetDisplay(container.containerWidth) / 2 - 1
 					]}
 
 					rotation={[
@@ -213,10 +213,10 @@ function MeasurementScales({ container }) {
 	// LEFT + RIGHT WIDTH SCALES
 	// =====================================================
 
-	for (let i = 0; i <= mmToFeetDisplay(container.width); i++) {
+	for (let i = 0; i <= mmToFeetDisplay(container.containerWidth); i++) {
 
 		const z =
-			i - mmToFeetDisplay(container.width) / 2;
+			i - mmToFeetDisplay(container.containerWidth) / 2;
 
 		// =========================================
 		// LEFT SCALE
@@ -228,8 +228,8 @@ function MeasurementScales({ container }) {
 				key={`left-line-${i}`}
 
 				points={[
-					[-mmToFeetDisplay(container.depth) / 2 - 0.2, 0, z],
-					[-mmToFeetDisplay(container.depth) / 2 - 0.5, 0, z]
+					[-mmToFeetDisplay(container.containerDepth) / 2 - 0.2, 0, z],
+					[-mmToFeetDisplay(container.containerDepth) / 2 - 0.5, 0, z]
 				]}
 
 				color="black"
@@ -246,8 +246,8 @@ function MeasurementScales({ container }) {
 				key={`right-line-${i}`}
 
 				points={[
-					[mmToFeetDisplay(container.depth) / 2 + 0.2, 0, z],
-					[mmToFeetDisplay(container.depth) / 2 + 0.5, 0, z]
+					[mmToFeetDisplay(container.containerDepth) / 2 + 0.2, 0, z],
+					[mmToFeetDisplay(container.containerDepth) / 2 + 0.5, 0, z]
 				]}
 
 				color="black"
@@ -267,7 +267,7 @@ function MeasurementScales({ container }) {
 				key={`left-text-${i}`}
 
 				position={[
-					-mmToFeetDisplay(container.depth) / 2 - 1.2,
+					-mmToFeetDisplay(container.containerDepth) / 2 - 1.2,
 					0,
 					z
 				]}
@@ -300,7 +300,7 @@ function MeasurementScales({ container }) {
 				key={`right-text-${i}`}
 
 				position={[
-					mmToFeetDisplay(container.depth) / 2 + 1.2,
+					mmToFeetDisplay(container.containerDepth) / 2 + 1.2,
 					0,
 					z
 				]}
@@ -338,18 +338,18 @@ function FloorGrid({ container }) {
 
 	const tiles = [];
 
-	for (let x = 0; x < mmToFeetDisplay(container.depth); x++) {
+	for (let x = 0; x < mmToFeetDisplay(container.containerDepth); x++) {
 
-		for (let z = 0; z < mmToFeetDisplay(container.width); z++) {
+		for (let z = 0; z < mmToFeetDisplay(container.containerWidth); z++) {
 
 			tiles.push(
 
 				<mesh
 					key={`${x}-${z}`}
 					position={[
-						x - mmToFeetDisplay(container.depth) / 2 + 0.5,
+						x - mmToFeetDisplay(container.containerDepth) / 2 + 0.5,
 						-0.01,
-						z - mmToFeetDisplay(container.width) / 2 + 0.5
+						z - mmToFeetDisplay(container.containerWidth) / 2 + 0.5
 					]}
 				>
 
@@ -381,18 +381,18 @@ function BoundaryBox({ container }) {
 	const points = [
 
 		// bottom
-		[-mmToFeetDisplay(container.depth) / 2, 0, -mmToFeetDisplay(container.width) / 2],
-		[mmToFeetDisplay(container.depth) / 2, 0, -mmToFeetDisplay(container.width) / 2],
-		[mmToFeetDisplay(container.depth) / 2, 0, mmToFeetDisplay(container.width) / 2],
-		[-mmToFeetDisplay(container.depth) / 2, 0, mmToFeetDisplay(container.width) / 2],
-		[-mmToFeetDisplay(container.depth) / 2, 0, -mmToFeetDisplay(container.width) / 2],
+		[-mmToFeetDisplay(container.containerDepth) / 2, 0, -mmToFeetDisplay(container.containerWidth) / 2],
+		[mmToFeetDisplay(container.containerDepth) / 2, 0, -mmToFeetDisplay(container.containerWidth) / 2],
+		[mmToFeetDisplay(container.containerDepth) / 2, 0, mmToFeetDisplay(container.containerWidth) / 2],
+		[-mmToFeetDisplay(container.containerDepth) / 2, 0, mmToFeetDisplay(container.containerWidth) / 2],
+		[-mmToFeetDisplay(container.containerDepth) / 2, 0, -mmToFeetDisplay(container.containerWidth) / 2],
 
 		// top
-		[-mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.height), -mmToFeetDisplay(container.width) / 2],
-		[mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.height), -mmToFeetDisplay(container.width) / 2],
-		[mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.height), mmToFeetDisplay(container.width) / 2],
-		[-mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.height), mmToFeetDisplay(container.width) / 2],
-		[-mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.height), -mmToFeetDisplay(container.width) / 2]
+		[-mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerHeight), -mmToFeetDisplay(container.containerWidth) / 2],
+		[mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerHeight), -mmToFeetDisplay(container.containerWidth) / 2],
+		[mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerHeight), mmToFeetDisplay(container.containerWidth) / 2],
+		[-mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerHeight), mmToFeetDisplay(container.containerWidth) / 2],
+		[-mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerHeight), -mmToFeetDisplay(container.containerWidth) / 2]
 	];
 
 	return (
@@ -406,17 +406,17 @@ function BoundaryBox({ container }) {
 			{/* verticals */}
 
 			{[
-				[-mmToFeetDisplay(container.depth) / 2, -mmToFeetDisplay(container.width) / 2],
-				[mmToFeetDisplay(container.depth) / 2, -mmToFeetDisplay(container.width) / 2],
-				[mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.width) / 2],
-				[-mmToFeetDisplay(container.depth) / 2, mmToFeetDisplay(container.width) / 2]
+				[-mmToFeetDisplay(container.containerDepth) / 2, -mmToFeetDisplay(container.containerWidth) / 2],
+				[mmToFeetDisplay(container.containerDepth) / 2, -mmToFeetDisplay(container.containerWidth) / 2],
+				[mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerWidth) / 2],
+				[-mmToFeetDisplay(container.containerDepth) / 2, mmToFeetDisplay(container.containerWidth) / 2]
 			].map((p, idx) => (
 
 				<Line
 					key={idx}
 					points={[
 						[p[0], 0, p[1]],
-						[p[0], mmToFeetDisplay(container.height), p[1]]
+						[p[0], mmToFeetDisplay(container.containerHeight), p[1]]
 					]}
 					color="#38bdf8"
 				/>
@@ -449,14 +449,14 @@ function ContainerWalls({ container }) {
 			<mesh
 				position={[
 					0,
-					mmToFeetDisplay(container.height) / 2,
-					-mmToFeetDisplay(container.width) / 2
+					mmToFeetDisplay(container.containerHeight) / 2,
+					-mmToFeetDisplay(container.containerWidth) / 2
 				]}
 			>
 
 				<boxGeometry args={[
-					mmToFeetDisplay(container.depth),
-					mmToFeetDisplay(container.height),
+					mmToFeetDisplay(container.containerDepth),
+					mmToFeetDisplay(container.containerHeight),
 					0.05
 				]} />
 
@@ -473,14 +473,14 @@ function ContainerWalls({ container }) {
 			<mesh
 				position={[
 					0,
-					mmToFeetDisplay(container.height) / 2,
-					mmToFeetDisplay(container.width) / 2
+					mmToFeetDisplay(container.containerHeight) / 2,
+					mmToFeetDisplay(container.containerWidth) / 2
 				]}
 			>
 
 				<boxGeometry args={[
-					mmToFeetDisplay(container.depth),
-					mmToFeetDisplay(container.height),
+					mmToFeetDisplay(container.containerDepth),
+					mmToFeetDisplay(container.containerHeight),
 					0.05
 				]} />
 
@@ -496,16 +496,16 @@ function ContainerWalls({ container }) {
 
 			<mesh
 				position={[
-					mmToFeetDisplay(container.depth) / 2,
-					mmToFeetDisplay(container.height) / 2,
+					mmToFeetDisplay(container.containerDepth) / 2,
+					mmToFeetDisplay(container.containerHeight) / 2,
 					0
 				]}
 			>
 
 				<boxGeometry args={[
 					0.05,
-					mmToFeetDisplay(container.height),
-					mmToFeetDisplay(container.width)
+					mmToFeetDisplay(container.containerHeight),
+					mmToFeetDisplay(container.containerWidth)
 				]} />
 
 				<primitive
@@ -520,16 +520,16 @@ function ContainerWalls({ container }) {
 
 			<mesh
 				position={[
-					-mmToFeetDisplay(container.depth) / 2,
-					mmToFeetDisplay(container.height) / 2,
+					-mmToFeetDisplay(container.containerDepth) / 2,
+					mmToFeetDisplay(container.containerHeight) / 2,
 					0
 				]}
 			>
 
 				<boxGeometry args={[
 					0.2,
-					mmToFeetDisplay(container.height),
-					mmToFeetDisplay(container.width)
+					mmToFeetDisplay(container.containerHeight),
+					mmToFeetDisplay(container.containerWidth)
 				]} />
 
 				<meshStandardMaterial
@@ -549,71 +549,133 @@ function ContainerWalls({ container }) {
 
 // ─── FIXED: never round intermediate coordinates ───────────────────────────
 const MM_TO_FEET = 0.00328084;
+
+
+// Raw conversion — no rounding (rounding causes visible gaps at seams)
+function ft(mm) {
+  return mm * MM_TO_FEET;
+}
+
+
+// ── Helper: darken a hex colour for hover state ───────────────────────────────
+function darkenColor(hex, amount = 40) {
+	const clamp = (v) => Math.max(0, Math.min(255, v));
+	const raw = hex.replace("#", "");
+	const r = clamp(parseInt(raw.slice(0, 2), 16) - amount);
+	const g = clamp(parseInt(raw.slice(2, 4), 16) - amount);
+	const b = clamp(parseInt(raw.slice(4, 6), 16) - amount);
+	return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
 function mmToFeet(value) { return value * MM_TO_FEET; } // removed Math.round
 function mmToFeetDisplay(value) { return Math.round(value * MM_TO_FEET); } // only for labels
 
 // ─── FIXED: correct axis mapping ─────────────────────────────────────────────
+
 function Pallet({ pallet, container }) {
 	const [hovered, setHovered] = useState(false);
 
-	// Optimizer space: x = width-axis (left/right), z = depth-axis (front/back)
-	// Three.js space: x = left/right, z = front/back
-	// Origin in optimizer: (0,0,0) = left-front corner of interior floor
-	// Origin in Three.js: centre of container floor
+	const pos = pallet.position;
 
-	const palletX = mmToFeetDisplay(
-		pallet.position.x // optimizer x = width offset from left wall
-		+ pallet.dimensions.width / 2 // move to pallet centre (width axis)
-		- container.internalWidth / 2 // shift origin to container centre
-	);
+	// Use effective dims written by the Python placement engine.
+	// These already account for orientation (SIDE_FACING_LEFT swaps depth↔width).
+	// Fall back to raw dimensions only if the JSON pre-dates this fix.
+	const effWidth  = pos.effectiveWidth  > 0 ? pos.effectiveWidth  : pallet.dimensions.width;
+	const effDepth  = pos.effectiveDepth  > 0 ? pos.effectiveDepth  : pallet.dimensions.depth;
+	const effHeight = pos.effectiveHeight > 0 ? pos.effectiveHeight : pallet.dimensions.height;
 
-	const palletZ = mmToFeetDisplay(
-		pallet.position.z // optimizer z = depth offset from door
-		+ pallet.dimensions.depth / 2 // move to pallet centre (depth axis)
-		- container.internalDepth / 2 // shift origin to container centre
-	);
+	// ── Three.js world-space position ──────────────────────────────────────────
+	// pos.x and pos.z are corner offsets (left-front = 0,0 in optimizer space).
+	// Shift by half the effective footprint to get centre, then re-centre on
+	// the container's midpoint.
+	const threeX = ft(pos.x + effWidth  / 2 - container.internalWidth  / 2);
+	const threeZ = ft(pos.z + effDepth  / 2 - container.internalDepth  / 2);
+	const threeY = ft(effHeight / 2); // floor is y=0, pallet centre is half its height
 
-	const palletY = mmToFeetDisplay(pallet.dimensions.height) / 2; // sits on floor (y=0)
+	const baseColor   = pallet.color || "#4CAF50";
+	const activeColor = hovered ? darkenColor(baseColor, 45) : baseColor;
 
 	return (
 		<group>
-			<Box
-				args={[
-					mmToFeetDisplay(pallet.dimensions.width), // Three.js x = container width axis
-					mmToFeetDisplay(pallet.dimensions.height), // Three.js y = up
-					mmToFeetDisplay(pallet.dimensions.depth), // Three.js z = container depth axis
-				]}
-				position={[palletX, palletY, palletZ]}
-				castShadow
-				onPointerOver={() => setHovered(true)}
-				onPointerOut={() => setHovered(false)}
-			>
-				<meshStandardMaterial color={pallet.color || "#4CAF50"} transparent opacity={0.9} />
-			</Box>
+		{/* ── Pallet box ───────────────────────────────────────────────────── */}
+		<Box
+			args={[
+			ft(effWidth),   // x-axis  (left ↔ right)
+			ft(effHeight),  // y-axis  (floor ↔ ceiling)
+			ft(effDepth),   // z-axis  (door ↔ back)
+			]}
+			position={[threeX, threeY, threeZ]}
+			castShadow
+			onPointerOver={(e) => { e.stopPropagation(); setHovered(true); }}
+			onPointerOut={(e)  => { e.stopPropagation(); setHovered(false); }}
+		>
+			<meshStandardMaterial
+			color={activeColor}
+			transparent
+			opacity={hovered ? 1.0 : 0.88}
+			emissive={hovered ? activeColor : "#000000"}
+			emissiveIntensity={hovered ? 0.15 : 0}
+			/>
+		</Box>
 
-			<Text
-				position={[palletX, mmToFeetDisplay(pallet.dimensions.height) + 0.1, palletZ]}
-				fontSize={0.4}
-				color="white"
-				anchorX="center"
-				anchorY="middle"
-			>
-				{pallet.label}
-			</Text>
+		{/* ── SKU label on top face ─────────────────────────────────────────── */}
+		<Text
+			position={[threeX, ft(effHeight) + 0.08, threeZ]}
+			fontSize={0.35}
+			color="white"
+			anchorX="center"
+			anchorY="middle"
+			outlineWidth={0.02}
+			outlineColor="#000000"
+		>
+			{pallet.label || pallet.skuId}
+		</Text>
 
-			{hovered && (
-				<Html position={[palletX, mmToFeetDisplay(pallet.dimensions.height) + 1, palletZ]}>
-					<div style={{
-						background: "white", padding: "10px", borderRadius: "8px",
-						width: "220px", boxShadow: "0px 4px 10px rgba(0,0,0,0.3)"
-					}}
-						dangerouslySetInnerHTML={{ __html: pallet.tooltip_html || "" }}
-					/>
-				</Html>
-			)}
+		{/* ── Hover tooltip ────────────────────────────────────────────────── */}
+		{hovered && (
+			<Html
+			position={[threeX, ft(effHeight) + 1.2, threeZ]}
+			center
+			style={{ pointerEvents: "none" }}
+			>
+			<div style={{
+				background: "white",
+				border: "1px solid #e5e7eb",
+				padding: "10px 12px",
+				borderRadius: "8px",
+				minWidth: "200px",
+				boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+				fontSize: "12px",
+				lineHeight: "1.6",
+				color: "#111827",
+			}}>
+				{pallet.tooltip_html ? (
+				<div dangerouslySetInnerHTML={{ __html: pallet.tooltip_html }} />
+				) : (
+				<>
+					<div style={{ fontWeight: 600, marginBottom: 4, fontSize: 13 }}>
+					{pallet.label || pallet.skuId}
+					</div>
+					<div>SKU: {pallet.skuId}</div>
+					<div>Shipment: {pallet.shipmentId}</div>
+					<div>
+					Dims (W×D×H): {pallet.dimensions.width}×{pallet.dimensions.depth}×{pallet.dimensions.height} mm
+					</div>
+					{pallet.weightIn_kg > 0 && (
+					<div>Weight: {pallet.weightIn_kg} kg</div>
+					)}
+					<div style={{ marginTop: 4, color: "#6b7280", fontSize: 11 }}>
+					Pos: x={pos.x}, z={pos.z} | {pos.orientation}
+					</div>
+				</>
+				)}
+			</div>
+			</Html>
+		)}
 		</group>
 	);
 }
+
 
 // =====================================================
 // AXIS HELPER
@@ -844,17 +906,17 @@ export default function ContainerSimulator() {
 
 					<p>
 						Length:
-						{mmToFeetDisplay(container.depth)} ft
+						{mmToFeetDisplay(container.containerDepth)} ft
 					</p>
 
 					<p>
 						Width:
-						{mmToFeetDisplay(container.width)} ft
+						{mmToFeetDisplay(container.containerWidth)} ft
 					</p>
 
 					<p>
 						Height:
-						{mmToFeetDisplay(container.height)} ft
+						{mmToFeetDisplay(container.containerHeight)} ft
 					</p>
 
 				</div>

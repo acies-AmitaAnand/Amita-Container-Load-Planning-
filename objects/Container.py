@@ -15,12 +15,17 @@ from objects.Pallet import Pallet
 class Container(PydanticBaseModel):
 	containerId: str = Field(default='2', description="Container ID. Example: CONT_001")
 	containerType: str = Field(default='CONTAINER 40FT GP', description="Container type. Example: `53FT_DRY_VAN`") # "53FT_DRY_VAN"
-	depth: float = Field(default=12191, description="Outer measure of `length` in mm")
-	width: float = Field(default=2438, description="Outer measure of `width` in mm")
-	height: float = Field(default=2591, description="Outer measure of `height` in mm")
-	internalDepth: float = Field(default=11836, description="Internal length. Measurement in mm")
-	internalWidth: float = Field(default=2352, description="Internal width. Measurement in mm")
-	internalHeight: float = Field(default=2391, description="Internal height. Measurement in mm")
+
+	# Outer shell — renamed to avoid confusion with pallet.dimensions.depth
+	containerDepth: float = Field(default=12191, description="Outer front-to-back length mm")
+	containerWidth: float = Field(default=2438,  description="Outer left-to-right width mm")
+	containerHeight: float = Field(default=2591, description="Outer floor-to-ceiling height mm")
+
+	# Interior usable space — these become the Three.js coordinate bounds
+	internalDepth: float = Field(default=11836, description="Interior z-axis (door→back) mm")
+	internalWidth: float = Field(default=2352,  description="Interior x-axis (left→right) mm")
+	internalHeight: float = Field(default=2391, description="Interior y-axis (floor→ceiling) mm")
+
 	maxPayloadWeightIn_kg: float = Field(default=25000, description="Maximum payload weight. Measurement in kg")
 	tareWeightIn_kg: float = Field(default=0, description="Measurement in kg")
 
