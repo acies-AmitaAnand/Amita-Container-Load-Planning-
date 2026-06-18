@@ -588,8 +588,8 @@ function Pallet({ pallet, container }) {
 	// pos.x and pos.z are corner offsets (left-front = 0,0 in optimizer space).
 	// Shift by half the effective footprint to get centre, then re-centre on
 	// the container's midpoint.
-	const threeX = ft(pos.x + effWidth  / 2 - container.internalWidth  / 2);
-	const threeZ = ft(pos.z + effDepth  / 2 - container.internalDepth  / 2);
+	const threeX = ft(pos.z + effDepth  / 2 - container.internalDepth  / 2);  // ← z→X
+	const threeZ = ft(pos.x + effWidth  / 2 - container.internalWidth  / 2);  // ← x→Z
 	const threeY = ft(effHeight / 2); // floor is y=0, pallet centre is half its height
 
 	const baseColor   = pallet.color || "#4CAF50";
@@ -634,7 +634,7 @@ function Pallet({ pallet, container }) {
 		{/* ── Hover tooltip ────────────────────────────────────────────────── */}
 		{hovered && (
 			<Html
-			position={[threeX, ft(effHeight) + 1.2, threeZ]}
+			position={[threeX, ft(effHeight) + 6, threeZ]}
 			center
 			style={{ pointerEvents: "none" }}
 			>
