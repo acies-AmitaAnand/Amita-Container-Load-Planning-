@@ -1,4 +1,4 @@
-from objects.Container import Container
+from solver.objects.Container import Container
 from utils.CustomJSONEncoder import CustomJSONEncoder
 
 from IPython.display import IFrame, display

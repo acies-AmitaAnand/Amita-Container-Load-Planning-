@@ -4,12 +4,12 @@ from typing import List, Optional
 import uuid
 
 from pydantic import Field
-from objects.ContainerSummary import ContainerSummary
-from objects.ContainerLoadingRules import ContainerLoadingRules
+from solver.objects.ContainerSummary import ContainerSummary
+from solver.objects.ContainerLoadingRules import ContainerLoadingRules
 from utils.PydanticBaseModel import PydanticBaseModel
 
-from objects.Axle import Axle
-from objects.Pallet import Pallet
+from solver.objects.Axle import Axle
+from solver.objects.Pallet import Pallet
 
 
 class Container(PydanticBaseModel):

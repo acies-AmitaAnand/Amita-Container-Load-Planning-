@@ -1,7 +1,7 @@
 from typing import List
 
-from objects.Axle import Axle
-from objects.Container import Container
+from solver.objects.Axle import Axle
+from solver.objects.Container import Container
 from utils.PydanticBaseModel import PydanticBaseModel
 
 
