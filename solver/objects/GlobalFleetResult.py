@@ -8,10 +8,11 @@ from typing import Dict, List
 from objects.ContainerFleetOptimizationResult import ContainerFleetOptimizationResult
 from objects.GroupAllocation import GroupAllocation
 from objects.Pallet import Pallet
+from utils.PydanticBaseModel import PydanticBaseModel
 
 
 
-class GlobalFleetResult:
+class GlobalFleetResult(PydanticBaseModel):
     """Top-level result spanning all lane groups."""
     group_results: Dict[str, ContainerFleetOptimizationResult]  # groupId → result
     allocations: List[GroupAllocation]

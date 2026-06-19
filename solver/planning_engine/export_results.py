@@ -52,9 +52,9 @@ def export_all_containers_json(
             payload = {
                 "containerId":       c.containerId,
                 "containerType":     c.containerType,
-                "containerDepth":    c.depth,
-                "containerWidth":    c.width,
-                "containerHeight":   c.height,
+                "containerDepth":    c.containerDepth,
+                "containerWidth":    c.containerWidth,
+                "containerHeight":   c.containerHeight,
                 "internalDepth":     c.internalDepth,
                 "internalWidth":     c.internalWidth,
                 "internalHeight":    c.internalHeight,

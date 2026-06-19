@@ -10,6 +10,7 @@ import pandas as pd
 
 ##
 from planning_engine.placement_engine.placement import run_full_optimization
+from planning_engine.export_results import export_all_containers_json
 from utils.measure_conversion import *
 
 logger = getLogger("main application")
@@ -51,3 +52,5 @@ result = run_full_optimization(
     avg_pallets_per_container=20, # tune to your actual pallet density
     lifo=True,
 )
+
+paths = export_all_containers_json(result, out_dir="./output")

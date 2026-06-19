@@ -2,8 +2,9 @@
 
 
 from objects.ShipmentGroup import ShipmentGroup
+from utils.PydanticBaseModel import PydanticBaseModel
 
-class GroupAllocation:
+class GroupAllocation(PydanticBaseModel):
     """How many trucks are budgeted to a single lane group."""
     group: ShipmentGroup
     trucks_allocated: int          # containers this group may open
