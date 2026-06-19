@@ -15,9 +15,11 @@ from datetime import datetime
 from typing import List, Tuple, Dict
 import pandas as pd
 
-from models import (
-    Pallet, Dimension, Position, ShipmentGroup
-)
+from objects.Pallet import Pallet
+from objects.Dimension import Dimension
+from objects.Position import Position
+from objects.ShipmentGroup import ShipmentGroup
+
 
 # ── Color palette for SKUs ────────────────────────────────────────────────────
 _SKU_COLORS = [

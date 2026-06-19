@@ -9,6 +9,7 @@ from objects.Pallet import Pallet
 from objects.Position import Position
 from planning_engine.validators.validations import validate_pallet_fits
 from planning_engine.optimizers.MaxRectPacker import _get_packer
+from planning_engine.validators.axle import distribute_weight_to_axles
 
 logger = logging.getLogger("placement_engine")
 
@@ -52,7 +53,7 @@ def place_pallet(container: Container, pallet: Pallet) -> bool:
     container.loadedPallets    += 1
 
     packer.mark_placed(x, z, dep, wid)
-    _distribute_weight_to_axles(container, pallet, z, dep)
+    distribute_weight_to_axles(container, pallet, z, dep)
 
     # --- structured log ---
     elapsed_ms = (time.perf_counter() - t0) * 1000

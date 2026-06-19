@@ -3,7 +3,7 @@
 # Axle load distribution
 # ---------------------------------------------------------------------------
 
-def _distribute_weight_to_axles(
+def distribute_weight_to_axles(
     container: Container, pallet: Pallet, z_mm: int, depth_mm: int
 ) -> None:
     cog_z     = z_mm + depth_mm / 2
