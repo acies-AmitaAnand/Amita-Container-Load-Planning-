@@ -48,9 +48,9 @@ function getPayloadFromUrl() {
 
 		return {
 
-			depth: 16154,
-			width: 2438,
-			height: 2743,
+			containerDepth: 16154,
+			containerWidth: 2438,
+			containerHeight: 2743,
 			internalDepth: 16154,
 			internalWidth: 2438,
 			internalHeight: 2743,
