@@ -61,6 +61,18 @@ def create_pallet_features(
             how="left",
         )
 
+
+    ### Filter for the ones that are divisible
+    candidate = (
+        candidate
+        [
+            candidate[
+                "unit_count_in_pallet"
+            ]
+            > 0
+        ]
+    )
+
     # Compute pallet breakdown
     candidate["required_pallets"] = (
         candidate["planned_quantity"] / candidate["unit_count_in_pallet"]

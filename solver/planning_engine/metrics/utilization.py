@@ -7,6 +7,7 @@ from objects.Container import Container
 from objects.Pallet import Pallet
 from objects.UtilizationMetrics import UtilizationMetrics
 from objects.RemainingCapacity import RemainingCapacity
+from planning_engine.validators.axle import compute_axle_loads
 
 
 logger = logging.getLogger("placement_engine")

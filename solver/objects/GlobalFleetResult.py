@@ -2,7 +2,7 @@
 from datetime import datetime
 import uuid
 
-from pydantic import field
+from pydantic import Field
 from typing import Dict, List
 
 from objects.ContainerFleetOptimizationResult import ContainerFleetOptimizationResult
@@ -21,5 +21,5 @@ class GlobalFleetResult:
     total_loaded_pallets: int
     total_unallocated_pallets: int
     unallocated_pallets: List[Pallet]   # pallets with no truck at all
-    optimizer_run_id: str = field(default_factory=lambda: uuid.uuid4().hex)
-    run_timestamp: datetime = field(default_factory=datetime.utcnow)
+    optimizer_run_id: str = Field(default_factory=lambda: uuid.uuid4().hex)
+    run_timestamp: datetime = Field(default_factory=datetime.utcnow)

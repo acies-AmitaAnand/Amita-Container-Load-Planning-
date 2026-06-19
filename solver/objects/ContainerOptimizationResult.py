@@ -3,13 +3,13 @@ import uuid
 
 from pydantic import Field
 
-from solver.objects.AxleLoadResult import AxleLoadResult
-from solver.objects.Pallet import Pallet
-from solver.objects.RemainingCapacity import RemainingCapacity
-from solver.objects.UtilizationMetrics import UtilizationMetrics
+from objects.AxleLoadResult import AxleLoadResult
+from objects.Pallet import Pallet
+from objects.RemainingCapacity import RemainingCapacity
+from objects.UtilizationMetrics import UtilizationMetrics
 from utils.PydanticBaseModel import PydanticBaseModel
 
-from solver.objects.Container import Container
+from objects.Container import Container
 
 
 class ContainerOptimizationResult(PydanticBaseModel):

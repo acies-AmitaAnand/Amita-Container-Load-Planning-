@@ -1,25 +1,18 @@
-
-
+from __future__ import annotations
 
 import pandas as pd
-
 
 from logging import getLogger
 
 ## Classes
-
-
-
-
-from __future__ import annotations
 import math
 import pandas as pd
 
 ##
-from planning_engine.reference.container_optimizer import run_full_optimization
+from planning_engine.placement_engine.placement import run_full_optimization
 from utils.measure_conversion import *
 
-logger = getLogger("load_planner")
+logger = getLogger("main application")
 ### NeonDB Connection
 import database.helper as db_helper
 db_conn = db_helper.create_connection()

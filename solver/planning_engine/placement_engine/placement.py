@@ -35,16 +35,23 @@ from objects.ContainerFleetOptimizationResult import ContainerFleetOptimizationR
 from objects.ShipmentGroup import ShipmentGroup
 
 
-from placement_engine.placement import (
-    place_pallet, compute_axle_loads, compute_utilization,
-    reset_packer, log_container_summary,
-)
-from feature_engineering.features import (
+# from placement_engine.placement import (
+#     place_pallet, compute_axle_loads, compute_utilization,
+#     reset_packer, log_container_summary,
+# )
+
+
+
+from planning_engine.feature_engineering.transformation import (
     create_pallet_features, breakdown_into_pallets,
     group_pallets_by_lane, sort_pallets_for_loading,
 )
-from solver.objects.GlobalFleetResult import GlobalFleetResult
-from solver.objects.GroupAllocation import GroupAllocation
+from objects.GlobalFleetResult import GlobalFleetResult
+from objects.GroupAllocation import GroupAllocation
+from planning_engine.metrics.utilization import compute_utilization, log_container_summary
+from planning_engine.optimizers.MaxRectPacker import reset_packer
+from planning_engine.placement import place_pallet
+from planning_engine.validators.axle import compute_axle_loads
 
 logger = logging.getLogger("placement_engine")
 

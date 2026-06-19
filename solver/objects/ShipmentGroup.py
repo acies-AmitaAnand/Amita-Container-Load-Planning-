@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from solver.objects.Pallet import Pallet
+from objects.Pallet import Pallet
 from utils.PydanticBaseModel import PydanticBaseModel
 
 

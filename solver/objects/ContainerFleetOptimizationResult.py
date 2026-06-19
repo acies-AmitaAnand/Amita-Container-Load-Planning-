@@ -4,11 +4,11 @@ import uuid
 
 from pydantic import Field
 
-from solver.objects.ContainerOptimizationResult import ContainerOptimizationResult
-from solver.objects.Pallet import Pallet
+from objects.ContainerOptimizationResult import ContainerOptimizationResult
+from objects.Pallet import Pallet
 from utils.PydanticBaseModel import PydanticBaseModel
 
-from solver.objects.Container import Container
+from objects.Container import Container
 
 
 class ContainerFleetOptimizationResult(PydanticBaseModel):

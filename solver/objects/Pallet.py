@@ -5,8 +5,8 @@ import uuid
 
 from pydantic import Field
 
-from solver.objects.Dimension import Dimension
-from solver.objects.Position import Position
+from objects.Dimension import Dimension
+from objects.Position import Position
 from utils.PydanticBaseModel import PydanticBaseModel
 
 

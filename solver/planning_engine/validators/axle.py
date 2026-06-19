@@ -3,6 +3,13 @@
 # Axle load distribution
 # ---------------------------------------------------------------------------
 
+from typing import List
+
+from objects.AxleLoadResult import AxleLoadResult
+from objects.Container import Container
+from objects.Pallet import Pallet
+
+
 def distribute_weight_to_axles(
     container: Container, pallet: Pallet, z_mm: int, depth_mm: int
 ) -> None:

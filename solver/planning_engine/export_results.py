@@ -27,7 +27,7 @@ from typing import List
 from objects.Pallet import Pallet
 
 
-from solver.objects.GlobalFleetResult import GlobalFleetResult
+from objects.GlobalFleetResult import GlobalFleetResult
 from utils.CustomJSONEncoder import CustomJSONEncoder
 
 logger = logging.getLogger("export result")
