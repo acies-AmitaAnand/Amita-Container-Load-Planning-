@@ -48,8 +48,8 @@ result = run_full_optimization(
     lane_master_df=lane_master_df,
     preferred_equipment_type='CONTAINER',
     optimizer="SKYLINE",
-    fleet_limit=10,# Truck & Container limit               # 10 trucks total, all groups
-    avg_pallets_per_container=20, # tune to your actual pallet density
+    fleet_limit=20,# Truck & Container limit               # 10 trucks total, all groups
+    avg_pallets_per_container=40, # tune to your actual pallet density
     lifo=True,
 )
 

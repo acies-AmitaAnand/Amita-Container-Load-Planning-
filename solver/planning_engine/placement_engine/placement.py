@@ -57,7 +57,7 @@ logger = logging.getLogger("placement_engine")
 
 # ── Action 1: Map equipment row → Container constructor kwargs ────────────────
 
-def load_equipment_to_container_spec(row: pd.Series) -> Dict[str, Any]:
+def load_equipment_to_container_spec(row: pd.Series) -> Container:
     axle_conf = str(row.get("axle_configuration", "single")).lower()
     if "tandem" in axle_conf or "2" in axle_conf:
         axles = [
@@ -70,11 +70,11 @@ def load_equipment_to_container_spec(row: pd.Series) -> Dict[str, Any]:
         axles = [Axle(axleId="DEFAULT", maxWeight=30000,
                       positionX=float(row.get("internal_length_mm", 12000)) * 0.45)]
 
-    return dict(
+    return Container(
         containerType=str(row.get("equipment_name", "CONTAINER")),
-        depth=float(row.get("length_mm", 12191)),
-        width=float(row.get("width_mm", 2438)),
-        height=float(row.get("height_mm", 2591)),
+        containerDepth=float(row.get("length_mm", 12191)),
+        containerWidth=float(row.get("width_mm", 2438)),
+        containerHeight=float(row.get("height_mm", 2591)),
         internalDepth=float(row.get("internal_length_mm", 11836)),
         internalWidth=float(row.get("internal_width_mm", 2352)),
         internalHeight=float(row.get("internal_height_mm", 2391)),
@@ -96,7 +96,7 @@ def load_equipment_to_container_spec(row: pd.Series) -> Dict[str, Any]:
 # ── Action 2: Open a single fresh container ───────────────────────────────────
 
 def open_new_container(
-    spec: Dict[str, Any],
+    container_spec: Container,
     container_idx: int,
     group: ShipmentGroup,
 ) -> Container:
@@ -109,7 +109,11 @@ def open_new_container(
         origin=group.originLocationId,
         destinationInSequence=[group.destinationLocationId],
     )
-    return Container(containerId=cid, pallets=[], summary=summary, **spec)
+    container_spec.containerId=cid
+    container_spec.pallets=[]
+    container_spec.summary=summary
+
+    return container_spec
 
 
 # ── Action 3: Load one container ──────────────────────────────────────────────
@@ -216,7 +220,7 @@ def allocate_fleet_to_groups(
 
 def optimize_group_with_budget(
     group: ShipmentGroup,
-    equipment_spec: Dict[str, Any],
+    equipment_spec: Container,
     max_containers: int,           # hard limit for this group
     lifo: bool = True,
 ) -> ContainerFleetOptimizationResult:
@@ -250,11 +254,11 @@ def optimize_group_with_budget(
         container_idx += 1
 
     # Pallets still left after budget exhausted → unallocated
-    if remaining:
-        logger.warning(
-            "[%s] %d pallets unallocated — truck budget (%d) exhausted",
-            group.groupId, len(remaining), max_containers,
-        )
+    # if remaining:
+    #     logger.warning(
+    #         "[%s] %d pallets unallocated — truck budget (%d) exhausted",
+    #         group.groupId, len(remaining), max_containers,
+    #     )
 
     total_wt      = sum(c.usedWeightIn_kg for c in all_containers)
     total_max_wt  = sum(c.maxPayloadWeightIn_kg for c in all_containers)
@@ -299,23 +303,23 @@ def run_full_optimization(
     """
 
     # ── 1. Feature engineering ────────────────────────────────────────────
-    candidate_df = create_pallet_features(shipment_demand_df, sku_pallet_df)
+    candidate_df = create_pallet_features(shipment_demand_df=shipment_demand_df, sku_pallet_df=sku_pallet_df)
 
     # ── 2. Breakdown into Pallet objects ──────────────────────────────────
-    all_pallets = breakdown_into_pallets(candidate_df)
+    all_pallets = breakdown_into_pallets(shipment_candidate_df=candidate_df)
 
     # ── 3. Group by lane (origin × dest × date) ───────────────────────────
-    groups = group_pallets_by_lane(all_pallets, lane_master_df)
+    groups: List[ShipmentGroup] = group_pallets_by_lane(pallets=all_pallets, lane_master_df=lane_master_df, date_granularity='day')
 
     # ── 4. Select equipment spec ──────────────────────────────────────────
     mask   = load_equipment_metadata_df["equipment_type"].str.upper() == preferred_equipment_type.upper()
     eq_df  = load_equipment_metadata_df[mask]
     eq_row = eq_df.iloc[0] if len(eq_df) else load_equipment_metadata_df.iloc[0]
-    equipment_spec = load_equipment_to_container_spec(eq_row)
+    equipment_spec = load_equipment_to_container_spec(row=eq_row)
 
     # ── 5. Allocate trucks across groups by delivery date ─────────────────
     allocations = allocate_fleet_to_groups(
-        groups,
+        groups=groups,
         fleet_limit=fleet_limit,
         avg_pallets_per_container=avg_pallets_per_container,
     )
@@ -347,8 +351,8 @@ def run_full_optimization(
             continue
 
         fleet_result = optimize_group_with_budget(
-            alloc.group,
-            equipment_spec,
+            group=alloc.group,
+            equipment_spec=equipment_spec,
             max_containers=alloc.trucks_allocated,
             lifo=lifo,
         )
