@@ -12,7 +12,6 @@ from objects.Container import Container
 
 
 class ContainerFleetOptimizationResult(PydanticBaseModel):
-    containers: List[Container]
     containerResults: List[ContainerOptimizationResult]
     unallocated_pallets: List[Pallet]
     total_pallets: int

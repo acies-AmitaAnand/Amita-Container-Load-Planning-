@@ -21,67 +21,60 @@ from __future__ import annotations
 import json
 import logging
 import os
-from typing import List
+from typing import Dict, List
 
 
 from objects.Pallet import Pallet
 
 
 from objects.GlobalFleetResult import GlobalFleetResult
+from objects.ContainerFleetOptimizationResult import ContainerFleetOptimizationResult
 from utils.CustomJSONEncoder import CustomJSONEncoder
 
 logger = logging.getLogger("export result")
 
 
-# ── Action 7: Export each container to JSON ───────────────────────────────────
-
-def export_all_containers_json(
-    global_result: GlobalFleetResult,
+# ── Action 6: Export to JSON ──────────────────────────────────────────────────
+ 
+def export_container_json(
+    fleet_result: Dict[str, ContainerFleetOptimizationResult],
     out_dir: str = "./output",
+    group_id: str = "default",
 ) -> List[str]:
-    """
-    Writes one JSON file per container across all groups.
-    Returns list of file paths written.
-    """
     os.makedirs(out_dir, exist_ok=True)
-    paths: List[str] = []
-
-    for group_id, fleet_result in global_result.group_results.items():
-        for cr in fleet_result.containerResults:
+    paths = []
+    for group, fleet in fleet_result.items():
+        for cr in fleet.containerResults:
             c = cr.container
             payload = {
-                "containerId":       c.containerId,
-                "containerType":     c.containerType,
-                "containerDepth":    c.containerDepth,
-                "containerWidth":    c.containerWidth,
-                "containerHeight":   c.containerHeight,
-                "internalDepth":     c.internalDepth,
-                "internalWidth":     c.internalWidth,
-                "internalHeight":    c.internalHeight,
-                "maxPayloadWeight":  c.maxPayloadWeightIn_kg,
-                "tareWeight":        c.tareWeightIn_kg,
-                "maxVolume":         round(c.maxVolume_m3, 6),
-                "unit":              c.unit,
-                "door_width":        c.doorWidth,
-                "door_height":       c.doorHeight,
+                "containerId":     c.containerId,
+                "containerType":   c.containerType,
+                "containerDepth":  c.containerDepth,
+                "containerWidth":  c.containerWidth,
+                "containerHeight": c.containerHeight,
+                "internalDepth":   c.internalDepth,
+                "internalWidth":   c.internalWidth,
+                "internalHeight":  c.internalHeight,
+                "maxPayloadWeight": c.maxPayloadWeightIn_kg,
+                "tareWeight":      c.tareWeightIn_kg,
+                "maxVolume":       round(c.maxVolume_m3, 6),
+                "unit":            c.unit,
+                "door_width":      c.doorWidth,
+                "door_height":     c.doorHeight,
                 "axles": [
-                    {
-                        "axleId":      a.axleId,
-                        "maxWeight":   a.maxWeight,
-                        "positionX":   a.positionX,
-                        "currentLoad": round(a.currentLoad, 2),
-                    }
+                    {"axleId": a.axleId, "maxWeight": a.maxWeight,
+                    "positionX": a.positionX, "currentLoad": round(a.currentLoad, 2)}
                     for a in c.axles
                 ],
                 "pallets": [_pallet_to_viz_dict(p) for p in cr.loadedPallets],
                 "summary": {
-                    "shipmentId":           c.summary.shipmentId,
-                    "routeId":              c.summary.routeId,
-                    "origin":               c.summary.origin,
+                    "shipmentId":            c.summary.shipmentId,
+                    "routeId":               c.summary.routeId,
+                    "origin":                c.summary.origin,
                     "destinationInSequence": c.summary.destinationInSequence,
-                    "totalPallets":         c.summary.totalPallets,
-                    "totalWeight":          c.summary.totalWeightIn_kg,
-                    "totalVolume":          c.summary.totalVolumeIn_m3,
+                    "totalPallets":          c.summary.totalPallets,
+                    "totalWeight":           c.summary.totalWeightIn_kg,
+                    "totalVolume":           c.summary.totalVolumeIn_m3,
                 },
                 "loadingRules": {
                     "allowStacking":          c.loadingRules.allowStacking,
@@ -91,67 +84,24 @@ def export_all_containers_json(
                     "hazmatSegregation":      c.loadingRules.hazmatSegregation,
                     "centerGravityThreshold": c.loadingRules.centerGravityThreshold,
                 },
-                "utilization": cr.utilization.model_dump(),
-                "axleLoads":   [al.model_dump() for al in cr.axleLoads],
+                "utilization":       cr.utilization.model_dump(),
+                "axleLoads":         [al.model_dump() for al in cr.axleLoads],
                 "pendingPalletCount": len(cr.pendingPallets),
-                "groupId": group_id,
             }
-
-            fname = f"{c.containerId}.json"
+            fname = f"{group_id}_{c.containerId}.json"
             fpath = os.path.join(out_dir, fname)
             with open(fpath, "w") as f:
-                json.dump(payload, f, indent=2, default=str, cls=CustomJSONEncoder) 
+                json.dump(payload, f, indent=2, default=str)
             paths.append(fpath)
-
-    # Write a fleet summary manifest
-    manifest = {
-        "run_id":          global_result.optimizer_run_id,
-        "run_timestamp":   str(global_result.run_timestamp),
-        "fleet_limit":     global_result.fleet_limit,
-        "trucks_used":     global_result.total_trucks_used,
-        "total_pallets":   global_result.total_pallets,
-        "loaded_pallets":  global_result.total_loaded_pallets,
-        "unallocated_pallets": global_result.total_unallocated_pallets,
-        "groups": [
-            {
-                "groupId":           a.group.groupId,
-                "origin":            a.group.originLocationId,
-                "destination":       a.group.destinationLocationId,
-                "deliveryDate":      a.group.deliveryDateWindow,
-                "pallets":           len(a.group.pallets),
-                "trucks_allocated":  a.trucks_allocated,
-                "trucks_needed_est": a.trucks_needed_estimate,
-                "fully_funded":      a.is_fully_funded,
-                "containers_opened": group_results_trucks(global_result, a.group.groupId),
-            }
-            for a in global_result.allocations
-        ],
-    }
-    manifest_path = os.path.join(out_dir, "fleet_manifest.json")
-    with open(manifest_path, "w") as f:
-        json.dump(manifest, f, indent=2, default=str)
-    paths.append(manifest_path)
-
-    return paths
-
-
-def group_results_trucks(result: GlobalFleetResult, group_id: str) -> int:
-    r = result.group_results.get(group_id)
-    return r.total_containers if r else 0
-
-
+        return paths
+ 
+ 
 def _pallet_to_viz_dict(p: Pallet) -> dict:
     return {
         "candidatePalletId": p.candidatePalletId,
-        "dimensions": {
-            "depth":  p.dimensions.depth,
-            "width":  p.dimensions.width,
-            "height": p.dimensions.height,
-        },
+        "dimensions": {"depth": p.dimensions.depth, "width": p.dimensions.width, "height": p.dimensions.height},
         "position": {
-            "x":              p.position.x,
-            "y":              p.position.y,
-            "z":              p.position.z,
+            "x": p.position.x, "y": p.position.y, "z": p.position.z,
             "orientation":    p.position.orientation,
             "effectiveWidth":  p.position.effectiveWidth,
             "effectiveDepth":  p.position.effectiveDepth,
@@ -168,3 +118,4 @@ def _pallet_to_viz_dict(p: Pallet) -> dict:
         "destinationStop": p.destinationStop,
         "unloadSequence": p.unloadSequence,
     }
+ 

@@ -78,4 +78,3 @@ def place_pallet(container: Container, pallet: Pallet) -> bool:
         elapsed_ms,
     )
     return True
-

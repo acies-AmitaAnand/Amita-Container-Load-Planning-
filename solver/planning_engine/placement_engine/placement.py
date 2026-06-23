@@ -18,6 +18,7 @@ Actions (function calls — sequential order):
 """
 
 from __future__ import annotations
+from copy import deepcopy
 import logging
 import uuid
 from datetime import datetime
@@ -109,11 +110,12 @@ def open_new_container(
         origin=group.originLocationId,
         destinationInSequence=[group.destinationLocationId],
     )
-    container_spec.containerId=cid
-    container_spec.pallets=[]
-    container_spec.summary=summary
+    new_container_spec = deepcopy(container_spec)
+    new_container_spec.containerId=cid
+    new_container_spec.pallets=[]
+    new_container_spec.summary=summary
 
-    return container_spec
+    return new_container_spec
 
 
 # ── Action 3: Load one container ──────────────────────────────────────────────
@@ -151,122 +153,44 @@ def load_pallets_into_container(
     )
 
 
-# ── Action 4: Allocate fleet budget across groups ─────────────────────────────
-
-def allocate_fleet_to_groups(
-    groups: List[ShipmentGroup],
-    fleet_limit: int,
-    avg_pallets_per_container: int = 20,
-) -> List[GroupAllocation]:
-    """
-    Sort groups by estimatedDeliveryDate ASC (most urgent first) then
-    greedily assign trucks from the shared budget.
-
-    Args:
-        groups:                    All lane groups to be shipped.
-        fleet_limit:               Total trucks available across all groups.
-        avg_pallets_per_container: Used to estimate how many trucks a group
-                                   needs before actually packing it.
-                                   Default 20 pallets per 40ft container.
-
-    Returns:
-        List[GroupAllocation] in priority order (most urgent first).
-    """
-    # Sort: earliest delivery date first; ties broken by pallet count DESC
-    sorted_groups = sorted(
-        groups,
-        key=lambda g: (
-            g.estimatedDeliveryDate or datetime.max,
-            -len(g.pallets),
-        ),
-    )
-
-    remaining_budget = fleet_limit
-    allocations: List[GroupAllocation] = []
-
-    logger.info("=" * 70)
-    logger.info("FLEET ALLOCATION — budget: %d trucks across %d groups",
-                fleet_limit, len(sorted_groups))
-
-    for g in sorted_groups:
-        needed = max(1, -(-len(g.pallets) // avg_pallets_per_container))  # ceil div
-        given  = min(needed, remaining_budget)
-        remaining_budget -= given
-
-        alloc = GroupAllocation(
-            group=g,
-            trucks_allocated=given,
-            trucks_needed_estimate=needed,
-            is_fully_funded=(given >= needed),
-        )
-        allocations.append(alloc)
-
-        status = "FULL" if alloc.is_fully_funded else f"PARTIAL {given}/{needed}"
-        logger.info(
-            "  %-40s  date=%-10s  pallets=%3d  trucks=%s  budget_left=%d",
-            g.groupId[:40],
-            g.deliveryDateWindow,
-            len(g.pallets),
-            status,
-            remaining_budget,
-        )
-
-    logger.info("Fleet used: %d / %d", fleet_limit - remaining_budget, fleet_limit)
-    logger.info("=" * 70)
-    return allocations
-
-
-# ── Action 5: Pack one group within its truck budget ─────────────────────────
-
-def optimize_group_with_budget(
+# ── Action 4: Fill containers for one group ───────────────────────────────────
+ 
+def optimize_container_fleet(
     group: ShipmentGroup,
     equipment_spec: Container,
-    max_containers: int,           # hard limit for this group
     lifo: bool = True,
 ) -> ContainerFleetOptimizationResult:
     """
-    Opens up to max_containers trucks for a single lane group.
-    Pallets that do not fit within the budget become unallocated.
+    Opens containers one by one until all pallets in the group are loaded.
+    No fleet cap — containers open as long as pallets remain and at least
+    one pallet fits per container (weight + volume + floor area + position).
     """
     sorted_pallets = sort_pallets_for_loading(group.pallets, lifo=lifo)
     remaining      = list(sorted_pallets)
-
-    all_containers: List[Container]               = []
+ 
+    all_containers: List[Container]                   = []
     all_results:    List[ContainerOptimizationResult] = []
     container_idx = 1
-
-    logger.info(
-        "[%s] packing %d pallets into max %d truck(s)",
-        group.groupId, len(sorted_pallets), max_containers,
-    )
-
-    while remaining and container_idx <= max_containers:
+ 
+    while remaining:
         container = open_new_container(equipment_spec, container_idx, group)
-        result    = load_pallets_into_container(container, remaining)
-
+        result    = load_pallets_into_container(container=container, pallets=remaining)
+ 
         all_containers.append(container)
         all_results.append(result)
         remaining = result.pendingPallets
-
+ 
         if not result.loadedPallets:
-            break   # nothing fit — stop opening containers
-
+            break   # nothing fit — avoid infinite loop
+ 
         container_idx += 1
-
-    # Pallets still left after budget exhausted → unallocated
-    # if remaining:
-    #     logger.warning(
-    #         "[%s] %d pallets unallocated — truck budget (%d) exhausted",
-    #         group.groupId, len(remaining), max_containers,
-    #     )
-
+ 
     total_wt      = sum(c.usedWeightIn_kg for c in all_containers)
     total_max_wt  = sum(c.maxPayloadWeightIn_kg for c in all_containers)
     total_vol     = sum(c.usedVolume_m3 for c in all_containers)
     total_max_vol = sum(c.maxVolume_m3 for c in all_containers)
-
+ 
     return ContainerFleetOptimizationResult(
-        containers=all_containers,
         containerResults=all_results,
         unallocated_pallets=remaining,
         total_pallets=len(group.pallets),
@@ -277,114 +201,37 @@ def optimize_group_with_budget(
     )
 
 
-# ── Action 6: Full pipeline entry point ──────────────────────────────────────
 
+# ── Action 5: Full pipeline ───────────────────────────────────────────────────
+ 
 def run_full_optimization(
     shipment_demand_df: pd.DataFrame,
     sku_pallet_df: pd.DataFrame,
     load_equipment_metadata_df: pd.DataFrame,
     lane_master_df: Optional[pd.DataFrame] = None,
     preferred_equipment_type: str = "CONTAINER",
-    optimizer="SKYLINE",
-    fleet_limit: int = 10,                 # ← total trucks for the entire run
-    avg_pallets_per_container: int = 20,   # ← used for pre-allocation estimate
     lifo: bool = True,
-) -> GlobalFleetResult:
+    optimizer='MAX_RECT_PACKER',
+) -> Dict[str, ContainerFleetOptimizationResult]:
     """
-    End-to-end optimization with a shared fleet budget.
-
-    Steps:
-      1. Feature engineering  → enriched candidate_df
-      2. Breakdown            → Pallet objects
-      3. Group by lane        → ShipmentGroup list
-      4. Fleet allocation     → trucks per group (date-priority order)
-      5. Pack each group      → ContainerFleetOptimizationResult per group
-      6. Collect globals      → GlobalFleetResult
+    Flow:
+      1. Convert units → pallets
+      2. Create groups  (origin, destination, date, priority)
+      3. Sort groups    (earliest date ASC, highest priority DESC)
+      4. For each group, open containers until all pallets are loaded
     """
-
-    # ── 1. Feature engineering ────────────────────────────────────────────
-    candidate_df = create_pallet_features(shipment_demand_df=shipment_demand_df, sku_pallet_df=sku_pallet_df)
-
-    # ── 2. Breakdown into Pallet objects ──────────────────────────────────
-    all_pallets = breakdown_into_pallets(shipment_candidate_df=candidate_df)
-
-    # ── 3. Group by lane (origin × dest × date) ───────────────────────────
-    groups: List[ShipmentGroup] = group_pallets_by_lane(pallets=all_pallets, lane_master_df=lane_master_df, date_granularity='day')
-
-    # ── 4. Select equipment spec ──────────────────────────────────────────
+    candidate_df = create_pallet_features(shipment_demand_df, sku_pallet_df)
+    all_pallets  = breakdown_into_pallets(candidate_df)
+    groups       = group_pallets_by_lane(all_pallets, lane_master_df)
+ 
     mask   = load_equipment_metadata_df["equipment_type"].str.upper() == preferred_equipment_type.upper()
     eq_df  = load_equipment_metadata_df[mask]
     eq_row = eq_df.iloc[0] if len(eq_df) else load_equipment_metadata_df.iloc[0]
-    equipment_spec = load_equipment_to_container_spec(row=eq_row)
-
-    # ── 5. Allocate trucks across groups by delivery date ─────────────────
-    allocations = allocate_fleet_to_groups(
-        groups=groups,
-        fleet_limit=fleet_limit,
-        avg_pallets_per_container=avg_pallets_per_container,
-    )
-
-    # ── 6. Pack each group within its truck budget ────────────────────────
-    group_results: Dict[str, ContainerFleetOptimizationResult] = {}
-    all_unallocated: List[Pallet] = []
-    total_trucks_used = 0
-
-    for alloc in allocations:
-        if alloc.trucks_allocated == 0:
-            # No budget at all — all pallets are unallocated
-            all_unallocated.extend(alloc.group.pallets)
-            logger.warning(
-                "[%s] 0 trucks allocated — all %d pallets unallocated",
-                alloc.group.groupId, len(alloc.group.pallets),
-            )
-            # Record an empty result so the group still appears in output
-            group_results[alloc.group.groupId] = ContainerFleetOptimizationResult(
-                containers=[],
-                containerResults=[],
-                unallocated_pallets=list(alloc.group.pallets),
-                total_pallets=len(alloc.group.pallets),
-                total_containers=0,
-                fleet_weight_utilization_pct=0,
-                fleet_volume_utilization_pct=0,
-                optimizer_run_id=uuid.uuid4().hex,
-            )
-            continue
-
-        fleet_result = optimize_group_with_budget(
-            group=alloc.group,
-            equipment_spec=equipment_spec,
-            max_containers=alloc.trucks_allocated,
-            lifo=lifo,
-        )
-        group_results[alloc.group.groupId] = fleet_result
-        all_unallocated.extend(fleet_result.unallocated_pallets)
-        total_trucks_used += fleet_result.total_containers
-
-    total_loaded = sum(
-        r.total_containers > 0 and
-        sum(len(cr.loadedPallets) for cr in r.containerResults)
-        for r in group_results.values()
-    )
-
-    logger.info(
-        "RUN COMPLETE — trucks_used=%d/%d  loaded=%d  unallocated=%d",
-        total_trucks_used, fleet_limit,
-        sum(len(cr.loadedPallets) for r in group_results.values()
-            for cr in r.containerResults),
-        len(all_unallocated),
-    )
-
-    return GlobalFleetResult(
-        group_results=group_results,
-        allocations=allocations,
-        total_trucks_used=total_trucks_used,
-        fleet_limit=fleet_limit,
-        total_pallets=len(all_pallets),
-        total_loaded_pallets=sum(
-            len(cr.loadedPallets)
-            for r in group_results.values()
-            for cr in r.containerResults
-        ),
-        total_unallocated_pallets=len(all_unallocated),
-        unallocated_pallets=all_unallocated,
-    )
+    equipment_spec = load_equipment_to_container_spec(eq_row)
+ 
+    return {
+        group.groupId: optimize_container_fleet(group, equipment_spec, lifo=lifo)
+        for group in groups
+    }
+ 
+ 

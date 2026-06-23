@@ -260,13 +260,13 @@ function AxisHelper({ container }) {
   const len = 2000; // 2 m arms
 
   return (
-    <group position={[ox, 0, oz]}>
+    <group position={[ox-500, -500, oz]}>
       <Line points={[[0,0,0],[len,0,0]]} color="red" />
       <Line points={[[0,0,0],[0,len,0]]} color="green" />
       <Line points={[[0,0,0],[0,0,len]]} color="blue" />
-      <Text position={[len+200,0,0]} background="#20ff00" color='black' fontSize={200}>Depth (X)</Text>
-      <Text position={[0,len+200,0]} background="#20ff00" color='black' fontSize={200}>Height (Y)</Text>
-      <Text position={[0,0,len+200]} background="#20ff00" color='black' fontSize={200}>Width (Z)</Text>
+      <Text position={[len+200,0,0]} color='black' fontSize={200}>Depth (X)</Text>
+      <Text position={[0,len+200,0]} color='black' fontSize={200}>Height (Y)</Text>
+      <Text position={[0,0,len+200]} color='black' fontSize={200}>Width (Z)</Text>
     </group>
   );
 }

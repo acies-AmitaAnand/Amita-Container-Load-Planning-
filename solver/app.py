@@ -10,7 +10,7 @@ import pandas as pd
 
 ##
 from planning_engine.placement_engine.placement import run_full_optimization
-from planning_engine.export_results import export_all_containers_json
+from planning_engine.export_results import export_container_json
 from utils.measure_conversion import *
 
 logger = getLogger("main application")
@@ -34,11 +34,17 @@ sku_uom_df = pd.concat(
     axis=1
 )
 
+# File filter:
+shipment_demand_df['estimated_delivery_date'] = pd.to_datetime(shipment_demand_df["estimated_delivery_date"], errors="coerce")
+shipment_demand_df = shipment_demand_df[shipment_demand_df['estimated_delivery_date']==pd.to_datetime('2026-04-13')]
+
 sku_uom_column_mapper = {x:x for x in sku_uom_df.columns}
 sku_uom_column_mapper['height_mm'] = 'pallet_height_mm'
 sku_uom_column_mapper['width_mm'] = 'pallet_width_mm'
 sku_uom_column_mapper['length_mm'] = 'pallet_length_mm'
 sku_uom_df.rename(columns=sku_uom_column_mapper, inplace=True)
+
+
 
 
 result = run_full_optimization(
@@ -47,10 +53,8 @@ result = run_full_optimization(
     load_equipment_metadata_df=load_equipment_metadata_df,
     lane_master_df=lane_master_df,
     preferred_equipment_type='CONTAINER',
-    optimizer="SKYLINE",
-    fleet_limit=20,# Truck & Container limit               # 10 trucks total, all groups
-    avg_pallets_per_container=40, # tune to your actual pallet density
     lifo=True,
+    optimizer="MAX_RECT_PACKER",
 )
 
-paths = export_all_containers_json(result, out_dir="./output")
+paths = export_container_json(fleet_result=result, out_dir="./output")

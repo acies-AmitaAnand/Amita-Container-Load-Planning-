@@ -10,6 +10,7 @@ from planning_engine.utility.utils import orientations
 
 logger = logging.getLogger("placement_engine")
 
+
 # ---------------------------------------------------------------------------
 # Maximal Rectangles packer  (Best-Short-Side Fit + back-first bias)
 # ---------------------------------------------------------------------------
