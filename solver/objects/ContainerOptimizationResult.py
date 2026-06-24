@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import uuid
 
 from pydantic import Field
@@ -17,6 +17,6 @@ class ContainerOptimizationResult(PydanticBaseModel):
     loadedPallets: List[Pallet]
     pendingPallets: List[Pallet]
     axleLoads: List[AxleLoadResult]
-    utilization: UtilizationMetrics
-    remainingCapacity: RemainingCapacity
+    utilization: Optional[UtilizationMetrics] = None
+    remainingCapacity: Optional[RemainingCapacity] = None
     optimizer_run_id: str = Field(default_factory=lambda: uuid.uuid4().hex)

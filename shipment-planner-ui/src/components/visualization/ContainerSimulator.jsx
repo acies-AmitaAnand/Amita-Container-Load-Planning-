@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Box, Html, Text, Line } from "@react-three/drei";
 import MetricsPanel from "../../components/visualization/MetricsPanel";
-import { calculateMetrics } from "../../components/visualization/utils/calculateMetrics";
+import { calculateMetrics, extractMetrics } from "../../components/visualization/utils/calculateMetrics";
 import * as THREE from "three";
 
 // =====================================================
@@ -304,8 +304,7 @@ export default function ContainerSimulator() {
   const [showGrid,      setShowGrid]      = useState(true);
 
   const totalWeight = pallets.reduce((a, b) => a + (b.weight || 0), 0);
-  const metrics     = calculateMetrics(container, pallets);
-
+  const metrics = extractMetrics(container);
   // Camera sits back far enough to see the whole container in mm-space
   const camDist = container.containerDepth;
 

@@ -182,37 +182,36 @@ def breakdown_into_pallets(shipment_candidate_df: pd.DataFrame) -> List[Pallet]:
 def group_pallets_by_lane(
     pallets: List[Pallet],
     lane_master_df: pd.DataFrame | None = None,
-    date_granularity: str = "day",   # "day" | "week"
 ) -> List[ShipmentGroup]:
     """
-    Groups pallets by (origin, destination, delivery_date_window).
-    Optionally enriches with lane metadata.
+    Groups pallets by (origin, destination) only — date is NOT part of the key.
+    Each group = one lane. Pallets inside are sorted by date so the container
+    loop can advance day-by-day (oldest date first, then next, etc.).
+    Groups themselves are sorted by their earliest delivery date so the most
+    urgent lane gets a container first.
     """
     from collections import defaultdict
-
+ 
     bucket: Dict[Tuple, List[Pallet]] = defaultdict(list)
-
     for p in pallets:
-        if date_granularity == "week":
-            dt_key = p.estimatedDeliveryDate.strftime("%Y-W%W")
-        else:
-            dt_key = p.estimatedDeliveryDate.strftime("%Y-%m-%d")
-
-        key = (p.originLocationId, p.destinationLocationId, dt_key)
-        bucket[key].append(p)
-
+        bucket[(p.originLocationId, p.destinationLocationId)].append(p)
+ 
     groups: List[ShipmentGroup] = []
-    for idx, ((origin, dest, dt_key), pallet_list) in enumerate(bucket.items()):
-        group_id = f"GRP_{origin}_{dest}_{dt_key}".replace(" ", "_").replace("-", "")
+    for (origin, dest), pallet_list in bucket.items():
+        # Sort pallets inside the lane: oldest date first, then priority/service/weight
+        sorted_lane = sort_pallets_for_loading(pallet_list)
+        earliest    = sorted_lane[0].estimatedDeliveryDate
         groups.append(ShipmentGroup(
-            groupId=group_id,
+            groupId=f"GRP_{origin}_{dest}".replace(" ", "_"),
             originLocationId=origin,
             destinationLocationId=dest,
-            deliveryDateWindow=dt_key,
-            pallets=pallet_list,
-            estimatedDeliveryDate=pallet_list[0].estimatedDeliveryDate,
+            deliveryDateWindow=earliest.strftime("%Y-%m-%d"),
+            pallets=sorted_lane,
+            estimatedDeliveryDate=earliest,
         ))
 
+    # Most urgent lane (earliest delivery date) gets a container first
+    groups.sort(key=lambda g: g.estimatedDeliveryDate)
     return groups
 
 

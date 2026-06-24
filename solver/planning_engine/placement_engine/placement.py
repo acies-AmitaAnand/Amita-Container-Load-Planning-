@@ -22,7 +22,7 @@ from copy import deepcopy
 import logging
 import uuid
 from datetime import datetime
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 
 import pandas as pd
 
@@ -95,26 +95,23 @@ def load_equipment_to_container_spec(row: pd.Series) -> Container:
 
 
 # ── Action 2: Open a single fresh container ───────────────────────────────────
-
+ 
 def open_new_container(
     container_spec: Container,
     container_idx: int,
     group: ShipmentGroup,
 ) -> Container:
-    cid = (
-        f"CONT_{group.originLocationId}_{group.destinationLocationId}"
-        f"_{group.deliveryDateWindow}_{container_idx:03d}"
-    )
+    cid = f"CONT_{group.originLocationId}_{group.destinationLocationId}_{container_idx:03d}"
     summary = ContainerSummary(
         routeId=group.groupId,
         origin=group.originLocationId,
         destinationInSequence=[group.destinationLocationId],
     )
+    
     new_container_spec = deepcopy(container_spec)
     new_container_spec.containerId=cid
     new_container_spec.pallets=[]
     new_container_spec.summary=summary
-
     return new_container_spec
 
 
@@ -124,7 +121,7 @@ def load_pallets_into_container(
     container: Container,
     pallets: List[Pallet],
 ) -> ContainerOptimizationResult:
-    reset_packer(container.containerId)
+    """Try to place each pallet. Returns what was loaded vs what is still pending."""
     loaded:  List[Pallet] = []
     pending: List[Pallet] = []
 
@@ -135,21 +132,13 @@ def load_pallets_into_container(
         else:
             pending.append(pallet)
 
-    container.summary.totalPallets     = len(loaded)
-    container.summary.totalWeightIn_kg = round(container.usedWeightIn_kg, 2)
-    container.summary.totalVolumeIn_m3 = round(container.usedVolume_m3, 4)
-
-    axle_loads            = compute_axle_loads(container)
-    utilization, remaining = compute_utilization(container, pending)
-    log_container_summary(container, pending)
-
     return ContainerOptimizationResult(
         container=container,
         loadedPallets=loaded,
         pendingPallets=pending,
-        axleLoads=axle_loads,
-        utilization=utilization,
-        remainingCapacity=remaining,
+        axleLoads=[],        # computed once when container closes
+        utilization=None,    # computed once when container closes
+        remainingCapacity=None,
     )
 
 
@@ -157,33 +146,96 @@ def load_pallets_into_container(
  
 def optimize_container_fleet(
     group: ShipmentGroup,
-    equipment_spec: Container,
+    equipment_spec: Dict[str, Any],
     lifo: bool = True,
+    max_containers: int = 999,
 ) -> ContainerFleetOptimizationResult:
     """
-    Opens containers one by one until all pallets in the group are loaded.
-    No fleet cap — containers open as long as pallets remain and at least
-    one pallet fits per container (weight + volume + floor area + position).
+    For a lane (origin → destination):
+      - Open a container.
+      - Fill it with pallets for the oldest delivery date first.
+      - When that date's pallets are exhausted, advance to the next date
+        and keep filling the SAME container (it may still have capacity).
+      - When the container is full (nothing fits), close it and open the next.
+      - Stop when all pallets are loaded or max_containers is reached.
     """
-    sorted_pallets = sort_pallets_for_loading(group.pallets, lifo=lifo)
-    remaining      = list(sorted_pallets)
+    # Pallets are pre-sorted by date inside the group (group_pallets_by_lane did this).
+    # Build an ordered list of unique dates so we can iterate day-by-day.
+    from itertools import groupby
+ 
+    # Bucket pallets by date string — order is already date ASC from group_pallets_by_lane
+    date_buckets: List[Tuple[str, List[Pallet]]] = [
+        (dt, list(ps))
+        for dt, ps in groupby(
+            group.pallets,
+            key=lambda p: p.estimatedDeliveryDate.strftime("%Y-%m-%d")
+        )
+    ]
  
     all_containers: List[Container]                   = []
     all_results:    List[ContainerOptimizationResult] = []
+    unallocated:    List[Pallet]                      = []
     container_idx = 1
  
-    while remaining:
-        container = open_new_container(equipment_spec, container_idx, group)
-        result    = load_pallets_into_container(container=container, pallets=remaining)
+    date_idx = 0   # which day we are currently filling from
  
+    while date_idx < len(date_buckets) and container_idx <= max_containers:
+        container      = open_new_container(container_spec=equipment_spec, container_idx=container_idx, group=group)
+        loaded_any     = False
+        local_date_idx = date_idx   # walk forward inside this container
+ 
+        while local_date_idx < len(date_buckets):
+            dt_key, day_pallets = date_buckets[local_date_idx]
+ 
+            result = load_pallets_into_container(container, day_pallets)
+ 
+            if result.loadedPallets:
+                loaded_any = True
+                # Update the bucket to only what was not loaded (partial day)
+                date_buckets[local_date_idx] = (dt_key, result.pendingPallets)
+ 
+                if not result.pendingPallets:
+                    # This date is fully loaded — advance the global date cursor
+                    date_idx        = local_date_idx + 1
+                    local_date_idx += 1
+                    # Try to keep filling the same container with the next date
+                else:
+                    # Container is full mid-day — close it, retry same date next container
+                    break
+            else:
+                if not loaded_any:
+                    # Nothing from this date fits at all — skip it entirely
+                    unallocated.extend(day_pallets)
+                    date_buckets[local_date_idx] = (dt_key, [])
+                    date_idx        = local_date_idx + 1
+                    local_date_idx += 1
+                else:
+                    # Container full, next date will start fresh in a new container
+                    break
+
+        if not loaded_any:
+            break  # safety: nothing loaded in any date — stop
+
         all_containers.append(container)
-        all_results.append(result)
-        remaining = result.pendingPallets
- 
-        if not result.loadedPallets:
-            break   # nothing fit — avoid infinite loop
- 
+        pending_this_container = [p for _, ps in date_buckets[date_idx:] for p in ps]
+        axle_loads                 = compute_axle_loads(container)
+        utilization, remaining_cap = compute_utilization(container, pending_this_container)
+        container.summary.totalPallets     = len(container.pallets)
+        container.summary.totalWeightIn_kg = round(container.usedWeightIn_kg, 2)
+        container.summary.totalVolumeIn_m3 = round(container.usedVolume_m3, 4)
+        log_container_summary(container, pending_this_container)
+        all_results.append(ContainerOptimizationResult(
+            container=container,
+            loadedPallets=list(container.pallets),
+            pendingPallets=pending_this_container,
+            axleLoads=axle_loads,
+            utilization=utilization,
+            remainingCapacity=remaining_cap,
+        ))
         container_idx += 1
+ 
+    # Anything left in date_buckets after the loop is unallocated
+    unallocated += [p for _, ps in date_buckets[date_idx:] for p in ps]
  
     total_wt      = sum(c.usedWeightIn_kg for c in all_containers)
     total_max_wt  = sum(c.maxPayloadWeightIn_kg for c in all_containers)
@@ -191,14 +243,16 @@ def optimize_container_fleet(
     total_max_vol = sum(c.maxVolume_m3 for c in all_containers)
  
     return ContainerFleetOptimizationResult(
+        containers=all_containers,
         containerResults=all_results,
-        unallocated_pallets=remaining,
+        unallocated_pallets=unallocated,
         total_pallets=len(group.pallets),
         total_containers=len(all_containers),
         fleet_weight_utilization_pct=round(total_wt  / total_max_wt  * 100, 2) if total_max_wt  else 0,
         fleet_volume_utilization_pct=round(total_vol / total_max_vol * 100, 2) if total_max_vol else 0,
         optimizer_run_id=uuid.uuid4().hex,
     )
+
 
 
 
@@ -210,28 +264,42 @@ def run_full_optimization(
     load_equipment_metadata_df: pd.DataFrame,
     lane_master_df: Optional[pd.DataFrame] = None,
     preferred_equipment_type: str = "CONTAINER",
+    fleet_limit: int = 10,
     lifo: bool = True,
-    optimizer='MAX_RECT_PACKER',
 ) -> Dict[str, ContainerFleetOptimizationResult]:
     """
     Flow:
       1. Convert units → pallets
-      2. Create groups  (origin, destination, date, priority)
-      3. Sort groups    (earliest date ASC, highest priority DESC)
-      4. For each group, open containers until all pallets are loaded
+      2. Create groups by lane (origin, destination) — sorted by earliest date
+      3. For each lane, fill containers day-by-day from the shared fleet budget
     """
-    candidate_df = create_pallet_features(shipment_demand_df, sku_pallet_df)
-    all_pallets  = breakdown_into_pallets(candidate_df)
-    groups       = group_pallets_by_lane(all_pallets, lane_master_df)
+    candidate_df   = create_pallet_features(shipment_demand_df, sku_pallet_df)
+    all_pallets    = breakdown_into_pallets(candidate_df)
+    groups         = group_pallets_by_lane(all_pallets, lane_master_df)
  
     mask   = load_equipment_metadata_df["equipment_type"].str.upper() == preferred_equipment_type.upper()
     eq_df  = load_equipment_metadata_df[mask]
     eq_row = eq_df.iloc[0] if len(eq_df) else load_equipment_metadata_df.iloc[0]
     equipment_spec = load_equipment_to_container_spec(eq_row)
  
-    return {
-        group.groupId: optimize_container_fleet(group, equipment_spec, lifo=lifo)
-        for group in groups
-    }
+    results:         Dict[str, ContainerFleetOptimizationResult] = {}
+    containers_used: int = 0
  
+    for group in groups:
+        budget = fleet_limit - containers_used
+        if budget <= 0:
+            results[group.groupId] = ContainerFleetOptimizationResult(
+                containers=[], containerResults=[],
+                unallocated_pallets=list(group.pallets),
+                total_pallets=len(group.pallets), total_containers=0,
+                fleet_weight_utilization_pct=0, fleet_volume_utilization_pct=0,
+                optimizer_run_id=uuid.uuid4().hex,
+            )
+            continue
+        result = optimize_container_fleet(
+            group, equipment_spec, lifo=lifo, max_containers=budget
+        )
+        results[group.groupId]  = result
+        containers_used        += result.total_containers
  
+    return results

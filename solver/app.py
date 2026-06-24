@@ -36,7 +36,7 @@ sku_uom_df = pd.concat(
 
 # File filter:
 shipment_demand_df['estimated_delivery_date'] = pd.to_datetime(shipment_demand_df["estimated_delivery_date"], errors="coerce")
-shipment_demand_df = shipment_demand_df[shipment_demand_df['estimated_delivery_date']==pd.to_datetime('2026-04-13')]
+shipment_demand_df = shipment_demand_df[shipment_demand_df['estimated_delivery_date']>=pd.to_datetime('2026-04-10')]
 
 sku_uom_column_mapper = {x:x for x in sku_uom_df.columns}
 sku_uom_column_mapper['height_mm'] = 'pallet_height_mm'
@@ -54,7 +54,7 @@ result = run_full_optimization(
     lane_master_df=lane_master_df,
     preferred_equipment_type='CONTAINER',
     lifo=True,
-    optimizer="MAX_RECT_PACKER",
+    # optimizer="MAX_RECT_PACKER",
 )
 
 paths = export_container_json(fleet_result=result, out_dir="./output")

@@ -19,16 +19,14 @@ class Pallet(PydanticBaseModel):
     originLocationId: str
     destinationLocationId: str
     estimatedDeliveryDate: datetime
-    
+ 
     dimensions: Dimension
     position: Position = Field(default_factory=Position)
-
     label: str = Field(default="", description="Label for displaying")
-    color: str = Field(default="#FF0000", description="Hex color code")
-    weightIn_kg: float = Field(default=0, description="Weight of the pallet")
-    floorArea_m2: float = Field(default=0, description="Floor occupancy in meter^2")
-    volume_m3: float = Field(default=0, description="Volume of pallet in meter^3")
-
+    color: str = Field(default="#4CAF50", description="Hex color code")
+    weightIn_kg: float = Field(default=0.0)
+    floorArea_m2: float = Field(default=0.0)
+    volume_m3: float = Field(default=0.0)
     priority: int = 0
     serviceLevel: int = 0
     unitsInPallet: int = 0
@@ -36,14 +34,14 @@ class Pallet(PydanticBaseModel):
     fillPct: float = 1.0
     loadedToContainer: bool = False
     rejectionReason: str = ""
-
     unloadSequence: int = Field(default=0, description="LIFO unload order (1=first out)")
     destinationStop: int = Field(default=0, description="Multi-stop destination index")
     isFragile: bool = False
     isHazmat: bool = False
     temperatureRequirement: str = Field(default="ambient")
-
+ 
     def model_post_init(self, __context) -> None:
         d = self.dimensions
         self.floorArea_m2 = (d.depth * d.width) / 1_000_000
         self.volume_m3 = (d.depth * d.width * d.height) / 1_000_000_000
+ 

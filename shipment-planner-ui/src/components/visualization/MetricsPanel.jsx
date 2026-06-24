@@ -29,42 +29,71 @@ export default function MetricsPanel({
 			label:
 				"Avg Stack Height",
 			value:
-				metrics.avgStackHeight
+				metrics.avgStackHeight // Need to calculate
 		},
 
 		{
 			label:
 				"Stack Density",
 			value:
-				metrics.stackDensity
+				metrics.stackDensity // Need to calculate
 		},
 
 		{
 			label:
 				"Stability Index",
 			value:
-				metrics.stabilityIndex
+				metrics.stabilityIndex // Need to calculate
 		},
 
 		{
 			label:
 				"Void Space Ratio",
 			value:
-				`${metrics.voidRatio}%`
+				`${metrics.voidRatio}%` // Need to calculate
 		},
 
 		{
 			label:
 				"Pallets per Truck",
 			value:
-				metrics.palletsPerTruck
+				metrics.palletsPerContainer
 		},
 
 		{
 			label:
 				"Effective Utilization",
 			value:
-				`${metrics.utilizationScore}%`
+				`${metrics.utilizationScore}%` // Need to calculate
+
+		}
+		,
+		{
+			label:
+				"Container Maximum Weight",
+			value:
+				`${metrics.totalMaxWeight}`
+		}
+		,
+		{
+			label:
+				"Consumed Weight",
+			value:
+				`${metrics.consumedWeight}`
+		}
+		,
+		{
+			label:
+				"Container Maximum Volume",
+			value:
+				`${metrics.totalMaxVolume}`
+		}
+		,
+		{
+			label:
+				"Occupied Volume",
+			value:
+				`${metrics.consumedVolume}`
 		}
 	];
 
