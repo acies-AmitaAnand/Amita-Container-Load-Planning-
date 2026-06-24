@@ -289,3 +289,69 @@ locations.to_sql(
 print(
     "ETL Completed Successfully"
 )
+
+
+
+###
+
+
+import json
+
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+import os
+from sqlalchemy.dialects.postgresql import JSON
+
+load_dotenv()
+
+DATABASE_URL = os.getenv(
+    "NEON_DB_URL"
+)
+
+engine = create_engine(
+    DATABASE_URL
+)
+
+
+item_sku_uom = pd.read_csv(r"D:\acies_solutions\references\reference_data_in_csv\item uom details.csv", encoding='latin-1')
+item_sku_uom['Pallet Weight'] = pd.to_numeric(item_sku_uom['Weight'].str.replace(',', '', regex=False), errors='coerce')
+item_sku_uom['No of units in BUOM'] = pd.to_numeric(item_sku_uom['No of units in BUOM'], errors='coerce')
+item_sku_uom['sku_id'] = item_sku_uom['Item.[Item]'].apply(lambda val: val.split("-")[0].strip())
+
+
+item_sku_uom['pallet_weight_in_kg'] = item_sku_uom.apply(
+    lambda row: (row['Pallet Weight']*0.453592) if row['Weight UoM']=='LB' else (row['Pallet Weight']), axis=1)
+
+item_sku_uom['pallet_weight_in_kg'] = item_sku_uom['pallet_weight_in_kg'].round(2)
+
+item_sku_uom['item_weight_in_kg'] = item_sku_uom.apply(
+    lambda row: ((row['Pallet Weight']*0.453592)/max(row['No of units in BUOM'], 1)) if row['Weight UoM']=='LB' else (row['Pallet Weight']/max(1, row['No of units in BUOM'])), axis=1)
+item_sku_uom['item_weight_in_kg'] = item_sku_uom['item_weight_in_kg'].round(2)
+
+
+filtered_item_sku_uom = item_sku_uom[item_sku_uom['UOM.[UOM]']=='PAL - Pallet']
+
+sku_uom_df['sku_id'] = sku_uom_df['sku_id'].astype(str)
+filtered_item_sku_uom['sku_id'] = filtered_item_sku_uom['sku_id'].astype(str)
+
+new_sku_uom_df = pd.merge(sku_uom_df, filtered_item_sku_uom[['sku_id',
+	'item_weight_in_kg',
+	'pallet_weight_in_kg']], how='left', left_on='sku_id', right_on='sku_id')
+
+
+# new_sku_uom_df['pallet_dimensions'] = new_sku_uom_df['pallet_dimensions'].apply(
+#         lambda x: json.dumps(x) if isinstance(x, dict) else None
+#     )
+new_sku_uom_df.drop(columns=['weight_kg'], inplace=True, errors='ignore')
+new_sku_uom_df.to_sql(
+    "sku_unit_of_measure",
+    engine,
+    if_exists="delete_rows",
+    index=False,
+    dtype={
+        "case_dimensions": JSON,
+        "pallet_dimensions": JSON,
+        "box_dimensions": JSON,
+    }
+
+)

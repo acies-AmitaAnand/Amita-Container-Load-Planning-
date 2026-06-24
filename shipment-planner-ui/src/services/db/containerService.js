@@ -185,7 +185,7 @@ export function buildContainerInputs({
 				container: {
 					containerId: container.container_id,
 					containerType: container.container_type,
-					length: container.length,
+					length: container.depth,
 
 					width:
 						container.width,
