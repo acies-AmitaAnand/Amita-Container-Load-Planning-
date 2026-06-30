@@ -1,62 +1,116 @@
-
-import {
-	Link
-} from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const menus = [
-
-	{
-		label: "Data Loading",
-		path: "/data-loading"
-	},
-
-	{
-		label: "UOM Configuration",
-		path: "/uom-configuration"
-	},
-
-	{
-		label: "Item Master",
-		path: "/item-master"
-	},
-
-	{
-		label: "Route View",
-		path: "/route-view"
-	},
-
-	{
-		label: "Container Visualization",
-		path: "/container-visualization"
-	},
-
-	{
-		label: "Parameter Admin",
-		path: "/parameter-admin"
-	}
+	{ label: "Data Loading", path: "/data-loading", icon: "📥" },
+	{ label: "UOM Configuration", path: "/uom-configuration", icon: "⚙️" },
+	{ label: "Item Master", path: "/item-master", icon: "📦" },
+	{ label: "Route View", path: "/route-view", icon: "🛣️" },
+	{ label: "Container Visualization", path: "/container-visualization", icon: "🚛" },
+	{ label: "Parameter Admin", path: "/parameter-admin", icon: "🔧" },
 ];
-export default function Sidebar() {
+
+const EXPANDED_WIDTH = 260;
+const COLLAPSED_WIDTH = 64;
+
+export default function Sidebar({ collapsed, onToggle }) {
+	const location = useLocation();
+
 	return (
 		<div
 			style={{
-				width: "260px",
-				flexShrink: 0,        // ← prevents the sidebar from being squeezed or ignored
-				background: "#ffffff",
-				color: "#000000",
-				padding: "20px",
+				width: collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH,
+				flexShrink: 0,
+				background: "#111827",
+				color: "white",
+				padding: "20px 12px",
+				height: "100vh",
 				overflowY: "auto",
-				height: "100%",
+				overflowX: "hidden",
+				transition: "width 0.2s ease",
+				position: "relative",
 			}}
 		>
-			<h2>Shipment Planner</h2>
-			<hr />
-			{menus.map((menu) => (
-				<div key={menu.path} style={{ marginBottom: "15px" }}>
-					<Link to={menu.path} style={{ color: "black", textDecoration: "none", }}>
-						<u>{menu.label}</u>
-					</Link>
-				</div>
-			))}
+			{/* Toggle button */}
+			<button
+				onClick={onToggle}
+				aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+				style={{
+					position: "absolute",
+					top: 16,
+					right: collapsed ? "50%" : 12,
+					transform: collapsed ? "translateX(50%)" : "none",
+					background: "#1f2937",
+					border: "none",
+					color: "white",
+					width: 28,
+					height: 28,
+					borderRadius: 6,
+					cursor: "pointer",
+					fontSize: 14,
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
+				{collapsed ? "›" : "‹"}
+			</button>
+
+			<h2
+				style={{
+					fontSize: collapsed ? 0 : 20,
+					opacity: collapsed ? 0 : 1,
+					height: collapsed ? 0 : "auto",
+					overflow: "hidden",
+					transition: "opacity 0.15s ease",
+					marginTop: collapsed ? 8 : 40,
+					marginBottom: collapsed ? 0 : 12,
+					whiteSpace: "nowrap",
+				}}
+			>
+				Shipment Planner
+			</h2>
+
+			<hr style={{ borderColor: "#374151", marginTop: collapsed ? 44 : 0 }} />
+
+			<nav style={{ marginTop: 12 }}>
+				{menus.map((menu) => {
+					const isActive = location.pathname === menu.path;
+					return (
+						<Link
+							key={menu.path}
+							to={menu.path}
+							title={collapsed ? menu.label : undefined}
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: 10,
+								padding: "10px 8px",
+								marginBottom: 4,
+								borderRadius: 6,
+								color: "white",
+								textDecoration: "none",
+								background: isActive ? "#1f2937" : "transparent",
+								whiteSpace: "nowrap",
+								overflow: "hidden",
+							}}
+						>
+							<span style={{ fontSize: 16, flexShrink: 0, width: 20, textAlign: "center" }}>
+								{menu.icon}
+							</span>
+							<span
+								style={{
+									opacity: collapsed ? 0 : 1,
+									transition: "opacity 0.15s ease",
+									fontSize: 14,
+								}}
+							>
+								{menu.label}
+							</span>
+						</Link>
+					);
+				})}
+			</nav>
 		</div>
 	);
 }
