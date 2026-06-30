@@ -44,7 +44,7 @@ sku_uom_column_mapper['width_mm'] = 'pallet_width_mm'
 sku_uom_column_mapper['length_mm'] = 'pallet_length_mm'
 sku_uom_df.rename(columns=sku_uom_column_mapper, inplace=True)
 
-
+shipment_demand_df = shipment_demand_df[(shipment_demand_df['origin_location_id']=='151') & (shipment_demand_df['destination_location_id']=='0720')]
 
 
 result = run_full_optimization(

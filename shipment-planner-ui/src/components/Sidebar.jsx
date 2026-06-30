@@ -35,51 +35,28 @@ const menus = [
 		path: "/parameter-admin"
 	}
 ];
-
 export default function Sidebar() {
-
 	return (
-
 		<div
 			style={{
 				width: "260px",
-				background: "#111827",
-				color: "white",
-				padding: "20px"
+				flexShrink: 0,        // ← prevents the sidebar from being squeezed or ignored
+				background: "#ffffff",
+				color: "#000000",
+				padding: "20px",
+				overflowY: "auto",
+				height: "100%",
 			}}
 		>
-
-			<h2>
-				Shipment Planner
-			</h2>
-
+			<h2>Shipment Planner</h2>
 			<hr />
-
 			{menus.map((menu) => (
-
-				<div
-					key={menu.path}
-					style={{
-						marginBottom: "15px"
-					}}
-				>
-
-					<Link
-						to={menu.path}
-
-						style={{
-							color: "white",
-							textDecoration: "none"
-						}}
-					>
-
-						{menu.label}
-
+				<div key={menu.path} style={{ marginBottom: "15px" }}>
+					<Link to={menu.path} style={{ color: "black", textDecoration: "none", }}>
+						<u>{menu.label}</u>
 					</Link>
-
 				</div>
 			))}
-
 		</div>
 	);
 }

@@ -2,7 +2,7 @@ import {
 	Outlet
 } from "react-router-dom";
 
-import Sidebar from "./Sidebar";
+import Sidebar from "../../components/Sidebar";
 
 export default function MainLayout() {
 
@@ -14,15 +14,13 @@ export default function MainLayout() {
 				height: "100vh"
 			}}
 		>
-
-			<Sidebar />
-
 			<div
 				style={{
 					flex: 1,
 					padding: "20px",
 					overflow: "auto",
-					background: "#f3f4f6"
+					background: "#ffffff",
+					color:"#000000",
 				}}
 			>
 
