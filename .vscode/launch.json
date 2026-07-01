@@ -13,12 +13,21 @@
       "command": "npm run dev"
     },
     {
-      "name": "Py Debugger: Placement Engine",
+      "name": "Py: Placement Engine",
       "type": "debugpy",
       "cwd": "${workspaceFolder}/solver",
       "request": "launch",
       "program": "app.py",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Py: FastAPI Server",
+      "type": "debugpy",
+      "cwd": "${workspaceFolder}/solver",
+      "module": "uvicorn",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "args": ["fastapi-main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
     }
   ]
 }
