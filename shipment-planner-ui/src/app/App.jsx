@@ -16,7 +16,9 @@ import ItemMaster from "../pages/item-master/ItemMaster";
 
 import RouteView from "../pages/route-view/RouteView";
 
-import ContainerVisualization from "../pages/container-visualization/ContainerVisualization";
+// import ContainerVisualization from "../pages/container-visualization/ContainerVisualization";
+
+import MultiContainerView from "../pages/container-visualization/MultiContainerView";
 
 import ParameterAdmin from "../pages/parameter-admin/ParameterAdmin";
 
@@ -63,7 +65,7 @@ export default function App() {
 				/>
 				<Route
 					path="container-visualization"
-					element={<ContainerVisualization />}
+					element={<MultiContainerView />}
 				/>
 
 				<Route

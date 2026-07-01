@@ -318,8 +318,7 @@ function CameraController({ viewMode }) {
 import PalletDetailPanel from "../../components/visualization/PalletDetailPanel";
 
 
-export default function ContainerSimulator() {
-	const payload = getPayloadFromUrl();
+export default function ContainerSimulator({key, payload}) {
 	const container = payload;
 	const pallets = payload.pallets || [];
 
