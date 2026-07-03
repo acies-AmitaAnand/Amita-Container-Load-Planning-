@@ -22,7 +22,9 @@ import MultiContainerView from "../pages/container-visualization/MultiContainerV
 
 import ParameterAdmin from "../pages/parameter-admin/ParameterAdmin";
 
+import PlannerConfig       from "../pages/PlannerConfig";
 
+import DataTable           from "../components/DataTable";
 // ...other page imports
 
 export default function App() {
@@ -33,47 +35,25 @@ export default function App() {
         <div style={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
 
 		<Routes>
-
+			<Route path="/data-loading"
+				element={<DataTable table="shipment_demand"   title="Shipment Demand" />} />
+			<Route path="/uom-configuration"
+				element={<DataTable table="sku_pallet_master" title="SKU / Pallet Master" />} />
+			<Route path="/item-master"
+				element={<DataTable table="load_equipment"    title="Load Equipment" />} />
+			<Route path="/route-view"
+				element={<DataTable table="lane_master"       title="Lane Master" />} />
+			<Route path="/container-visualization"
+				element={<MultiContainerView />} />
+			<Route path="/parameter-admin"
+				element={<PlannerConfig />} />
 			<Route
-				path="/"
-				element={<MainLayout />}
-			>
+				path="container-visualization"
+				element={<MultiContainerView />}
+			/>
 
-				<Route
-					index
-					element={<Dashboard />}
-				/>
-
-				<Route
-					path="data-loading"
-					element={<DataLoading />}
-				/>
-
-				<Route
-					path="uom-configuration"
-					element={<UOMConfiguration />}
-				/>
-
-				<Route
-					path="item-master"
-					element={<ItemMaster />}
-				/>
-
-				<Route
-					path="route-view"
-					element={<RouteView />}
-				/>
-				<Route
-					path="container-visualization"
-					element={<MultiContainerView />}
-				/>
-
-				<Route
-					path="parameter-admin"
-					element={<ParameterAdmin />}
-				/>
-
-			</Route>
+			<Route path="/parameter-admin"
+            element={<PlannerConfig />} />
 
 		</Routes>
         </div>

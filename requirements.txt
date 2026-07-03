@@ -16,6 +16,8 @@ matplotlib
 plotly
 networkx
 
+psycopg2-binary
+uvicorn
 # Map
 osmnx
 
