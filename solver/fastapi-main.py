@@ -103,7 +103,7 @@ def plan_config():
     return PlanRequest().model_dump()
 
 
-@app.post("/api/plan")
+@app.post("/api/plan/schedule")
 def api_plan(req: PlanRequest) -> dict:
     """
     Pull all input data from NeonDB and run the multi-day rolling scheduler.

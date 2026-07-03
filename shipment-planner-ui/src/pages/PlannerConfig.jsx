@@ -27,7 +27,7 @@ export default function PlannerConfig() {
     setError(null);
     setResult(null);
     try {
-      const res = await fetch(`${API}/plan`, {
+      const res = await fetch(`${API}/plan/schedule`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(config),

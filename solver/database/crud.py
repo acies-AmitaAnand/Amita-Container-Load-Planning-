@@ -11,11 +11,12 @@ from database.connection import get_conn
 
 # Whitelist — only these table names may be passed to any function here.
 ALLOWED_TABLES = {
-    "shipment_demand",
-    "sku_pallet_master",
+    "item_master",
     "lane_master",
-    "load_equipment",
+    "load_equipment_metadata",
     "location",
+    "shipment_plans",
+    "sku_unit_of_measure",
     "transport_asset",
 }
 
@@ -32,8 +33,8 @@ def list_rows(table: str, limit: int = 500, offset: int = 0) -> list[dict]:
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
-            f"SELECT * FROM {table} WHERE is_deleted = FALSE "
-            f"ORDER BY id LIMIT %s OFFSET %s",
+            f"SELECT * FROM inventory_management.public.{table} "
+            f"LIMIT %s OFFSET %s",
             (limit, offset),
         )
         return [dict(r) for r in cur.fetchall()]
@@ -44,7 +45,7 @@ def get_row(table: str, row_id: int) -> dict | None:
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
-            f"SELECT * FROM {table} WHERE id = %s AND is_deleted = FALSE",
+            f"SELECT * FROM inventory_management.public.{table} WHERE id = %s AND is_deleted = FALSE",
             (row_id,),
         )
         row = cur.fetchone()
@@ -62,7 +63,7 @@ def insert_row(table: str, data: dict[str, Any]) -> dict:
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
-            f"INSERT INTO {table} ({cols}) VALUES ({values}) RETURNING *",
+            f"INSERT INTO inventory_management.public.{table} ({cols}) VALUES ({values}) RETURNING *",
             list(data.values()),
         )
         return dict(cur.fetchone())
@@ -78,7 +79,7 @@ def update_row(table: str, row_id: int, data: dict[str, Any]) -> dict | None:
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
-            f"UPDATE {table} SET {assignments} WHERE id = %s AND is_deleted = FALSE RETURNING *",
+            f"UPDATE inventory_management.public.{table} SET {assignments} WHERE id = %s AND is_deleted = FALSE RETURNING *",
             [*data.values(), row_id],
         )
         row = cur.fetchone()
@@ -91,7 +92,7 @@ def delete_row(table: str, row_id: int) -> bool:
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
-            f"UPDATE {table} SET is_deleted = TRUE WHERE id = %s AND is_deleted = FALSE",
+            f"delete inventory_management.public.{table} where id = %s",
             (row_id,),
         )
         return cur.rowcount > 0

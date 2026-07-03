@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const menus = [
-	{ label: "Data Loading", path: "/data-loading", icon: "📥" },
-	{ label: "UOM Configuration", path: "/uom-configuration", icon: "⚙️" },
+	{ label: "Shipment Demand", path: "/shipment-plan", icon: "📥" },
 	{ label: "Item Master", path: "/item-master", icon: "📦" },
-	{ label: "Route View", path: "/route-view", icon: "🛣️" },
+	{ label: "SKU UOM Configuration", path: "/sku-uom-configuration", icon: "⚙️" },
+	{ label: "Location Master", path: "/location-master", icon: "🛣️" },
+	{ label: "Route Master", path: "/lane-master", icon: "🧭" },
+	{ label: "Transport Master", path: "/transport-master", icon: "🚚" },
 	{ label: "Container Visualization", path: "/container-visualization", icon: "🚛" },
 	{ label: "Parameter Admin", path: "/parameter-admin", icon: "🔧" },
 ];

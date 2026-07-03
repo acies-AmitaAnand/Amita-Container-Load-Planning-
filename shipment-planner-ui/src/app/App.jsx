@@ -35,25 +35,14 @@ export default function App() {
         <div style={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
 
 		<Routes>
-			<Route path="/data-loading"
-				element={<DataTable table="shipment_demand"   title="Shipment Demand" />} />
-			<Route path="/uom-configuration"
-				element={<DataTable table="sku_pallet_master" title="SKU / Pallet Master" />} />
-			<Route path="/item-master"
-				element={<DataTable table="load_equipment"    title="Load Equipment" />} />
-			<Route path="/route-view"
-				element={<DataTable table="lane_master"       title="Lane Master" />} />
-			<Route path="/container-visualization"
-				element={<MultiContainerView />} />
-			<Route path="/parameter-admin"
-				element={<PlannerConfig />} />
-			<Route
-				path="container-visualization"
-				element={<MultiContainerView />}
-			/>
-
-			<Route path="/parameter-admin"
-            element={<PlannerConfig />} />
+			<Route path="/shipment-plan" element={<DataTable table="shipment_plans"   title="Shipment Demand" />} />
+			<Route path="/sku-uom-configuration" element={<DataTable table="sku_unit_of_measure" title="SKU / Pallet Master" />} />
+			<Route path="/item-master" element={<DataTable table="item_master"    title="Load Equipment" />} />
+			<Route path="/location-master" element={<DataTable table="location"       title="Location Master" />} />
+			<Route path="/lane-master" element={<DataTable table="lane_master"       title="Lane Master" />} />
+			<Route path="/transport-master" element={<DataTable table="transport_asset"       title="Transport Master" />} />
+			<Route path="/container-visualization" element={<MultiContainerView />}/>
+			<Route path="/parameter-admin" element={<PlannerConfig />} />
 
 		</Routes>
         </div>

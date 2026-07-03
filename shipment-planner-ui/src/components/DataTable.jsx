@@ -16,12 +16,14 @@ const API = "http://localhost:8000/api";
 
 // Columns to show per table (all others hidden — still editable in row detail)
 const DISPLAY_COLS = {
-  shipment_demand:   ["order_line_id","sku_id","estimated_delivery_date","origin_location_id","destination_location_id","planned_quantity","priority","service_level"],
-  sku_pallet_master: ["sku_id","sku_name","unit_count_in_pallet","pallet_length_mm","pallet_width_mm","pallet_height_mm","pallet_weight_in_kg","item_weight_in_kg"],
-  lane_master:       ["lane_id","lane_name","origin_location_id","destination_location_id","distance_km","estimated_transit_hours","is_active"],
-  load_equipment:    ["equipment_id","equipment_name","equipment_type","internal_length_mm","internal_width_mm","internal_height_mm","max_payload_weight_kg"],
-  location:          ["location_id","location_name","location_type","city","country","dock_count","temperature_capability"],
-  transport_asset:   ["transport_asset_id","asset_name","asset_type","max_weight_kg","supports_refrigeration","current_status"],
+  shipment_plans:   ["order_line_id", "shipment_id", "sku_id", "actual_delivery_date", "origin_location_id", "destination_location_id", "estimated_delivery_date", "planned_quantity", "shipped_quantity", "weight_kg", "priority", "temperature_requirement", "special_handling", "requested_transport_mode", "max_transit_time_in_days", "service_level", "unload_sequence_preference", "optimizer_run_id", "created_at",],
+  item_master: ["sku_id", "sku_name", "length_mm", "width_mm", "height_mm", "weight_kg", "stacking_limit", "can_rotate", "temperature_min_c", "temperature_max_c", "hazmat_class", "fragility_rating", "shelf_life_days", "is_food_grade", "is_regulated", "created_at", ],
+  sku_unit_of_measure: ["sku_id","sku_name","unit_count_in_pallet","pallet_length_mm","pallet_width_mm","pallet_height_mm","pallet_weight_in_kg","item_weight_in_kg"],
+  lane_master:       ["lane_id", "lane_name", "lane_code", "origin_location_id", "destination_location_id", "transport_asset_type", "distance_km", "estimated_transit_hours", "preferred_route_name", "is_active", "created_at", ],
+  load_equipment_metadata:    ["equipment_id", "equipment_name", "equipment_type", "length_mm", "width_mm", "height_mm", "internal_length_mm", "internal_width_mm", "internal_height_mm", "max_payload_weight_kg", "tare_weight_kg", "door_width_mm", "door_height_mm", "refrigeration_capable", "temperature_min_c", "temperature_max_c", "max_stack_height_mm", "axle_configuration", "created_at", ],
+  location:          ["location_id", "location_name", "location_type", "latitude", "longitude", "address", "city", "state", "country", "postal_code", "dock_count", "storage_type", "temperature_capability", "operating_hours", ],
+  transport_asset:   ["transport_asset_id", "asset_name", "asset_type", "axle_count", "supports_refrigeration", "supports_hazmat", "max_weight_kg", "assigned_from", "assigned_to", "current_status", "created_at", ],
+  transport_equipment_assignment:   ["transported_content_id", "transport_asset_id", "equipment_id", "transfer_points", "optimizer_run_id", ],
 };
 
 const EDITABLE_SKIP = new Set(["id","created_at","is_deleted"]);
@@ -61,24 +63,25 @@ export default function DataTable({ table, title }) {
   };
 
   const commitEdit = async () => {
-    if (!editCell) return;
-    const { rowId, col } = editCell;
-    setSaving(true);
-    try {
-      const res = await fetch(`${API}/${table}/${rowId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ [col]: editValue }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const updated = await res.json();
-      setRows((prev) => prev.map((r) => (r.id === rowId ? updated : r)));
-    } catch (e) {
-      alert(`Save failed: ${e.message}`);
-    } finally {
-      setSaving(false);
-      setEditCell(null);
-    }
+    console.info("Skipping edits");
+    // if (!editCell) return;
+    // const { rowId, col } = editCell;
+    // setSaving(true);
+    // try {
+    //   const res = await fetch(`${API}/${table}/${rowId}`, {
+    //     method: "PATCH",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ [col]: editValue }),
+    //   });
+    //   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    //   const updated = await res.json();
+    //   setRows((prev) => prev.map((r) => (r.id === rowId ? updated : r)));
+    // } catch (e) {
+    //   toast(`Save failed: ${e.message}`);
+    // } finally {
+    //   setSaving(false);
+    //   setEditCell(null);
+    // }
   };
 
   // ── Delete ───────────────────────────────────────────────────────────────
@@ -175,7 +178,7 @@ export default function DataTable({ table, title }) {
                     <td
                       key={col}
                       style={{ ...S.td, cursor: editable ? "pointer" : "default" }}
-                      onClick={() => editable && !isEditing && startEdit(row.id, col, row[col])}
+                      // onClick={() => editable && !isEditing && startEdit(row.id, col, row[col])}
                     >
                       {isEditing ? (
                         <input
