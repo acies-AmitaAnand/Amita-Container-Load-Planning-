@@ -42,7 +42,8 @@ def export_container_json(
     group_id: str = "default",
 ) -> List[str]:
     os.makedirs(out_dir, exist_ok=True)
-    paths = []
+    paths = {}
+    i = 0
     for group, fleet in fleet_result.items():
         for cr in fleet.containerResults:
             c = cr.container
@@ -88,11 +89,14 @@ def export_container_json(
                 "axleLoads":         [al.model_dump() for al in cr.axleLoads],
                 "pendingPalletCount": len(cr.pendingPallets),
             }
-            fname = f"{group_id}_{c.containerId}.json"
+            fname = f"res-{i}-{group_id}_{c.containerId}.json"
             fpath = os.path.join(out_dir, fname)
             with open(fpath, "w") as f:
                 json.dump(payload, f, indent=2, default=str)
-            paths.append(fpath)
+                dumped = json.dumps(payload, default=str, cls=CustomJSONEncoder)
+                paths[fname] = dumped
+            i += 1
+
         return paths
  
  

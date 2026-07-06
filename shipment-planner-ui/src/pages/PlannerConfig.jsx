@@ -16,7 +16,7 @@ export default function PlannerConfig() {
 
   // Load default config on mount
   useEffect(() => {
-    fetch(`${API}/plan/config`)
+    fetch(`${API}/metadata/plan/config`)
       .then((r) => r.json())
       .then(setConfig)
       .catch(() => setConfig({ horizon_days: 7, total_containers: 10, container_free_after_days: 1, lifo: true }));
@@ -36,7 +36,16 @@ export default function PlannerConfig() {
         const detail = await res.json();
         throw new Error(detail.detail || `HTTP ${res.status}`);
       }
-      setResult(await res.json());
+
+      const data = await res.json();
+
+      Object.entries(data).forEach(([key, value]) => {
+          localStorage.setItem(key, value);
+      });
+
+      console.log(data);
+      setResult(data);
+      
     } catch (e) {
       setError(e.message);
     } finally {
@@ -109,6 +118,8 @@ export default function PlannerConfig() {
 // ── Plan result timeline ──────────────────────────────────────────────────────
 
 function PlanResult({ result }) {
+
+
   const maxContainers = result.total_containers;
 
   return (

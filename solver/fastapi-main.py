@@ -101,7 +101,7 @@ class PlanRequest(BaseModel):
     lifo:                      bool = True
 
 
-@app.get("/api/plan/config")
+@app.get("/api/metadata/plan/config")
 def plan_config():
     """Return the default planning parameters for the UI config panel."""
     return PlanRequest().model_dump()
@@ -161,11 +161,9 @@ def api_plan(req: PlanRequest) -> dict:
         total_containers=req.total_containers,
         container_free_after_days=req.container_free_after_days,
     )
+    
     return export_container_json(fleet_result=result, out_dir="./output")
 
-
-    # ── Serialise ─────────────────────────────────────────────────────────────
-    # return _serialise_schedule(result)
 
 
 def _serialise_schedule(r: ScheduleResult) -> dict:
