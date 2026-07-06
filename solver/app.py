@@ -21,10 +21,12 @@ db_conn = db_helper.create_connection()
 ## Loading Data
 item_master_df = db_helper.fetch_data(sql="select * from inventory_management.public.item_master", connection=db_conn)
 lane_master_df = db_helper.fetch_data(sql="select * from inventory_management.public.lane_master", connection=db_conn)
-load_equipment_metadata_df = db_helper.fetch_data(sql="select * from inventory_management.public.load_equipment_metadata", connection=db_conn)
 location_df = db_helper.fetch_data(sql="select * from inventory_management.public.location", connection=db_conn)
+
 shipment_demand_df = db_helper.fetch_data(sql="select * from inventory_management.public.shipment_plans", connection=db_conn)
 sku_uom_df = db_helper.fetch_data(sql="select * from inventory_management.public.sku_unit_of_measure", connection=db_conn)
+load_equipment_metadata_df = db_helper.fetch_data(sql="select * from inventory_management.public.load_equipment_metadata", connection=db_conn)
+
 transport_asset_df = db_helper.fetch_data(sql="select * from inventory_management.public.transport_asset", connection=db_conn)
 sku_uom_df = pd.concat(
     [

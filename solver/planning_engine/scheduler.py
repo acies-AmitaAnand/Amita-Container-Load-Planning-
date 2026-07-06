@@ -83,7 +83,7 @@ class ScheduleResult:
 
 def plan_rolling_window(
     shipment_demand_df:       pd.DataFrame,
-    sku_pallet_df:            pd.DataFrame,
+    sku_uom_df:            pd.DataFrame,
     load_equipment_metadata_df: pd.DataFrame,
     planning_date:            date | None = None,
     horizon_days:             int = 7,
@@ -118,9 +118,23 @@ def plan_rolling_window(
     eq_row = eq_df.iloc[0] if len(eq_df) else load_equipment_metadata_df.iloc[0]
     equip  = load_equipment_to_container_spec(eq_row)
 
+
+    # File filter:
+    shipment_demand_df['estimated_delivery_date'] = pd.to_datetime(shipment_demand_df["estimated_delivery_date"], errors="coerce")
+    shipment_demand_df = shipment_demand_df[shipment_demand_df['estimated_delivery_date']>=pd.to_datetime(planning_date)]
+
+    sku_uom_column_mapper = {x:x for x in sku_uom_df.columns}
+    sku_uom_column_mapper['height_mm'] = 'pallet_height_mm'
+    sku_uom_column_mapper['width_mm'] = 'pallet_width_mm'
+    sku_uom_column_mapper['length_mm'] = 'pallet_length_mm'
+    sku_uom_df.rename(columns=sku_uom_column_mapper, inplace=True)
+
+    # shipment_demand_df = shipment_demand_df[(shipment_demand_df['origin_location_id']=='151') & (shipment_demand_df['destination_location_id']=='0720')]
+
+
     # ── Build all pallets from the full demand ────────────────────────────────
-    candidate_df = create_pallet_features(shipment_demand_df, sku_pallet_df)
-    all_pallets  = breakdown_into_pallets(candidate_df)
+    candidate_df = create_pallet_features(shipment_demand_df=shipment_demand_df, sku_pallet_df=sku_uom_df)
+    all_pallets  = breakdown_into_pallets(shipment_candidate_df=candidate_df)
 
     # ── Bucket pallets by estimated_delivery_date ─────────────────────────────
     # date string → list of Pallet
@@ -210,7 +224,7 @@ def _occupy_container(
     """Mark the first available container slot as busy until current_day + free_after."""
     for i, f in enumerate(free_on):
         if f <= current_day:
-            free_on[i] = current_day + free_after + 1
+            free_on[i] = current_day + free_after
             return
 
 

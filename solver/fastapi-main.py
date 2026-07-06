@@ -110,9 +110,9 @@ def api_plan(req: PlanRequest) -> dict:
     Returns a serialisable summary of the schedule result.
     """
     # ── Pull all input tables from DB ─────────────────────────────────────────
-    demand_rows   = list_rows("shipment_demand",   limit=10_000)
-    sku_rows      = list_rows("sku_pallet_master", limit=10_000)
-    equip_rows    = list_rows("load_equipment",    limit=100)
+    demand_rows   = list_rows("shipment_plans",   limit=10_000)
+    sku_rows      = list_rows("sku_unit_of_measure", limit=10_000)
+    equip_rows    = list_rows("load_equipment_metadata",    limit=100)
 
     if not demand_rows:
         raise HTTPException(status_code=400, detail="No shipment demand records in database")
@@ -122,13 +122,21 @@ def api_plan(req: PlanRequest) -> dict:
         raise HTTPException(status_code=400, detail="No load equipment records in database")
 
     demand_df = pd.DataFrame(demand_rows)
-    sku_df    = pd.DataFrame(sku_rows)
+    sku_uom_df    = pd.DataFrame(sku_rows)
     equip_df  = pd.DataFrame(equip_rows)
+    # FE
+    sku_uom_df = pd.concat(
+        [
+            sku_uom_df,
+            sku_uom_df['pallet_dimensions'].apply(pd.Series)
+        ],
+        axis=1
+    )
 
     # ── Run scheduler ─────────────────────────────────────────────────────────
     result: ScheduleResult = plan_rolling_window(
         shipment_demand_df=demand_df,
-        sku_pallet_df=sku_df,
+        sku_uom_df=sku_uom_df,
         load_equipment_metadata_df=equip_df,
         planning_date=req.planning_date,
         horizon_days=req.horizon_days,
