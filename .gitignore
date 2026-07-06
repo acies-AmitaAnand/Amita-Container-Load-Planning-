@@ -371,3 +371,4 @@ vite.config.ts.timestamp-*
 .vite/
 
 output/
+debug_snapshots/
