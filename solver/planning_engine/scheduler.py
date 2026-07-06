@@ -33,20 +33,16 @@ import pandas as pd
 
 from objects.Pallet import Pallet
 from objects.Container import Container
-
 from planning_engine.feature_engineering.transformation import (
     create_pallet_features,
     breakdown_into_pallets,
+    group_pallets_by_lane,
     sort_pallets_for_loading,
 )
-# from container_optimizer import (
-#     load_equipment_to_container_spec,
-#     open_new_container,
-#     load_pallets_into_container,
-# )
+
 
 from objects.ContainerFleetOptimizationResult import ContainerFleetOptimizationResult
-from planning_engine.placement_engine.placement import load_equipment_to_container_spec, load_pallets_into_container, open_new_container
+from planning_engine.placement_engine.placement import load_equipment_to_container_spec, open_new_container, optimize_container_fleet
 
 
 # ── Result types ──────────────────────────────────────────────────────────────
@@ -83,7 +79,7 @@ class ScheduleResult:
 
 def plan_rolling_window(
     shipment_demand_df:       pd.DataFrame,
-    sku_uom_df:            pd.DataFrame,
+    sku_uom_df:               pd.DataFrame,       # matches API caller name
     load_equipment_metadata_df: pd.DataFrame,
     planning_date:            date | None = None,
     horizon_days:             int = 7,
@@ -119,19 +115,6 @@ def plan_rolling_window(
     equip  = load_equipment_to_container_spec(eq_row)
 
 
-    # File filter:
-    shipment_demand_df['estimated_delivery_date'] = pd.to_datetime(shipment_demand_df["estimated_delivery_date"], errors="coerce")
-    shipment_demand_df = shipment_demand_df[shipment_demand_df['estimated_delivery_date']>=pd.to_datetime(planning_date)]
-
-    sku_uom_column_mapper = {x:x for x in sku_uom_df.columns}
-    sku_uom_column_mapper['height_mm'] = 'pallet_height_mm'
-    sku_uom_column_mapper['width_mm'] = 'pallet_width_mm'
-    sku_uom_column_mapper['length_mm'] = 'pallet_length_mm'
-    sku_uom_df.rename(columns=sku_uom_column_mapper, inplace=True)
-
-    # shipment_demand_df = shipment_demand_df[(shipment_demand_df['origin_location_id']=='151') & (shipment_demand_df['destination_location_id']=='0720')]
-
-
     # ── Build all pallets from the full demand ────────────────────────────────
     candidate_df = create_pallet_features(shipment_demand_df=shipment_demand_df, sku_pallet_df=sku_uom_df)
     all_pallets  = breakdown_into_pallets(shipment_candidate_df=candidate_df)
@@ -157,7 +140,8 @@ def plan_rolling_window(
 
     # Overflow from previous day — prepended to next day's pallet list.
     overflow: List[Pallet] = []
-
+    groups = group_pallets_by_lane(remaining)
+    
     for day_idx in range(1, horizon_days + 1):
         plan_date = planning_date + timedelta(days=day_idx)
         date_key  = plan_date.strftime("%Y-%m-%d")
@@ -187,12 +171,24 @@ def plan_rolling_window(
         container_seq  = 1
 
         while remaining and containers_opened < free_today:
-            container = open_new_container(equip, container_seq, _make_group(plan_date))
-            cr        = load_pallets_into_container(container, remaining)
+            container = open_new_container(container_spec=equip, container_idx=container_seq, group=_make_group(plan_date=plan_date))
+            
+            
+            
+            cr        = optimize_container_fleet(equipment_spec=container, group=groups[0], lifo=True, max_containers=1).containerResults[0]
 
             if cr.loadedPallets:
-                # Mark this container slot as busy until day_idx + F
-                _occupy_container(container_free_on, day_idx, container_free_after_days)
+                # Compute utilization now that the container load is final
+                from planning_engine.metrics.utilization import compute_utilization
+                util, rem_cap = compute_utilization(container, cr.pendingPallets)
+                cr.utilization      = util
+                cr.remainingCapacity = rem_cap
+                # Update summary fields
+                container.summary.totalPallets     = len(cr.loadedPallets)
+                container.summary.totalWeightIn_kg = round(container.usedWeightIn_kg, 2)
+                container.summary.totalVolumeIn_m3 = round(container.usedVolume_m3, 4)
+                # Mark this container slot as busy for F days
+                _occupy_container(free_on=container_free_on, current_day=day_idx, free_after=container_free_after_days)
                 day_loaded.extend(cr.loadedPallets)
                 day_results.append(cr)
                 remaining       = cr.pendingPallets
@@ -224,7 +220,7 @@ def _occupy_container(
     """Mark the first available container slot as busy until current_day + free_after."""
     for i, f in enumerate(free_on):
         if f <= current_day:
-            free_on[i] = current_day + free_after
+            free_on[i] = current_day + free_after  # available after F days
             return
 
 

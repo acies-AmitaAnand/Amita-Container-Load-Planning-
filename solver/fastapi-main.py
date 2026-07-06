@@ -17,6 +17,7 @@
 
 from __future__ import annotations
 from datetime import date
+import json
 from typing import Any
 
 import pandas as pd
@@ -26,6 +27,9 @@ from pydantic import BaseModel
 
 from database.crud import ALLOWED_TABLES, delete_row, get_row, insert_row, list_rows, update_row
 from planning_engine.scheduler import ScheduleResult, plan_rolling_window
+from planning_engine.placement_engine.placement import run_full_optimization
+from planning_engine.export_results import export_container_json
+from utils import CustomJSONEncoder
 
 app = FastAPI(title="Shipment Planner API", version="1.0.0")
 
@@ -111,19 +115,20 @@ def api_plan(req: PlanRequest) -> dict:
     """
     # ── Pull all input tables from DB ─────────────────────────────────────────
     demand_rows   = list_rows("shipment_plans",   limit=10_000)
-    sku_rows      = list_rows("sku_unit_of_measure", limit=10_000)
+    sku_uom_df      = list_rows("sku_unit_of_measure", limit=10_000)
     equip_rows    = list_rows("load_equipment_metadata",    limit=100)
 
     if not demand_rows:
         raise HTTPException(status_code=400, detail="No shipment demand records in database")
-    if not sku_rows:
+    if not sku_uom_df:
         raise HTTPException(status_code=400, detail="No SKU/pallet master records in database")
     if not equip_rows:
         raise HTTPException(status_code=400, detail="No load equipment records in database")
 
     demand_df = pd.DataFrame(demand_rows)
-    sku_uom_df    = pd.DataFrame(sku_rows)
+    sku_uom_df = pd.DataFrame(sku_uom_df)
     equip_df  = pd.DataFrame(equip_rows)
+
     # FE
     sku_uom_df = pd.concat(
         [
@@ -133,24 +138,72 @@ def api_plan(req: PlanRequest) -> dict:
         axis=1
     )
 
+    # File filter:
+    demand_df['estimated_delivery_date'] = pd.to_datetime(demand_df["estimated_delivery_date"], errors="coerce")
+
+    sku_uom_column_mapper = {x:x for x in sku_uom_df.columns}
+    sku_uom_column_mapper['height_mm'] = 'pallet_height_mm'
+    sku_uom_column_mapper['width_mm'] = 'pallet_width_mm'
+    sku_uom_column_mapper['length_mm'] = 'pallet_length_mm'
+    sku_uom_df.rename(columns=sku_uom_column_mapper, inplace=True)
+
     # ── Run scheduler ─────────────────────────────────────────────────────────
-    result: ScheduleResult = plan_rolling_window(
+    result = run_full_optimization(
         shipment_demand_df=demand_df,
-        sku_uom_df=sku_uom_df,
+        sku_pallet_df=sku_uom_df,
         load_equipment_metadata_df=equip_df,
+        lane_master_df=None,
+        preferred_equipment_type=req.preferred_equipment_type,
+        fleet_limit=req.total_containers,
+        lifo=req.lifo,
         planning_date=req.planning_date,
         horizon_days=req.horizon_days,
         total_containers=req.total_containers,
         container_free_after_days=req.container_free_after_days,
-        preferred_equipment_type=req.preferred_equipment_type,
-        lifo=req.lifo,
     )
+    return export_container_json(fleet_result=result, out_dir="./output")
+
 
     # ── Serialise ─────────────────────────────────────────────────────────────
-    return _serialise_schedule(result)
+    # return _serialise_schedule(result)
 
 
 def _serialise_schedule(r: ScheduleResult) -> dict:
+    import json, os
+    from utils.CustomJSONEncoder import CustomJSONEncoder
+ 
+    os.makedirs("output", exist_ok=True)
+ 
+    days_out = []
+    for d in r.days:
+        containers_out = []
+        for cr in d.container_results:
+            util = cr.utilization
+            entry = {
+                "containerId":   cr.container.containerId,
+                "loadedPallets": len(cr.loadedPallets),
+                "weightUtil":    util.weightUtilization_pct if util else 0,
+                "volumeUtil":    util.volumeUtilization_pct if util else 0,
+                "floorUtil":     util.floorAreaUtilization_pct if util else 0,
+                "pendingCount":  len(cr.pendingPallets),
+            }
+            containers_out.append(entry)
+ 
+            # ── Export full container JSON for React visualiser ───────────────
+            fname = f"output/{cr.container.containerId}.json"
+            with open(fname, "w") as fh:
+                json.dump(cr.container, fh, cls=CustomJSONEncoder, indent=2)
+ 
+        days_out.append({
+            "day":                   d.day,
+            "plan_date":             d.plan_date.isoformat(),
+            "containers_available":  d.containers_available,
+            "containers_used":       d.containers_used,
+            "loaded_pallets":        d.loaded_pallets,
+            "unallocated_pallets":   len(d.unallocated_pallets),
+            "containers":            containers_out,
+        })
+ 
     return {
         "planning_date":             r.planning_date.isoformat(),
         "horizon_days":              r.horizon_days,
@@ -158,27 +211,5 @@ def _serialise_schedule(r: ScheduleResult) -> dict:
         "container_free_after_days": r.container_free_after_days,
         "total_loaded_pallets":      r.total_loaded,
         "total_unallocated_pallets": r.total_unallocated,
-        "days": [
-            {
-                "day":                   d.day,
-                "plan_date":             d.plan_date.isoformat(),
-                "containers_available":  d.containers_available,
-                "containers_used":       d.containers_used,
-                "loaded_pallets":        d.loaded_pallets,
-                "unallocated_pallets":   len(d.unallocated_pallets),
-                # Per-container detail for React visualiser
-                "containers": [
-                    {
-                        "containerId":   cr.container.containerId,
-                        "loadedPallets": len(cr.loadedPallets),
-                        "weightUtil":    cr.utilization.weightUtilization_pct if cr.utilization else 0,
-                        "volumeUtil":    cr.utilization.volumeUtilization_pct if cr.utilization else 0,
-                        "floorUtil":     cr.utilization.floorAreaUtilization_pct if cr.utilization else 0,
-                        "pendingCount":  len(cr.pendingPallets),
-                    }
-                    for cr in d.container_results
-                ],
-            }
-            for d in r.days
-        ],
+        "days":                      days_out,
     }

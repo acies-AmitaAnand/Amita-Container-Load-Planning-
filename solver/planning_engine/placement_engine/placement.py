@@ -21,7 +21,7 @@ from __future__ import annotations
 from copy import deepcopy
 import logging
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 from typing import List, Optional, Dict, Any, Tuple
 
 import pandas as pd
@@ -266,6 +266,10 @@ def run_full_optimization(
     preferred_equipment_type: str = "CONTAINER",
     fleet_limit: int = 10,
     lifo: bool = True,
+    planning_date:date = None,
+    horizon_days:date = None,
+    total_containers: int = 10,
+    container_free_after_days: int = 1,
 ) -> Dict[str, ContainerFleetOptimizationResult]:
     """
     Flow:
@@ -273,6 +277,9 @@ def run_full_optimization(
       2. Create groups by lane (origin, destination) — sorted by earliest date
       3. For each lane, fill containers day-by-day from the shared fleet budget
     """
+    
+    shipment_demand_df = shipment_demand_df[shipment_demand_df["estimated_delivery_date"]>=pd.to_datetime(planning_date)] # Filter for date
+
     candidate_df   = create_pallet_features(shipment_demand_df, sku_pallet_df)
     all_pallets    = breakdown_into_pallets(candidate_df)
     groups         = group_pallets_by_lane(all_pallets, lane_master_df)
