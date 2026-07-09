@@ -27,7 +27,7 @@ from pydantic import BaseModel
 
 from database.crud import ALLOWED_TABLES, delete_row, get_row, insert_row, list_rows, update_row
 from planning_engine.scheduler import ScheduleResult, plan_rolling_window
-from planning_engine.placement_engine.placement import run_full_optimization
+from planning_engine.placement_engine.placement import run_full_optimization, run_full_optimization_daily
 from planning_engine.export_results import export_container_json
 from utils import CustomJSONEncoder
 
@@ -148,7 +148,7 @@ def api_plan(req: PlanRequest) -> dict:
     sku_uom_df.rename(columns=sku_uom_column_mapper, inplace=True)
 
     # ── Run scheduler ─────────────────────────────────────────────────────────
-    result = run_full_optimization(
+    result = run_full_optimization_daily(
         shipment_demand_df=demand_df,
         sku_pallet_df=sku_uom_df,
         load_equipment_metadata_df=equip_df,

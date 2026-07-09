@@ -109,7 +109,7 @@ def open_new_container(
     )
     
     new_container_spec = deepcopy(container_spec)
-    new_container_spec.containerId=cid
+    new_container_spec.containerId=cid+"_on_"+str(group.deliveryDateWindow)
     new_container_spec.pallets=[]
     new_container_spec.summary=summary
     return new_container_spec
@@ -310,3 +310,165 @@ def run_full_optimization(
         containers_used        += result.total_containers
  
     return results
+
+
+
+def run_full_optimization_daily(
+    shipment_demand_df: pd.DataFrame,
+    sku_pallet_df: pd.DataFrame,
+    load_equipment_metadata_df: pd.DataFrame,
+    lane_master_df: Optional[pd.DataFrame] = None,
+    preferred_equipment_type: str = "CONTAINER",
+    fleet_limit: int = 10,
+    lifo: bool = True,
+    planning_date: date = None,
+    horizon_days: int = 7,
+    total_containers: int = 10,
+    container_free_after_days: int = 1,
+) -> Dict[str, ContainerFleetOptimizationResult]:
+    """
+    Multi-day rolling container planner.
+
+    Day 0  = planning_date  (no shipments)
+    Day 1  = planning_date + 1 day  (first shipment day)
+    ...
+    Day N  = planning_date + horizon_days
+
+    Container pool
+    --------------
+    total_containers trucks are shared across all days and all lanes.
+    A truck used on day D becomes free again on day D + container_free_after_days.
+    container_free_on[i] = first day index the i-th truck is available.
+
+    Overflow rule
+    -------------
+    Pallets not loaded on day D carry forward to day D+1, prepended before
+    that day's own demand (overflow-first).
+    """
+    if planning_date is None:
+        planning_date = date.today()
+
+    # ── Equipment spec ────────────────────────────────────────────────────────
+    mask   = load_equipment_metadata_df["equipment_type"].str.upper() == preferred_equipment_type.upper()
+    eq_df  = load_equipment_metadata_df[mask]
+    eq_row = eq_df.iloc[0] if len(eq_df) else load_equipment_metadata_df.iloc[0]
+    equipment_spec = load_equipment_to_container_spec(eq_row)
+
+    # ── Build all pallets from full demand ────────────────────────────────────
+    candidate_df = create_pallet_features(shipment_demand_df, sku_pallet_df)
+    all_pallets  = breakdown_into_pallets(candidate_df)
+
+    # ── Bucket pallets by (origin, dest, delivery_date) ───────────────────────
+    # { "2026-07-07": { "GRP_A_B": [Pallet, ...] } }
+    from collections import defaultdict
+    from datetime import timedelta
+
+    daily_lane_pallets: Dict[str, Dict[str, list]] = defaultdict(lambda: defaultdict(list))
+    for p in all_pallets:
+        dk  = p.estimatedDeliveryDate.strftime("%Y-%m-%d")
+        lid = f"GRP_{p.originLocationId}_{p.destinationLocationId}"
+        daily_lane_pallets[dk][lid].append(p)
+
+    # ── Container pool ────────────────────────────────────────────────────────
+    # container_free_on[i] = day index (1-based) when truck i is next available
+    container_free_on = [1] * total_containers
+
+    # ── Rolling day loop ──────────────────────────────────────────────────────
+    results:  Dict[str, ContainerFleetOptimizationResult] = {}
+    # overflow: { lane_id: [Pallet] } — carries forward to next day
+    overflow: Dict[str, list] = defaultdict(list)
+
+    for day_idx in range(1, horizon_days + 1):
+        day_date = planning_date + timedelta(days=day_idx)
+        dk       = day_date.strftime("%Y-%m-%d")
+
+        # How many containers are free today?
+        free_today = sum(1 for f in container_free_on if f <= day_idx)
+        if free_today == 0:
+            # No trucks — all pallets for today carry forward
+            for lid, pallets in daily_lane_pallets.get(dk, {}).items():
+                overflow[lid].extend(pallets)
+            for lid, pallets in overflow.items():
+                pass  # already in overflow, stays there
+            continue
+
+        # Combine overflow (from previous days) with today's demand per lane
+        today_lanes: Dict[str, list] = defaultdict(list)
+        # Overflow first
+        for lid, pallets in overflow.items():
+            today_lanes[lid].extend(pallets)
+        # Then today's demand
+        for lid, pallets in daily_lane_pallets.get(dk, {}).items():
+            today_lanes[lid].extend(pallets)
+
+        if not any(today_lanes.values()):
+            overflow = defaultdict(list)
+            continue
+
+        overflow = defaultdict(list)  # reset; repopulate from what didn't fit
+        containers_used_today = 0
+
+        for lane_id, pallets in today_lanes.items():
+            if not pallets:
+                continue
+
+            budget = free_today - containers_used_today
+            if budget <= 0:
+                overflow[lane_id].extend(pallets)
+                continue
+
+            # Build a ShipmentGroup for this lane on this day
+            origin, dest = _parse_lane_id(lane_id)
+            group = ShipmentGroup(
+                groupId=f"{lane_id}_{dk}",
+                originLocationId=origin,
+                destinationLocationId=dest,
+                deliveryDateWindow=dk,
+                pallets=sort_pallets_for_loading(pallets, lifo=lifo),
+                estimatedDeliveryDate=day_date,
+            )
+
+            fleet_result = optimize_container_fleet(
+                group, equipment_spec,
+                lifo=lifo,
+                max_containers=budget,
+            )
+
+            # Track how many trucks were consumed
+            trucks_used = fleet_result.total_containers
+            containers_used_today += trucks_used
+
+            # Mark those trucks as busy until day_idx + F
+            _occupy_containers(container_free_on, day_idx, trucks_used, container_free_after_days)
+
+            # Carry unloaded pallets forward
+            if fleet_result.unallocated_pallets:
+                overflow[lane_id].extend(fleet_result.unallocated_pallets)
+
+            # Key: lane_day so each day's result is separate
+            result_key = f"{lane_id}_{dk}"
+            results[result_key] = fleet_result
+
+    return results
+
+
+def _parse_lane_id(lane_id: str):
+    """GRP_<origin>_<dest> → (origin, dest). Handles location IDs with underscores."""
+    parts = lane_id.replace("GRP_", "", 1).split("_", 1)
+    return (parts[0], parts[1]) if len(parts) == 2 else (parts[0], parts[0])
+
+
+def _occupy_containers(
+    container_free_on: list,
+    current_day: int,
+    count: int,
+    free_after: int,
+) -> None:
+    """Mark `count` available containers as busy until current_day + free_after."""
+    marked = 0
+    for i in range(len(container_free_on)):
+        if marked == count:
+            break
+        if container_free_on[i] <= current_day:
+            container_free_on[i] = current_day + free_after
+            marked += 1
