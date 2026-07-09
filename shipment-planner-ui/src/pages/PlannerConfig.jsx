@@ -36,16 +36,12 @@ export default function PlannerConfig() {
         const detail = await res.json();
         throw new Error(detail.detail || `HTTP ${res.status}`);
       }
-
       const data = await res.json();
-
-      Object.entries(data).forEach(([key, value]) => {
-          localStorage.setItem(key, value);
+      // Write each container into localStorage for MultiContainerView
+      (data.localStorage_entries || []).forEach(({ key, payload }) => {
+        if (payload) localStorage.setItem(key, JSON.stringify(payload));
       });
-
-      console.log(data);
       setResult(data);
-      
     } catch (e) {
       setError(e.message);
     } finally {
@@ -118,75 +114,61 @@ export default function PlannerConfig() {
 // ── Plan result timeline ──────────────────────────────────────────────────────
 
 function PlanResult({ result }) {
+  const entries = result.containers_by_day || [];
 
-
-  const maxContainers = result.total_containers;
+  // Group by deliveryDate for the timeline view
+  const byDate = entries.reduce((acc, c) => {
+    const key = c.deliveryDate || c.groupId;
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(c);
+    return acc;
+  }, {});
 
   return (
     <div style={S.resultCard}>
       <div style={S.resultHeader}>
-        <h3 style={S.subheading}>
-          Plan: {result.planning_date} → +{result.horizon_days} days
-        </h3>
+        <h3 style={S.subheading}>Plan result</h3>
         <div style={S.resultSummary}>
-          <Chip label="Horizon" value={`${result.horizon_days} days`} />
-          <Chip label="Fleet" value={`${result.total_containers} containers`} />
-          <Chip label="Free after" value={`${result.container_free_after_days}d`} />
-          <Chip label="Total loaded" value={result.total_loaded_pallets} accent="#1d9e75" />
-          <Chip label="Total overflow" value={result.total_unallocated_pallets}
-                accent={result.total_unallocated_pallets > 0 ? "#d97706" : "#1d9e75"} />
+          <Chip label="Containers"    value={entries.length} />
+          <Chip label="Total loaded"  value={entries.reduce((s, c) => s + c.loadedPallets, 0)}  accent="#1d9e75" />
+          <Chip label="Total pending" value={entries.reduce((s, c) => s + c.pendingPallets, 0)}
+                accent={entries.some(c => c.pendingPallets > 0) ? "#d97706" : "#1d9e75"} />
         </div>
       </div>
 
-      {/* Day-by-day timeline */}
       <div style={S.timeline}>
-        {result.days.map((day) => (
-          <DayCard key={day.day} day={day} maxContainers={maxContainers} />
+        {Object.entries(byDate).map(([dateKey, containers]) => (
+          <DayCard key={dateKey} dateKey={dateKey} containers={containers} />
         ))}
       </div>
     </div>
   );
 }
 
-function DayCard({ day, maxContainers }) {
+function DayCard({ dateKey, containers }) {
   const [open, setOpen] = useState(false);
-  const fillPct = maxContainers > 0 ? (day.containers_used / maxContainers) * 100 : 0;
-  const hasOverflow = day.unallocated_pallets > 0;
+  const totalLoaded  = containers.reduce((s, c) => s + c.loadedPallets, 0);
+  const totalPending = containers.reduce((s, c) => s + c.pendingPallets, 0);
+  const hasOverflow  = totalPending > 0;
 
   return (
     <div style={{ ...S.dayCard, borderLeft: hasOverflow ? "4px solid #d97706" : "4px solid #1d9e75" }}>
       <div style={S.dayHeader} onClick={() => setOpen((o) => !o)}>
         <div>
-          <span style={S.dayLabel}>Day {day.day}</span>
-          <span style={S.dayDate}>{day.plan_date}</span>
+          <span style={S.dayLabel}>{dateKey}</span>
+          <span style={S.dayDate}>{containers.length} container{containers.length !== 1 ? "s" : ""}</span>
         </div>
         <div style={S.dayStats}>
-          <span style={S.stat}>
-            <b>{day.containers_used}</b>/{day.containers_available} containers
-          </span>
-          <span style={S.stat}>
-            <b style={{ color: "#1d9e75" }}>{day.loaded_pallets}</b> loaded
-          </span>
-          {hasOverflow && (
-            <span style={{ ...S.stat, color: "#d97706" }}>
-              <b>{day.unallocated_pallets}</b> overflow →
-            </span>
-          )}
+          <span style={S.stat}><b style={{ color: "#1d9e75" }}>{totalLoaded}</b> loaded</span>
+          {hasOverflow && <span style={{ ...S.stat, color: "#d97706" }}><b>{totalPending}</b> pending</span>}
           <span style={S.toggle}>{open ? "▲" : "▼"}</span>
         </div>
       </div>
 
-      {/* Container utilization bar */}
-      <div style={S.barTrack}>
-        <div style={{ ...S.barFill, width: `${fillPct}%`,
-          background: fillPct > 90 ? "#dc2626" : fillPct > 60 ? "#d97706" : "#1d9e75" }} />
-      </div>
-
-      {/* Expanded container list */}
-      {open && day.containers.length > 0 && (
+      {open && (
         <div style={S.containerList}>
-          {day.containers.map((c, i) => (
-            <div key={i} style={S.containerRow}>
+          {containers.map((c) => (
+            <div key={c.containerId} style={S.containerRow}>
               <span style={S.contId}>{c.containerId}</span>
               <UtilBar label="Weight" pct={c.weightUtil} />
               <UtilBar label="Volume" pct={c.volumeUtil} />
@@ -194,13 +176,6 @@ function DayCard({ day, maxContainers }) {
               <span style={S.palletsLoaded}>{c.loadedPallets} pallets</span>
             </div>
           ))}
-        </div>
-      )}
-
-      {open && day.containers.length === 0 && (
-        <div style={S.noContainers}>
-          No containers dispatched this day
-          {day.unallocated_pallets > 0 && ` — ${day.unallocated_pallets} pallets overflow to next day`}.
         </div>
       )}
     </div>

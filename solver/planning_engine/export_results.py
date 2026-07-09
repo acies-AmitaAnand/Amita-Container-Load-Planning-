@@ -35,18 +35,31 @@ logger = logging.getLogger("export result")
 
 
 # ── Action 6: Export to JSON ──────────────────────────────────────────────────
- 
+
 def export_container_json(
     fleet_result: Dict[str, ContainerFleetOptimizationResult],
     out_dir: str = "./output",
     group_id: str = "default",
-) -> List[str]:
+) -> dict:
+    """
+    Writes one JSON file per container to out_dir.
+    Returns a dict structured for the API response:
+      {
+        "containers_by_day": [ { "date": ..., "groupId": ..., "containers": [...summary...] } ],
+        "localStorage_entries": [ { "key": "res_<containerId>", "payload": <full container dict> } ]
+      }
+    React iterates localStorage_entries and writes each to localStorage,
+    then MultiContainerView picks them up by filtering keys starting with "res".
+    """
     os.makedirs(out_dir, exist_ok=True)
-    paths = {}
-    i = 0
-    for group, fleet in fleet_result.items():
+ 
+    localStorage_entries = []
+    containers_by_day    = []
+ 
+    for i, (group, fleet) in enumerate(fleet_result.items()):
         for cr in fleet.containerResults:
             c = cr.container
+ 
             payload = {
                 "containerId":     c.containerId,
                 "containerType":   c.containerType,
@@ -63,8 +76,12 @@ def export_container_json(
                 "door_width":      c.doorWidth,
                 "door_height":     c.doorHeight,
                 "axles": [
-                    {"axleId": a.axleId, "maxWeight": a.maxWeight,
-                    "positionX": a.positionX, "currentLoad": round(a.currentLoad, 2)}
+                    {
+                        "axleId":      a.axleId,
+                        "maxWeight":   a.maxWeight,
+                        "positionX":   a.positionX,
+                        "currentLoad": round(a.currentLoad, 2),
+                    }
                     for a in c.axles
                 ],
                 "pallets": [_pallet_to_viz_dict(p) for p in cr.loadedPallets],
@@ -85,20 +102,41 @@ def export_container_json(
                     "hazmatSegregation":      c.loadingRules.hazmatSegregation,
                     "centerGravityThreshold": c.loadingRules.centerGravityThreshold,
                 },
-                "utilization":       cr.utilization.model_dump(),
-                "axleLoads":         [al.model_dump() for al in cr.axleLoads],
+                "utilization":        cr.utilization.model_dump() if cr.utilization else None,
+                "axleLoads":          [al.model_dump() for al in cr.axleLoads],
                 "pendingPalletCount": len(cr.pendingPallets),
             }
-            fname = f"res-{i}-{group_id}_{c.containerId}.json"
+ 
+            # Write file
+            fname = f"{c.containerId}.json"
             fpath = os.path.join(out_dir, fname)
             with open(fpath, "w") as f:
                 json.dump(payload, f, indent=2, default=str)
-                dumped = json.dumps(payload, default=str, cls=CustomJSONEncoder)
-                paths[fname] = dumped
-            i += 1
-
-        return paths
  
+            # localStorage entry — key must start with "res" for MultiContainerView
+            localStorage_entries.append({
+                "key":     f"res_{c.containerId}",
+                "payload": payload,
+            })
+ 
+            # Summary entry for the day timeline in the UI
+            util = cr.utilization
+            containers_by_day.append({
+                "groupId":       group,
+                "deliveryDate":  c.summary.routeId,
+                "containerId":   c.containerId,
+                "loadedPallets": len(cr.loadedPallets),
+                "pendingPallets": len(cr.pendingPallets),
+                "weightUtil":    round(util.weightUtilization_pct, 1) if util else 0,
+                "volumeUtil":    round(util.volumeUtilization_pct, 1) if util else 0,
+                "floorUtil":     round(util.floorAreaUtilization_pct, 1) if util else 0,
+            })
+ 
+    # ── FIX: return is outside both for loops ─────────────────────────────────
+    return {
+        "containers_by_day":    containers_by_day,
+        "localStorage_entries": localStorage_entries,
+    }
  
 def _pallet_to_viz_dict(p: Pallet) -> dict:
     return {
