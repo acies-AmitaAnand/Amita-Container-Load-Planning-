@@ -50,15 +50,14 @@ export default function PlannerConfig() {
           "optimization_summary",
           JSON.stringify({
               generatedAt: new Date().toISOString(),
-              containers_by_day: result.containers_by_day
+              containers_by_day: data.containers_by_day||[]
           })
       );
 
-      
 
       setResult(data);
       // Navigate to visualization page so user sees results immediately
-      navigate("/container-visualization");
+      navigate("/optimized-day-planning");
     } catch (e) {
       setError(e.message);
     } finally {

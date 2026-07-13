@@ -45,9 +45,8 @@ export default function App() {
 			<Route path="/location-master" element={<DataTable table="location"       title="Location Master" />} />
 			<Route path="/lane-master" element={<DataTable table="lane_master"       title="Lane Master" />} />
 			<Route path="/transport-master" element={<DataTable table="transport_asset"       title="Transport Master" />} />
-			<Route path="/container-visualization" element={<MultiContainerView />}/>
-			<Route path="/navigated-container-visualization" element={<OptimizationResultsPage />}/>
-			<Route path="/container-visualization-demo" element={<ContainerVisualization />} />
+			<Route path="/all-container-visualization" element={<MultiContainerView />}/>
+			<Route path="/optimized-day-planning" element={<ContainerVisualization />} />
 			<Route path="/parameter-admin" element={<PlannerConfig />} />
 
 		</Routes>

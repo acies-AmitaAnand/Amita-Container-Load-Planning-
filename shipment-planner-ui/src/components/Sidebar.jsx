@@ -8,10 +8,9 @@ const menus = [
 	{ label: "Location Master", path: "/location-master", icon: "🛣️" },
 	{ label: "Route Master", path: "/lane-master", icon: "🧭" },
 	{ label: "Transport Master", path: "/transport-master", icon: "🚚" },
-	{ label: "Container Visualization", path: "/container-visualization", icon: "🚛" },
-	{ label: "Navigated Container Visualization", path: "/navigated-container-visualization", icon: "🚛" },
-	{ label: "Navigated Container Visualization (Test)", path: "/container-visualization-demo", icon: "🚛" },
 	{ label: "Parameter Admin", path: "/parameter-admin", icon: "🔧" },
+	{ label: "Optimization Planning Summary (Day)", path: "/optimized-day-planning", icon: "🚛" },
+	{ label: "📦All Container Visualization", path: "/all-container-visualization", icon: "📦" },
 ];
 
 const EXPANDED_WIDTH = 260;
