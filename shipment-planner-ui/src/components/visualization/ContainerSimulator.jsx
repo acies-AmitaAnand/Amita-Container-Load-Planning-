@@ -329,6 +329,33 @@ export default function ContainerSimulator({key, payload}) {
 
 	const totalWeight = pallets.reduce((a, b) => a + (b.weightIn_kg || b.weight || 0), 0);
 
+
+	const skuLegend = useMemo(() => {
+
+		const legend = new Map();
+
+		pallets.forEach((pallet) => {
+
+			const sku =
+				pallet.skuId || pallet.label;
+
+			if (!legend.has(sku)) {
+
+				legend.set(sku, {
+					skuId: sku,
+					label: pallet.label || sku,
+					color: pallet.color || "#4CAF50"
+				});
+
+			}
+
+		});
+
+		return Array.from(legend.values());
+
+	}, [pallets]);
+
+
 	return (
 		<div style={{ display:"flex", flexDirection:"column", width:"100%", height:"100vh", background:"#e5e7eb" }}>
 
@@ -406,15 +433,48 @@ export default function ContainerSimulator({key, payload}) {
 
 				<hr style={{ borderColor:"#374151", margin:"12px 0" }} />
 
-				<h3 style={{ marginBottom:6 }}>Legend</h3>
-				<div style={{ maxHeight:200, overflowY:"auto" }}>
-					{pallets.map((p, i) => (
-						<div key={i} style={{ display:"flex", alignItems:"center", marginBottom:6 }}>
-							<div style={{ width:16, height:16, background:p.color, borderRadius:2,
-								marginRight:8, flexShrink:0 }} />
-							<span style={{ fontSize:12, wordBreak:"break-all" }}>{p.label || p.skuId}</span>
+				<h3 style={{ marginBottom: 6 }}>Legend</h3>
+				<div
+					style={{
+						maxHeight: 200,
+						overflowY: "auto"
+					}}
+				>
+
+					{skuLegend.map((item) => (
+
+						<div
+							key={item.skuId}
+							style={{
+								display: "flex",
+								alignItems: "center",
+								marginBottom: 6
+							}}
+						>
+
+							<div
+								style={{
+									width: 16,
+									height: 16,
+									background: item.color,
+									borderRadius: 2,
+									marginRight: 8,
+									flexShrink: 0
+								}}
+							/>
+
+							<span
+								style={{
+									fontSize: 12
+								}}
+							>
+								{item.label}
+							</span>
+
 						</div>
+
 					))}
+
 				</div>
 
 				<hr style={{ borderColor:"#374151", margin:"12px 0" }} />

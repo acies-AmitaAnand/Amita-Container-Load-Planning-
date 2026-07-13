@@ -9,6 +9,7 @@ const menus = [
 	{ label: "Route Master", path: "/lane-master", icon: "🧭" },
 	{ label: "Transport Master", path: "/transport-master", icon: "🚚" },
 	{ label: "Container Visualization", path: "/container-visualization", icon: "🚛" },
+	{ label: "Navigated Container Visualization", path: "/navigated-container-visualization", icon: "🚛" },
 	{ label: "Parameter Admin", path: "/parameter-admin", icon: "🔧" },
 ];
 

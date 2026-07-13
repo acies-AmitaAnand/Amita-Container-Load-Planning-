@@ -20,6 +20,8 @@ import RouteView from "../pages/route-view/RouteView";
 
 import MultiContainerView from "../pages/container-visualization/MultiContainerView";
 
+import OptimizationResultsPage from "../pages/container-visualization/OptimizationResultsPage";
+
 import ParameterAdmin from "../pages/parameter-admin/ParameterAdmin";
 
 import PlannerConfig       from "../pages/PlannerConfig";
@@ -42,6 +44,7 @@ export default function App() {
 			<Route path="/lane-master" element={<DataTable table="lane_master"       title="Lane Master" />} />
 			<Route path="/transport-master" element={<DataTable table="transport_asset"       title="Transport Master" />} />
 			<Route path="/container-visualization" element={<MultiContainerView />}/>
+			<Route path="/navigated-container-visualization" element={<OptimizationResultsPage />}/>
 			<Route path="/parameter-admin" element={<PlannerConfig />} />
 
 		</Routes>

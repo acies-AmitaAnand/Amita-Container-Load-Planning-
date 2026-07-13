@@ -41,6 +41,18 @@ export default function PlannerConfig() {
       (data.localStorage_entries || []).forEach(({ key, payload }) => {
         if (payload) localStorage.setItem(key, JSON.stringify(payload));
       });
+
+      
+      localStorage.setItem(
+          "optimization_summary",
+          JSON.stringify({
+              generatedAt: new Date().toISOString(),
+              containers_by_day: result.containers_by_day
+          })
+      );
+
+      
+
       setResult(data);
     } catch (e) {
       setError(e.message);
