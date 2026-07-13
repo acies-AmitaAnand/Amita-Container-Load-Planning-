@@ -5,6 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API = "http://localhost:8000/api";
 
@@ -13,6 +14,8 @@ export default function PlannerConfig() {
   const [result,  setResult]  = useState(null);
   const [running, setRunning] = useState(false);
   const [error,   setError]   = useState(null);
+
+  const navigate = useNavigate();
 
   // Load default config on mount
   useEffect(() => {
@@ -37,7 +40,7 @@ export default function PlannerConfig() {
         throw new Error(detail.detail || `HTTP ${res.status}`);
       }
       const data = await res.json();
-      // Write each container into localStorage for MultiContainerView
+      // Write each container into localStorage for ContainerVisualization
       (data.localStorage_entries || []).forEach(({ key, payload }) => {
         if (payload) localStorage.setItem(key, JSON.stringify(payload));
       });
@@ -54,6 +57,8 @@ export default function PlannerConfig() {
       
 
       setResult(data);
+      // Navigate to visualization page so user sees results immediately
+      navigate("/container-visualization");
     } catch (e) {
       setError(e.message);
     } finally {

@@ -16,11 +16,13 @@ import ItemMaster from "../pages/item-master/ItemMaster";
 
 import RouteView from "../pages/route-view/RouteView";
 
-// import ContainerVisualization from "../pages/container-visualization/ContainerVisualization";
+import ContainerVisualization from "../pages/container-visualization/ContainerVisualization";
 
 import MultiContainerView from "../pages/container-visualization/MultiContainerView";
 
 import OptimizationResultsPage from "../pages/container-visualization/OptimizationResultsPage";
+
+import OptimizationVisualization2 from "../pages/container-visualization/OptimizationVisualization2";
 
 import ParameterAdmin from "../pages/parameter-admin/ParameterAdmin";
 
@@ -45,6 +47,7 @@ export default function App() {
 			<Route path="/transport-master" element={<DataTable table="transport_asset"       title="Transport Master" />} />
 			<Route path="/container-visualization" element={<MultiContainerView />}/>
 			<Route path="/navigated-container-visualization" element={<OptimizationResultsPage />}/>
+			<Route path="/container-visualization-demo" element={<ContainerVisualization />} />
 			<Route path="/parameter-admin" element={<PlannerConfig />} />
 
 		</Routes>
