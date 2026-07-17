@@ -16,6 +16,7 @@ class Pallet(PydanticBaseModel):
     )
     shipmentId: str
     skuId: str
+    orderLineId: str =""
     originLocationId: str
     destinationLocationId: str
     estimatedDeliveryDate: datetime

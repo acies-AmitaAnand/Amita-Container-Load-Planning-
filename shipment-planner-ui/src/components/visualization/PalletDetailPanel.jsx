@@ -191,6 +191,9 @@ export default function PalletDetailPanel({ payload, selectedPalletId, onSelectP
               <thead>
                 <tr>
                   <SortHeader field="label"      label="SKU"        sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="orderLineId"          label="Order line" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="candidatePalletId"          label="Pallet Id" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="estimatedDeliveryDate" label="Est. delivery" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                   <SortHeader field="x"           label="X (mm)"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
                   <SortHeader field="z"           label="Z (mm)"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
                   <SortHeader field="weightIn_kg" label="Weight (kg)" sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
@@ -217,6 +220,9 @@ export default function PalletDetailPanel({ payload, selectedPalletId, onSelectP
                         {p.label || p.skuId}
                         {p.isPartialPallet && <span style={styles.partialTag}>partial</span>}
                       </td>
+                      <td style={styles.td}>{p.orderLineId || "—"}</td>
+                      <td style={styles.td}>{p.candidatePalletId || "—"}</td>
+                      <td style={styles.td}>{p.estimatedDeliveryDate?.slice(0, 10) || "—"}</td>
                       <td style={{ ...styles.td, textAlign: "right" }}>{p.position.x}</td>
                       <td style={{ ...styles.td, textAlign: "right" }}>{p.position.z}</td>
                       <td style={{ ...styles.td, textAlign: "right" }}>{fmt(p.weightIn_kg, 1)}</td>
@@ -265,9 +271,15 @@ function PalletDetailCard({ pallet, payload }) {
           <div style={styles.detailSubtitle}>{pallet.candidatePalletId}</div>
         </div>
       </div>
-
       <DetailGroup title="Product detail">
         <DetailRow k="SKU"        v={pallet.skuId} />
+        <DetailRow k="Order Line"        v={pallet.orderLineId              || "—"} />
+        <DetailRow k="Pallet ID"            v={pallet.candidatePalletId         || "—"} />
+        <DetailRow k="Origin"            v={pallet.originLocationId         || "—"} />
+        <DetailRow k="Destination"       v={pallet.destinationLocationId    || "—"} />
+        <DetailRow k="Actual delivery"   v={pallet.actualDeliveryDate       || "—"} />
+        <DetailRow k="Est. delivery"     v={pallet.estimatedDeliveryDate    || "—"} />
+        <DetailRow k="Max transit (days)" v={pallet.maxTransitTimeInDays   ?? "—"} />
         <DetailRow k="Shipment"   v={pallet.shipmentId} />
         <DetailRow k="Priority"   v={pallet.priority} />
         <DetailRow k="Pallet type" v={pallet.isPartialPallet ? `Partial (${fmt(pallet.fillPct * 100, 1)}% full)` : "Full"} />
@@ -330,6 +342,8 @@ function DetailRow({ k, v }) {
 
 function sortAccessor(p, field) {
   switch (field) {
+    case "orderLineId":           return p.orderLineId || "";
+    case "estimatedDeliveryDate": return p.estimatedDeliveryDate || "";
     case "x":      return p.position.x;
     case "z":      return p.position.z;
     case "height": return p.position.effectiveHeight ?? p.dimensions.height;

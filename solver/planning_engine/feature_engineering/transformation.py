@@ -140,6 +140,7 @@ def breakdown_into_pallets(shipment_candidate_df: pd.DataFrame) -> List[Pallet]:
                 candidatePalletId=pid,
                 shipmentId=str(row["shipment_id"]),
                 skuId=str(row["sku_id"]),
+                orderLineId=str(row["order_line_id"]),
                 originLocationId=str(row["origin_location_id"]),
                 destinationLocationId=str(row["destination_location_id"]),
                 estimatedDeliveryDate=est_date,

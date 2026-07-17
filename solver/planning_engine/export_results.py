@@ -159,5 +159,12 @@ def _pallet_to_viz_dict(p: Pallet) -> dict:
         "priority":       p.priority,
         "destinationStop": p.destinationStop,
         "unloadSequence": p.unloadSequence,
+        # ── SKU detail fields (shown in 3D container view) ─────────────────
+        "orderLineId":             p.orderLineId             if hasattr(p, "orderLineId")             else None,
+        "skuId":                   p.skuId,
+        "actualDeliveryDate":      str(p.actualDeliveryDate)      if hasattr(p, "actualDeliveryDate")      else None,
+        "originLocationId":        p.originLocationId,
+        "destinationLocationId":   p.destinationLocationId,
+        "estimatedDeliveryDate":   str(p.estimatedDeliveryDate),
+        "maxTransitTimeInDays":    p.maxTransitTimeInDays    if hasattr(p, "maxTransitTimeInDays")    else None,
     }
- 
