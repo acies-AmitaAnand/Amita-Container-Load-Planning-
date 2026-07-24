@@ -114,7 +114,7 @@ def api_plan(req: PlanRequest) -> dict:
     Returns a serialisable summary of the schedule result.
     """
     # ── Pull all input tables from DB ─────────────────────────────────────────
-    demand_rows   = list_rows("shipment_plans",   limit=10_000)
+    demand_rows   = list_rows("sample_shipment_plans",   limit=10_000)
     sku_uom_df      = list_rows("sku_unit_of_measure", limit=10_000)
     equip_rows    = list_rows("load_equipment_metadata",    limit=100)
 

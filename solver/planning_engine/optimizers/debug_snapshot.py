@@ -23,7 +23,7 @@ def snapshot(packer, container, pallet=None, label=""):
                 "effectiveDepth": r.d,
                 "effectiveHeight": 50,
             },
-            "label": f"free {r.w}x{r.d}",
+            "skuName": f"free {r.w}x{r.d}",
             "color": "#00000022",   # transparent ghost
             "weightIn_kg": 0,
             "isPartialPallet": False,
@@ -36,7 +36,7 @@ def snapshot(packer, container, pallet=None, label=""):
         **container.model_dump(),
         "pallets": [p.model_dump() for p in container.pallets] + free_as_pallets,
         "debug": {
-            "label": label,
+            "skuName": label,
             "step": len(container.pallets),
             "free_rect_count": len(packer.free),
             "current_pallet": pallet.candidatePalletId if pallet else None,

@@ -84,7 +84,7 @@ function SortHeader({ field, label, sortField, sortDir, onSort, align }) {
 export default function PalletDetailPanel({ payload, selectedPalletId, onSelectPallet }) {
   const pallets = payload.pallets || [];
   const [internalSelected, setInternalSelected] = useState(selectedPalletId || null);
-  const [sortField, setSortField] = useState("label");
+  const [sortField, setSortField] = useState("candidatePalletId");
   const [sortDir, setSortDir]     = useState("asc");
   const [filterText, setFilterText] = useState("");
 
@@ -190,15 +190,18 @@ export default function PalletDetailPanel({ payload, selectedPalletId, onSelectP
             <table style={styles.table}>
               <thead>
                 <tr>
-                  <SortHeader field="label"      label="SKU"        sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="skuId"      label="SKU ID"        sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="skuName"      label="SKU"        sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                   <SortHeader field="orderLineId"          label="Order line" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="shipmentId"          label="Shipment Id" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                   <SortHeader field="candidatePalletId"          label="Pallet Id" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                   <SortHeader field="estimatedDeliveryDate" label="Est. delivery" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                  <SortHeader field="weightIn_kg" label="Weight (kg)" sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
+                  <SortHeader field="fillPct"     label="Fill %"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
+                  <SortHeader field="unitsLoaded"     label="Units Loaded"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
+                  <SortHeader field="height"      label="Height (mm)" sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
                   <SortHeader field="x"           label="X (mm)"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
                   <SortHeader field="z"           label="Z (mm)"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
-                  <SortHeader field="weightIn_kg" label="Weight (kg)" sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
-                  <SortHeader field="height"      label="Height (mm)" sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
-                  <SortHeader field="fillPct"     label="Fill %"     sortField={sortField} sortDir={sortDir} onSort={handleSort} align="right" />
                   <SortHeader field="orientation" label="Orientation" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
                 </tr>
               </thead>
@@ -217,19 +220,23 @@ export default function PalletDetailPanel({ payload, selectedPalletId, onSelectP
                     >
                       <td style={styles.td}>
                         <span style={{ ...styles.swatch, background: p.color }} />
-                        {p.label || p.skuId}
+                        {p.skuId || p.label}
                         {p.isPartialPallet && <span style={styles.partialTag}>partial</span>}
                       </td>
-                      <td style={styles.td}>{p.orderLineId || "—"}</td>
-                      <td style={styles.td}>{p.candidatePalletId || "—"}</td>
-                      <td style={styles.td}>{p.estimatedDeliveryDate?.slice(0, 10) || "—"}</td>
-                      <td style={{ ...styles.td, textAlign: "right" }}>{p.position.x}</td>
-                      <td style={{ ...styles.td, textAlign: "right" }}>{p.position.z}</td>
-                      <td style={{ ...styles.td, textAlign: "right" }}>{fmt(p.weightIn_kg, 1)}</td>
-                      <td style={{ ...styles.td, textAlign: "right" }}>
-                        {p.position.effectiveHeight ?? p.dimensions.height}
+                      <td style={styles.td}>
+                        <span style={{ ...styles.swatch, background: p.color }} />
+                        {p.label || p.skuId}
                       </td>
+                      <td style={styles.td}>{p.orderLineId || "—"}</td>
+                      <td style={styles.td}>{p.shipmentId || "—"}</td>
+                      <td style={styles.td}>{p.candidatePalletId.slice(-4) || "—"}</td>
+                      <td style={styles.td}>{p.estimatedDeliveryDate?.slice(0, 10) || "—"}</td>
+                      <td style={{ ...styles.td, textAlign: "right" }}>{fmt(p.weightIn_kg, 1)}</td>
                       <td style={{ ...styles.td, textAlign: "right" }}>{fmt(p.fillPct * 100, 0)}%</td>
+                      <td style={{ ...styles.td, textAlign: "right" }}>{p.unitsLoaded}</td>
+                      <td style={{ ...styles.td, textAlign: "right" }}>{p.position.z}</td>
+                      <td>{p.position.effectiveHeight ?? p.dimensions.height}</td>
+                      <td style={{ ...styles.td, textAlign: "right" }}>{p.position.x}</td>
                       <td style={styles.td}>{shortOrient(p.position.orientation)}</td>
                     </tr>
                   );
@@ -268,18 +275,26 @@ function PalletDetailCard({ pallet, payload }) {
         <span style={{ ...styles.swatch, width: 14, height: 14, marginRight: 8, background: pallet.color }} />
         <div>
           <div style={styles.detailTitle}>{pallet.label || pallet.skuId}</div>
-          <div style={styles.detailSubtitle}>{pallet.candidatePalletId}</div>
+          <div style={styles.detailSubtitle}>Pallet ID: {pallet.candidatePalletId.slice(-4)}</div>
         </div>
       </div>
-      <DetailGroup title="Product detail">
-        <DetailRow k="SKU"        v={pallet.skuId} />
+      <DetailGroup title="Shipping Information">
+        <DetailRow k="SKU ID"        v={pallet.skuId} />
+        <DetailRow k="SKU"        v={pallet.skuName} />
         <DetailRow k="Order Line"        v={pallet.orderLineId              || "—"} />
-        <DetailRow k="Pallet ID"            v={pallet.candidatePalletId         || "—"} />
+        <DetailRow k="Shipment ID"            v={pallet.shipmentId         || "—"} />
+        <DetailRow k="Pallet ID"            v={pallet.candidatePalletId.slice(-4)         || "—"} />
         <DetailRow k="Origin"            v={pallet.originLocationId         || "—"} />
         <DetailRow k="Destination"       v={pallet.destinationLocationId    || "—"} />
         <DetailRow k="Actual delivery"   v={pallet.actualDeliveryDate       || "—"} />
         <DetailRow k="Est. delivery"     v={pallet.estimatedDeliveryDate    || "—"} />
         <DetailRow k="Max transit (days)" v={pallet.maxTransitTimeInDays   ?? "—"} />
+      </DetailGroup>
+
+      <DetailGroup title="Product detail">
+        <DetailRow k="SKU ID"        v={pallet.skuId} />
+        <DetailRow k="SKU"        v={pallet.skuName} />
+        <DetailRow k="Units Loaded"   v={pallet.unitsLoaded} />
         <DetailRow k="Shipment"   v={pallet.shipmentId} />
         <DetailRow k="Priority"   v={pallet.priority} />
         <DetailRow k="Pallet type" v={pallet.isPartialPallet ? `Partial (${fmt(pallet.fillPct * 100, 1)}% full)` : "Full"} />

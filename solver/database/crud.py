@@ -15,7 +15,8 @@ ALLOWED_TABLES = {
     "lane_master",
     "load_equipment_metadata",
     "location",
-    "shipment_plans",
+    # "shipment_plans",
+    "sample_shipment_plans",
     "sku_unit_of_measure",
     "transport_asset",
 }

@@ -15,6 +15,7 @@ class ContainerFleetOptimizationResult(PydanticBaseModel):
     containerResults: List[ContainerOptimizationResult]
     unallocated_pallets: List[Pallet]
     total_pallets: int
+    total_units: int = 0
     total_containers: int
     fleet_weight_utilization_pct: float
     fleet_volume_utilization_pct: float

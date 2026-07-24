@@ -39,7 +39,7 @@ export default function App() {
         <div style={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
 
 		<Routes>
-			<Route path="/shipment-plan" element={<DataTable table="shipment_plans"   title="Shipment Demand" />} />
+			<Route path="/shipment-plan" element={<DataTable table="sample_shipment_plans"   title="Shipment Demand" />} />
 			<Route path="/sku-uom-configuration" element={<DataTable table="sku_unit_of_measure" title="SKU / Pallet Master" />} />
 			<Route path="/item-master" element={<DataTable table="item_master"    title="Load Equipment" />} />
 			<Route path="/location-master" element={<DataTable table="location"       title="Location Master" />} />

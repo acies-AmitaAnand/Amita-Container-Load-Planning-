@@ -23,14 +23,14 @@ class Pallet(PydanticBaseModel):
  
     dimensions: Dimension
     position: Position = Field(default_factory=Position)
-    label: str = Field(default="", description="Label for displaying")
+    skuName: str = Field(default="", description="Label for displaying")
     color: str = Field(default="#4CAF50", description="Hex color code")
     weightIn_kg: float = Field(default=0.0)
     floorArea_m2: float = Field(default=0.0)
     volume_m3: float = Field(default=0.0)
     priority: int = 0
     serviceLevel: int = 0
-    unitsInPallet: int = 0
+    unitsLoaded: int = 0
     isPartialPallet: bool = False
     fillPct: float = 1.0
     loadedToContainer: bool = False
