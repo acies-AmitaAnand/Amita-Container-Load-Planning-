@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LogistIQ — Freight & Fleet Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nav-bg: #ffffff;
+    --page-bg: #f6f8fb;
+    --card-bg: #ffffff;
+    --border: #e6ebf2;
+    --ink: #0f1c33;
+    --ink-soft: #5b6b83;
+    --ink-mute: #9aa8bd;
+    --blue: #2563eb;
+    --blue-deep: #16267a;
+    --blue-tint: #eef3ff;
+    --green: #16a34a;
+    --amber: #d97706;
+    --red: #dc2626;
+    --track: #eef2f7;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--page-bg);
+    color: var(--ink);
+    display: flex;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    width: 258px; flex-shrink: 0;
+    background: var(--nav-bg);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    position: sticky; top: 0; height: 100vh;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 11px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+    color: #fff; font-weight: 800; font-size: 19px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand h1 { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .brand h1 span { color: var(--blue); }
+  .brand small { display: block; font-size: 10px; letter-spacing: 1.4px; color: var(--ink-mute); font-weight: 600; }
+  .brand .chev { margin-left: auto; color: var(--ink-mute); cursor: pointer; font-size: 15px; }
+
+  .nav { flex: 1; overflow-y: auto; padding: 14px 12px; }
+  .nav-group { margin-bottom: 18px; }
+  .nav-group h5 {
+    font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--ink-mute); font-weight: 700; padding: 0 12px 8px;
+  }
+  .nav a {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 12px; border-radius: 9px;
+    color: var(--ink-soft); text-decoration: none;
+    font-size: 13.5px; font-weight: 500; margin-bottom: 2px;
+    transition: background .15s, color .15s;
+  }
+  .nav a .ic { width: 18px; text-align: center; font-size: 15px; }
+  .nav a:hover { background: var(--page-bg); color: var(--ink); }
+  .nav a.active { background: var(--blue-tint); color: var(--blue); font-weight: 600; }
+
+  .side-foot {
+    border-top: 1px solid var(--border); padding: 14px 16px;
+    display: flex; align-items: center; gap: 11px;
+  }
+  .avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg,#f59e0b,#d97706);
+    color: #fff; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .side-foot .n { font-size: 13px; font-weight: 600; }
+  .side-foot .r { font-size: 11px; color: var(--ink-mute); }
+
+  /* ---------- Main ---------- */
+  .main { flex: 1; min-width: 0; }
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 28px; background: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 5;
+  }
+  .topbar h2 { font-size: 18px; font-weight: 800; letter-spacing: -.3px; }
+  .topbar h2 span { color: var(--ink-mute); font-weight: 500; font-size: 13px; display: block; }
+  .search {
+    margin-left: auto; display: flex; align-items: center; gap: 8px;
+    background: var(--page-bg); border: 1px solid var(--border);
+    border-radius: 9px; padding: 8px 12px; width: 260px;
+    color: var(--ink-mute); font-size: 13px;
+  }
+  .search input { border: 0; background: transparent; outline: none; font-size: 13px; width: 100%; color: var(--ink); }
+  .tb-btn {
+    width: 38px; height: 38px; border-radius: 9px;
+    border: 1px solid var(--border); background: var(--nav-bg);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--ink-soft); font-size: 15px;
+  }
+  .tb-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); width: auto; padding: 0 16px; font-weight: 600; font-size: 13px; gap: 7px; }
+
+  .content { padding: 26px 28px 40px; }
+  .filters { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+  .chip {
+    padding: 8px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--nav-bg); color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .chip.active { background: var(--blue-deep); color: #fff; border-color: var(--blue-deep); }
+
+  /* ---------- KPI grid ---------- */
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-bottom: 22px;
+  }
+  .kpi {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    position: relative;
+  }
+  .kpi .top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .kpi .icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; background: var(--blue-tint); color: var(--blue);
+  }
+  .kpi .label { font-size: 12.5px; color: var(--ink-soft); font-weight: 600; }
+  .kpi .value { font-size: 30px; font-weight: 800; letter-spacing: -1px; margin-bottom: 6px; }
+  .kpi .value small { font-size: 15px; font-weight: 600; color: var(--ink-mute); }
+  .kpi-delta { font-size: 12.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
+  .kpi-delta.up { color: var(--green); }
+  .kpi-delta.down { color: var(--red); }
+  .kpi-target { font-size: 11.5px; color: var(--ink-mute); margin-top: 8px; }
+  .badge {
+    position: absolute; top: 18px; right: 18px;
+    font-size: 10.5px; font-weight: 700; padding: 4px 9px; border-radius: 20px;
+  }
+  .badge.g { background: #dcfce7; color: var(--green); }
+  .badge.a { background: #fef3c7; color: var(--amber); }
+  .badge.r { background: #fee2e2; color: var(--red); }
+
+  /* ---------- Lower panels ---------- */
+  .panels { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .card-head { display: flex; align-items: center; margin-bottom: 18px; }
+  .card-head h3 { font-size: 15px; font-weight: 700; }
+  .card-head .toggle {
+    margin-left: auto; display: flex; gap: 4px; background: var(--page-bg);
+    border-radius: 8px; padding: 3px;
+  }
+  .card-head .toggle button {
+    border: 0; background: transparent; font-size: 12px; font-weight: 600;
+    color: var(--ink-soft); padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  }
+  .card-head .toggle button.on { background: var(--nav-bg); color: var(--blue); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+
+  /* funnel */
+  .funnel { display: flex; flex-direction: column; gap: 12px; }
+  .fstep { }
+  .fstep .fl { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .fstep .fl .n { font-weight: 600; color: var(--ink-soft); }
+  .fstep .fl .v { font-weight: 700; }
+  .fbar { height: 12px; border-radius: 7px; background: var(--track); overflow: hidden; }
+  .fbar span { display: block; height: 100%; border-radius: 7px; background: linear-gradient(90deg,#2563eb,#1e3a8a); }
+
+  /* table */
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 11px; letter-spacing: .5px; text-transform: uppercase;
+    color: var(--ink-mute); font-weight: 700; padding: 0 10px 10px;
+  }
+  thead th.num { text-align: right; }
+  tbody td { padding: 11px 10px; font-size: 13px; border-top: 1px solid var(--border); }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .pill.g { background: #dcfce7; color: var(--green); }
+  .pill.a { background: #fef3c7; color: var(--amber); }
+  .pill.r { background: #fee2e2; color: var(--red); }
+
+  /* rank list */
+  .rank-item { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .rank-num {
+    width: 24px; height: 24px; border-radius: 7px; flex-shrink: 0;
+    background: var(--blue-tint); color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .rank-body { flex: 1; min-width: 0; }
+  .rank-body .n { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .rank-bar { height: 8px; border-radius: 5px; background: var(--track); overflow: hidden; }
+  .rank-bar span { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg,#f59e0b,#d97706); }
+  .rank-val { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 1080px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .panels { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+  }
+</style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">L</div>
+      <div>
+        <h1>Logist<span>IQ</span></h1>
+        <small>FREIGHT INTELLIGENCE</small>
+      </div>
+      <div class="chev">⌄</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-group">
+        <h5>Overview</h5>
+        <a href="#" class="active"><span class="ic">▦</span> Dashboard</a>
+        <a href="#"><span class="ic">◷</span> Live Tracking</a>
+        <a href="#"><span class="ic">◈</span> Lanes & Routes</a>
+      </div>
+      <div class="nav-group">
+        <h5>Operations</h5>
+        <a href="#"><span class="ic">▤</span> Shipments</a>
+        <a href="#"><span class="ic">▥</span> Fleet</a>
+        <a href="#"><span class="ic">◱</span> Carriers</a>
+        <a href="#"><span class="ic">▧</span> Warehousing</a>
+      </div>
+      <div class="nav-group">
+        <h5>Finance</h5>
+        <a href="#"><span class="ic">▣</span> Billing</a>
+        <a href="#"><span class="ic">◨</span> Profitability</a>
+        <a href="#"><span class="ic">▢</span> Reports</a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      <div class="avatar">RA</div>
+      <div>
+        <div class="n">Ravi Anand</div>
+        <div class="r">Ops Manager</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h2>Freight & Fleet Dashboard <span>Network performance at a glance</span></h2>
+      </div>
+      <div class="search">
+        <span>⌕</span><input placeholder="Search shipments, lanes, carriers…">
+      </div>
+      <button class="tb-btn">⤓</button>
+      <button class="tb-btn primary">＋ New Shipment</button>
+    </div>
+
+    <div class="content">
+      <div class="filters">
+        <div class="chip active">Today</div>
+        <div class="chip">This Week</div>
+        <div class="chip">This Month</div>
+        <div class="chip">Quarter</div>
+        <div class="chip">All Lanes ▾</div>
+        <div class="chip">All Carriers ▾</div>
+      </div>
+
+      <!-- KPI grid -->
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <!-- Lower panels -->
+      <div class="panels">
+        <div class="card">
+          <div class="card-head">
+            <h3>Order-to-Delivery Flow</h3>
+            <div class="toggle">
+              <button class="on" id="tgShip">Shipments</button>
+              <button id="tgCost">Cost</button>
+            </div>
+          </div>
+          <div class="funnel" id="funnel"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Top Carriers by Volume</h3></div>
+          <div id="carrierRanks"></div>
+        </div>
+      </div>
+
+      <div class="panels" style="margin-top:16px; grid-template-columns:1fr;">
+        <div class="card">
+          <div class="card-head"><h3>Lane Performance</h3></div>
+          <table>
+            <thead>
+              <tr>
+                <th>Lane</th>
+                <th class="num">Loads</th>
+                <th class="num">On-Time %</th>
+                <th class="num">Cost / km</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="laneRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ---------- KPI cards ----------
+  const kpis = [
+    { icon:'◷', label:'On-Time Delivery (OTD)', value:'93.4', unit:'%', delta:'2.1%', up:true,  target:'Target 95%',    state:'a', stateLbl:'Near' },
+    { icon:'₹',  label:'Cost per Shipment',      value:'1,284', unit:'', delta:'3.4%', up:false, target:'Target ₹1,200',  state:'a', stateLbl:'Near' },
+    { icon:'▥', label:'Fleet Utilization',       value:'81.7', unit:'%', delta:'4.6%', up:true,  target:'Target 80%',    state:'g', stateLbl:'On Track' },
+    { icon:'✓', label:'Perfect Order Rate',      value:'88.9', unit:'%', delta:'1.2%', up:true,  target:'Target 92%',    state:'a', stateLbl:'Near' },
+    { icon:'◴', label:'Avg Dwell Time',          value:'4.2', unit:'h', delta:'0.6h', up:false, target:'Target 3.5h',   state:'r', stateLbl:'Below' },
+    { icon:'⚠', label:'Damage / Loss Rate',      value:'0.8', unit:'%', delta:'0.3%', up:false, target:'Target <1%',    state:'g', stateLbl:'On Track' }
+  ];
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
+    <div class="kpi">
+      <span class="badge ${k.state}">${k.stateLbl}</span>
+      <div class="top">
+        <div class="icon">${k.icon}</div>
+        <div class="label">${k.label}</div>
+      </div>
+      <div class="value">${k.value}<small>${k.unit}</small></div>
+      <div class="kpi-delta ${k.up?'up':'down'}">${k.up?'↗':'↘'} ${k.delta}</div>
+      <div class="kpi-target">${k.target}</div>
+    </div>
+  `).join('');
+
+  // ---------- Funnel ----------
+  const funnelShip = [
+    ["Orders Booked",   "6,420", 100],
+    ["Dispatched",      "6,050", 94],
+    ["In Transit",      "5,880", 91.5],
+    ["Delivered On-Time","5,494", 85.6]
+  ];
+  const funnelCost = [
+    ["Orders Booked",   "₹82.4L", 100],
+    ["Dispatched",      "₹77.6L", 94.2],
+    ["In Transit",      "₹74.9L", 90.9],
+    ["Delivered On-Time","₹69.1L", 83.9]
+  ];
+  function renderFunnel(data){
+    document.getElementById('funnel').innerHTML = data.map(f => `
+      <div class="fstep">
+        <div class="fl"><span class="n">${f[0]}</span><span class="v">${f[1]}</span></div>
+        <div class="fbar"><span style="width:${f[2]}%"></span></div>
+      </div>`).join('');
+  }
+  renderFunnel(funnelShip);
+  document.getElementById('tgShip').onclick = function(){
+    this.classList.add('on'); document.getElementById('tgCost').classList.remove('on'); renderFunnel(funnelShip);
+  };
+  document.getElementById('tgCost').onclick = function(){
+    this.classList.add('on'); document.getElementById('tgShip').classList.remove('on'); renderFunnel(funnelCost);
+  };
+
+  // ---------- Lane table ----------
+  const lanes = [
+    ["Chennai → Bengaluru", "1,420", "94.1%", "₹0.82", "g", "Healthy"],
+    ["Mumbai → Delhi",      "2,180", "88.7%", "₹0.91", "a", "Watch"],
+    ["Delhi → Kolkata",     "980",   "79.4%", "₹1.04", "r", "At Risk"],
+    ["Pune → Hyderabad",    "1,110", "96.3%", "₹0.77", "g", "Healthy"],
+    ["Ahmedabad → Jaipur",  "640",   "90.2%", "₹0.88", "a", "Watch"]
+  ];
+  document.getElementById('laneRows').innerHTML = lanes.map(l => `
+    <tr>
+      <td>${l[0]}</td>
+      <td class="num">${l[1]}</td>
+      <td class="num">${l[2]}</td>
+      <td class="num">${l[3]}</td>
+      <td><span class="pill ${l[4]}">${l[5]}</span></td>
+    </tr>`).join('');
+
+  // ---------- Carrier ranks ----------
+  const carriers = [
+    ["In-house Fleet", 100, "48,200"],
+    ["BlueDart Logistics", 74, "35,600"],
+    ["TCI Freight", 61, "29,400"],
+    ["Delhivery 3PL", 43, "20,700"],
+    ["Gati Express", 28, "13,500"]
+  ];
+  document.getElementById('carrierRanks').innerHTML = carriers.map((c,i) => `
+    <div class="rank-item">
+      <div class="rank-num">${i+1}</div>
+      <div class="rank-body">
+        <div class="n">${c[0]}</div>
+        <div class="rank-bar"><span style="width:${c[1]}%"></span></div>
+      </div>
+      <div class="rank-val">${c[2]}</div>
+    </div>`).join('');
+</script>
+</body>
+</html>

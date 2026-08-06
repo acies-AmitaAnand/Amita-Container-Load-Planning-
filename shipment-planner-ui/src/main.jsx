@@ -6,6 +6,9 @@ import {
   BrowserRouter
 } from "react-router-dom";
 
+import "./index.css";
+import "./App.css";
+
 import App from "./app/App";
 
 ReactDOM.createRoot(
