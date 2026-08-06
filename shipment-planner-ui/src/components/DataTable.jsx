@@ -196,7 +196,8 @@ export default function DataTable({ table, title }) {
 													/>
 												) : (
 													<span title={editable ? "Click to edit" : undefined}>
-														{formatCell(row[col])}
+														{/* {formatCell(row[col])} */}
+                            {String(formatCell(row[col])).substring(0,10)}
 													</span>
 												)}
 											</td>

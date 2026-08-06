@@ -10,6 +10,7 @@
 
 .main-shell {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     background: var(--page-bg);
@@ -18,6 +19,7 @@
 .page-content {
     flex: 1;
     overflow-y: auto;
+    min-width: 0;
     /* overflow-x: hidden; */
     background: var(--page-bg);
     padding: 26px 28px 40px;
@@ -273,6 +275,7 @@
 
 .content {
     min-height: 100%;
+    min-width: 0;
 }
 .table-container {
     width: 100%;
