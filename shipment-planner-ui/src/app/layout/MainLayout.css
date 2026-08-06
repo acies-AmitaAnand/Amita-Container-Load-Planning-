@@ -20,9 +20,10 @@
 }
 
 .page-content {
-  flex: 1;
-  overflow: auto;
-  padding: 26px 28px 40px;
+    flex: 1;
+    overflow: auto;
+    background: var(--page-bg);
+    padding: 24px;
 }
 
 /* ===========================
@@ -164,6 +165,9 @@
   align-items: center;
   gap: 16px;
 
+  position: sticky;
+  top: 0;
+  z-index: 20;
   padding: 16px 28px;
 
   background: white;
@@ -281,4 +285,8 @@
 .sidebar.collapsed .sidebar-toggle {
   right: 50%;
   transform: translateX(50%);
+}
+
+.content {
+    min-height: 100%;
 }

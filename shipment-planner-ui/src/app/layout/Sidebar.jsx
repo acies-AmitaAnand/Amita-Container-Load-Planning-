@@ -64,26 +64,15 @@ export default function Sidebar({ collapsed, onToggle }) {
 			<div className="brand">
 				<div className="logo">L</div>
 
-				{!collapsed && (
-					<>
-						<div>
-							<h1>
-								Logist<span>IQ</span>
-							</h1>
-							<small>SHIPMENT PLANNER</small>
-						</div>
+			{!collapsed && (
+			<div>
+				<h1>
+				Logist<span>IQ</span>
+				</h1>
+				<small>SHIPMENT PLANNER</small>
+			</div>
+			)}
 
-						<div className="chev" onClick={onToggle}>
-							◀
-						</div>
-					</>
-				)}
-
-				{collapsed && (
-					<div className="chev" onClick={onToggle}>
-						▶
-					</div>
-				)}
 			</div>
 
 			<nav className="nav">

@@ -18,10 +18,12 @@ export default function MainLayout() {
 			<div className="main-shell">
 				<Topbar />
 
-				<main className="page-content">
+			<main className="page-content">
+				<div className="content">
 					<Outlet />
-				</main>
-			</div>
-		</div>
+				</div> 
+			</main>
+	</div>
+	</div>
 	);
 }
