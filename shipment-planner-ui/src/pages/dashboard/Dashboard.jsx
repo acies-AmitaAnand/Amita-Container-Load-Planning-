@@ -1,17 +1,13 @@
+import "./Dashboard.css";
+
 export default function Dashboard() {
-
-	return (
-
-		<div>
-
-			<h1>
-				Dashboard
-			</h1>
-
-			<p>
-				Upload CSV / Excel files.
-			</p>
-
-		</div>
-	);
+  return (
+    <div className="dashboard">
+      {/* Filters */}
+      {/* KPI Grid */}
+      {/* Funnel */}
+      {/* Carrier Ranking */}
+      {/* Lane Table */}
+    </div>
+  );
 }
