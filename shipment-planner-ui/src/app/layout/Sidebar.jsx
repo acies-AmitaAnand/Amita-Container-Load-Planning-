@@ -22,20 +22,20 @@ const menus = [
 		category: "OPERATIONS",
 		labels: [
 			{
-				label: "Parameter Admin",
-				path: "/parameter-admin",
+				label: "Build Container Load Planning",
+				path: "/build-load-planning",
 				icon: "🔧",
 			},
 			{
-				label: "Optimization Planning",
+				label: "View Container Load Summary",
 				path: "/optimized-day-planning",
 				icon: "🚛",
 			},
-			{
-				label: "Container Visualization",
-				path: "/all-container-visualization",
-				icon: "📦",
-			},
+			// {
+			// 	label: "Container Visualization",
+			// 	path: "/all-container-visualization",
+			// 	icon: "📦",
+			// },
 		],
 	},
 	{

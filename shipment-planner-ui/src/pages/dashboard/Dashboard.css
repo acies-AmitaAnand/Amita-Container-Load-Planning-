@@ -54,7 +54,7 @@
 
 .kpi {
 	position: relative;
-    box-shadow: 0 1px 2px rgba(15, 28, 51, 0.04);
+		box-shadow: 0 1px 2px rgba(15, 28, 51, 0.04);
 	background: white;
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
@@ -169,7 +169,7 @@
 
 .card {
 	background: white;
-    box-shadow: 0 1px 2px rgba(15, 28, 51, 0.04);
+		box-shadow: 0 1px 2px rgba(15, 28, 51, 0.04);
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
 
@@ -412,4 +412,119 @@ tbody td {
 	.kpi-grid {
 		grid-template-columns: 1fr;
 	}
+}
+
+.header-stats {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 16px;
+}
+
+.stat-card {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 18px;
+	background: white;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+.stat-icon {
+	font-size: 26px;
+}
+
+.stat-value {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.stat-label {
+	color: var(--ink-soft);
+	font-size: 13px;
+}
+
+.bottom-panels {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 16px;
+}
+
+.timeline {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.timeline-item {
+	display: flex;
+	gap: 14px;
+}
+
+.timeline-dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	margin-top: 5px;
+}
+
+.timeline-dot.success {
+	background: var(--green);
+}
+
+.timeline-dot.warning {
+	background: var(--amber);
+}
+
+.timeline-dot.info {
+	background: var(--blue);
+}
+
+.timeline-title {
+	font-weight: 600;
+}
+
+.timeline-time {
+	color: var(--ink-mute);
+	font-size: 12px;
+	margin-top: 4px;
+}
+
+.alerts {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.alert-row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	padding: 10px;
+	border-radius: 8px;
+	background: var(--page-bg);
+}
+
+.quick-actions {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 16px;
+}
+
+.action-btn {
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: white;
+	padding: 18px;
+	font-weight: 600;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: center;
+	transition: .2s;
+}
+
+.action-btn:hover {
+	background: var(--blue-tint);
+	border-color: var(--blue);
 }

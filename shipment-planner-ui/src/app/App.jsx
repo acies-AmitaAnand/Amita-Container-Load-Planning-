@@ -55,10 +55,10 @@ export default function App() {
 					}
 				/>
 
-				<Route
+				{/* <Route
 					path="/all-container-visualization"
 					element={<MultiContainerView />}
-				/>
+				/> */}
 
 				<Route
 					path="/optimized-day-planning"
@@ -66,7 +66,7 @@ export default function App() {
 				/>
 
 				<Route
-					path="/parameter-admin"
+					path="/build-load-planning"
 					element={<PlannerConfig />}
 				/>
 			</Route>
