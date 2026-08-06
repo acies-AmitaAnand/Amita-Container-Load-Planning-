@@ -23,7 +23,7 @@ export default function MainLayout() {
 					<Outlet />
 				</div> 
 			</main>
-	</div>
+		</div>
 	</div>
 	);
 }

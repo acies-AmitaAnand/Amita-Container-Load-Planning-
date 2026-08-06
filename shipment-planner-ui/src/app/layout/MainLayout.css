@@ -3,27 +3,24 @@
 =========================== */
 
 .app-shell {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+    display: flex;
+    height: 100vh;
+    background: var(--page-bg);
 }
 
 .main-shell {
-  flex: 1;
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-
-  overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--page-bg);
 }
 
 .page-content {
     flex: 1;
-    overflow: auto;
+    overflow-y: auto;
     background: var(--page-bg);
-    padding: 24px;
+    padding: 26px 28px 40px;
+    /* background: red !important; */
 }
 
 /* ===========================
@@ -240,20 +237,6 @@
   border-color: var(--blue);
 
   font-weight: 600;
-}
-
-/* ===========================
-   Desktop Only
-=========================== */
-
-@media (max-width: 1080px) {
-  .sidebar {
-    display: none;
-  }
-
-  .page-content {
-    padding: 18px;
-  }
 }
 
 .sidebar {
