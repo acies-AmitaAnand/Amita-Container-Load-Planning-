@@ -346,7 +346,7 @@ def run_full_optimization_daily(
     that day's own demand (overflow-first).
     """
     if planning_date is None:
-        planning_date = date.today()
+        planning_date = date.fromisoformat('2026-04-08')
 
     # ── Equipment spec ────────────────────────────────────────────────────────
     mask   = load_equipment_metadata_df["equipment_type"].str.upper() == preferred_equipment_type.upper()
