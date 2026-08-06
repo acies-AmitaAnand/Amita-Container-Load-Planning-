@@ -18,6 +18,7 @@
 .page-content {
     flex: 1;
     overflow-y: auto;
+    /* overflow-x: hidden; */
     background: var(--page-bg);
     padding: 26px 28px 40px;
     /* background: red !important; */
@@ -272,4 +273,22 @@
 
 .content {
     min-height: 100%;
+}
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: white;
+}
+
+.data-table {
+    width: 100%;
+    min-width: 1200px;   /* adjust based on number of columns */
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    white-space: nowrap;
 }

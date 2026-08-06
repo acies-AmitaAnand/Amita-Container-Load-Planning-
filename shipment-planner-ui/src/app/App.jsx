@@ -17,7 +17,7 @@ export default function App() {
 
 				<Route
 					path="/shipment-plan"
-					element={<DataTable table="shipment_plans" title="Shipment Demand" />}
+					element={<DataTable table="sample_shipment_plans" title="Shipment Demand" />}
 				/>
 
 				<Route
