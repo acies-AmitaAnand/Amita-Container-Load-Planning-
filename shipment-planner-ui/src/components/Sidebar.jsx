@@ -1,16 +1,52 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const menus = [
-	{ label: "Shipment Demand", path: "/shipment-plan", icon: "📥" },
-	{ label: "Item Master", path: "/item-master", icon: "📦" },
-	{ label: "SKU UOM Configuration", path: "/sku-uom-configuration", icon: "⚙️" },
-	{ label: "Location Master", path: "/location-master", icon: "🛣️" },
-	{ label: "Route Master", path: "/lane-master", icon: "🧭" },
-	{ label: "Transport Master", path: "/transport-master", icon: "🚚" },
-	{ label: "Parameter Admin", path: "/parameter-admin", icon: "🔧" },
-	{ label: "Optimization Planning Summary (Day)", path: "/optimized-day-planning", icon: "🚛" },
-	{ label: "📦All Container Visualization", path: "/all-container-visualization", icon: "📦" },
+	{
+		category: "OVERVIEW",
+		labels: [
+			{ label: "Dashboard", path: "/", icon: "🏠" },
+		],
+	},
+	{
+		category: "DATA",
+		labels: [
+			{ label: "Shipment Demand", path: "/shipment-plan", icon: "📥" },
+			{ label: "Item Master", path: "/item-master", icon: "📦" },
+			{ label: "Location Master", path: "/location-master", icon: "🛣️" },
+			{ label: "Route Master", path: "/lane-master", icon: "🧭" },
+			{ label: "Transport Master", path: "/transport-master", icon: "🚚" },
+		],
+	},
+	{
+		category: "OPERATIONS",
+		labels: [
+			{
+				label: "Parameter Admin",
+				path: "/parameter-admin",
+				icon: "🔧",
+			},
+			{
+				label: "Optimization Planning Summary (Day)",
+				path: "/optimized-day-planning",
+				icon: "🚛",
+			},
+			{
+				label: "All Container Visualization",
+				path: "/all-container-visualization",
+				icon: "📦",
+			},
+		],
+	},
+	{
+		category: "CONFIGURATION",
+		labels: [
+			{
+				label: "SKU UOM Configuration",
+				path: "/sku-uom-configuration",
+				icon: "⚙️",
+			},
+		],
+	},
 ];
 
 const EXPANDED_WIDTH = 260;
@@ -34,7 +70,6 @@ export default function Sidebar({ collapsed, onToggle }) {
 				position: "relative",
 			}}
 		>
-			{/* Toggle button */}
 			<button
 				onClick={onToggle}
 				aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
@@ -74,45 +109,73 @@ export default function Sidebar({ collapsed, onToggle }) {
 				Shipment Planner
 			</h2>
 
-			<hr style={{ borderColor: "#374151", marginTop: collapsed ? 44 : 0 }} />
+			<hr
+				style={{
+					borderColor: "#374151",
+					marginTop: collapsed ? 44 : 0,
+				}}
+			/>
 
 			<nav style={{ marginTop: 12 }}>
-				{menus.map((menu) => {
-					const isActive = location.pathname === menu.path;
-					return (
-						<Link
-							key={menu.path}
-							to={menu.path}
-							title={collapsed ? menu.label : undefined}
-							style={{
-								display: "flex",
-								alignItems: "center",
-								gap: 10,
-								padding: "10px 8px",
-								marginBottom: 4,
-								borderRadius: 6,
-								color: "white",
-								textDecoration: "none",
-								background: isActive ? "#1f2937" : "transparent",
-								whiteSpace: "nowrap",
-								overflow: "hidden",
-							}}
-						>
-							<span style={{ fontSize: 16, flexShrink: 0, width: 20, textAlign: "center" }}>
-								{menu.icon}
-							</span>
-							<span
+				{menus.map((category) => (
+					<div key={category.category}>
+						{!collapsed && (
+							<div
 								style={{
-									opacity: collapsed ? 0 : 1,
-									transition: "opacity 0.15s ease",
-									fontSize: 14,
+									color: "#9CA3AF",
+									fontSize: 11,
+									fontWeight: 600,
+									letterSpacing: 1,
+									margin: "18px 8px 8px",
+									textTransform: "uppercase",
 								}}
 							>
-								{menu.label}
-							</span>
-						</Link>
-					);
-				})}
+								{category.category}
+							</div>
+						)}
+
+						{category.labels.map((menu) => {
+							const isActive = location.pathname === menu.path;
+
+							return (
+								<Link
+									key={menu.path}
+									to={menu.path}
+									title={collapsed ? menu.label : undefined}
+									style={{
+										display: "flex",
+										alignItems: "center",
+										gap: 10,
+										padding: "10px 8px",
+										marginBottom: 4,
+										borderRadius: 6,
+										color: "white",
+										textDecoration: "none",
+										background: isActive ? "#1f2937" : "transparent",
+										whiteSpace: "nowrap",
+										overflow: "hidden",
+									}}
+								>
+									<span
+										style={{
+											width: 20,
+											textAlign: "center",
+											flexShrink: 0,
+										}}
+									>
+										{menu.icon}
+									</span>
+
+									{!collapsed && (
+										<span style={{ fontSize: 14 }}>
+											{menu.label}
+										</span>
+									)}
+								</Link>
+							);
+						})}
+					</div>
+				))}
 			</nav>
 		</div>
 	);
