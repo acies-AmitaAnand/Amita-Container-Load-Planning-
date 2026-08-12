@@ -71,14 +71,12 @@ function getPayloadFromUrl() {
 // =====================================================
 
 function MeasurementScales({ container }) {
-	const depth = container.containerDepth || container.internalDepth || 16000;
-	const width = container.containerWidth || container.internalWidth || 2500;
 	const elements = [];
-	const halfD = mmToFeetDisplay(depth) / 2;
-	const halfW = mmToFeetDisplay(width) / 2;
+	const halfD = mmToFeetDisplay(container.containerDepth) / 2;
+	const halfW = mmToFeetDisplay(container.containerWidth) / 2;
 
-	const dFt = mmToFeetDisplay(depth);
-	for (let i = 0; i <= dFt; i++) {
+	// Depth scale (along X axis, front and back edges)
+	for (let i = 0; i <= mmToFeetDisplay(container.containerDepth); i++) {
 		const x = i - halfD;
 		elements.push(
 			<Line key={`fl-${i}`} points={[[x,0,halfW+0.2],[x,0,halfW+0.5]]} color="black" />,
@@ -94,8 +92,8 @@ function MeasurementScales({ container }) {
 		}
 	}
 
-	const wFt = mmToFeetDisplay(width);
-	for (let i = 0; i <= wFt; i++) {
+	// Width scale (along Z axis, left and right edges)
+	for (let i = 0; i <= mmToFeetDisplay(container.containerWidth); i++) {
 		const z = i - halfW;
 		elements.push(
 			<Line key={`ll-${i}`} points={[[-halfD-0.2,0,z],[-halfD-0.5,0,z]]} color="black" />,
@@ -114,11 +112,9 @@ function MeasurementScales({ container }) {
 // =====================================================
 
 function FloorGrid({ container }) {
-	const depth = container.containerDepth || container.internalDepth || 16000;
-	const width = container.containerWidth || container.internalWidth || 2500;
 	const tiles = [];
-	const dFt = mmToFeetDisplay(depth);
-	const wFt = mmToFeetDisplay(width);
+	const dFt = mmToFeetDisplay(container.containerDepth);
+	const wFt = mmToFeetDisplay(container.containerWidth);
 	for (let x = 0; x < dFt; x++) {
 		for (let z = 0; z < wFt; z++) {
 			tiles.push(
@@ -137,12 +133,9 @@ function FloorGrid({ container }) {
 // =====================================================
 
 function BoundaryBox({ container }) {
-	const depth = container.containerDepth || container.internalDepth || 16000;
-	const width = container.containerWidth || container.internalWidth || 2500;
-	const height = container.containerHeight || container.internalHeight || 2700;
-	const hD = mmToFeetDisplay(depth) / 2;
-	const hW = mmToFeetDisplay(width) / 2;
-	const H = mmToFeetDisplay(height);
+	const hD = mmToFeetDisplay(container.containerDepth) / 2;
+	const hW = mmToFeetDisplay(container.containerWidth) / 2;
+	const H = mmToFeetDisplay(container.containerHeight);
 
 	const bottom = [
 		[-hD,0,-hW],[hD,0,-hW],[hD,0,hW],[-hD,0,hW],[-hD,0,-hW],
@@ -168,13 +161,9 @@ function BoundaryBox({ container }) {
 // =====================================================
 
 function ContainerWalls({ container }) {
-	const depth = container.containerDepth || container.internalDepth || 16000;
-	const width = container.containerWidth || container.internalWidth || 2500;
-	const height = container.containerHeight || container.internalHeight || 2700;
-
-	const hD = ft(depth) / 2;
-	const hW = ft(width) / 2;
-	const H = ft(height);
+	const hD = ft(container.containerDepth) / 2;
+	const hW = ft(container.containerWidth) / 2;
+	const H = ft(container.containerHeight);
 	const hH = H / 2;
 
 	const glassMat = new THREE.MeshPhysicalMaterial({
@@ -186,22 +175,22 @@ function ContainerWalls({ container }) {
 		<>
 			{/* front wall (door side, solid) */}
 			<mesh position={[-hD, hH, 0]}>
-				<boxGeometry args={[0.2, H, ft(width)]} />
+				<boxGeometry args={[0.2, H, ft(container.containerWidth)]} />
 				<meshStandardMaterial color="#111827" />
 			</mesh>
 			{/* back wall */}
 			<mesh position={[hD, hH, 0]}>
-				<boxGeometry args={[0.05, H, ft(width)]} />
+				<boxGeometry args={[0.05, H, ft(container.containerWidth)]} />
 				<primitive object={glassMat} attach="material" />
 			</mesh>
 			{/* left wall */}
 			<mesh position={[0, hH, -hW]}>
-				<boxGeometry args={[ft(depth), H, 0.05]} />
+				<boxGeometry args={[ft(container.containerDepth), H, 0.05]} />
 				<primitive object={glassMat} attach="material" />
 			</mesh>
 			{/* right wall */}
 			<mesh position={[0, hH, hW]}>
-				<boxGeometry args={[ft(depth), H, 0.05]} />
+				<boxGeometry args={[ft(container.containerDepth), H, 0.05]} />
 				<primitive object={glassMat} attach="material" />
 			</mesh>
 		</>
@@ -217,17 +206,16 @@ function Pallet({ pallet, container, isSelected, onSelect }) {
 	const pos = pallet.position || { x: 0, y: 0, z: 0 };
 	const dims = pallet.dimensions || { width: 1200, depth: 1000, height: 1400 };
 
-	const effWidth = (pos.effectiveWidth > 0) ? pos.effectiveWidth : dims.width;
-	const effDepth = (pos.effectiveDepth > 0) ? pos.effectiveDepth : dims.depth;
-	const effHeight = (pos.effectiveHeight > 0) ? pos.effectiveHeight : dims.height;
-
-	const intDepth = container.internalDepth || container.containerDepth || 16000;
-	const intWidth = container.internalWidth || container.containerWidth || 2500;
+	// Use effective dims from Python (accounts for orientation swap).
+	// Fallback to raw dims if JSON is old.
+	const effWidth = (pos.effectiveWidth > 0) ? pos.effectiveWidth : (dims.width || 1200);
+	const effDepth = (pos.effectiveDepth > 0) ? pos.effectiveDepth : (dims.depth || 1000);
+	const effHeight = (pos.effectiveHeight > 0) ? pos.effectiveHeight : (dims.height || 1400);
 
 	// DEPTH → X (long axis of container is Three.js X)
-	const threeX = ft((pos.z || 0) + effDepth / 2 - intDepth / 2);
+	const threeX = ft(pos.z + effDepth / 2 - container.internalDepth / 2);
 	// WIDTH → Z (narrow axis of container is Three.js Z)
-	const threeZ = ft((pos.x || 0) + effWidth / 2 - intWidth / 2);
+	const threeZ = ft(pos.x + effWidth / 2 - container.internalWidth / 2);
 	// HEIGHT → Y (floor = 0)
 	const threeY = ft(effHeight / 2);
 
@@ -278,10 +266,10 @@ function Pallet({ pallet, container, isSelected, onSelect }) {
 								</div>
 								<div>SKU: {pallet.skuId}</div>
 								<div>Shipment: {pallet.shipmentId}</div>
-								<div>W×D×H: {dims.width}×{dims.depth}×{dims.height} mm</div>
+								<div>W×D×H: {pallet.dimensions.width}×{pallet.dimensions.depth}×{pallet.dimensions.height} mm</div>
 								{pallet.weightIn_kg > 0 && <div>Weight: {pallet.weightIn_kg} kg</div>}
 								<div style={{ marginTop:4, color:"#6b7280", fontSize:11 }}>
-									pos x={pos.x} z={pos.z} | {pos.orientation || "FRONT_FACING"}
+									pos x={pos.x} z={pos.z} | {pos.orientation}
 								</div>
 								</>
 						}
@@ -330,23 +318,19 @@ function CameraController({ viewMode }) {
 
 import PalletDetailPanel from "../../components/visualization/PalletDetailPanel";
 
-export default function ContainerSimulator({ payload }) {
-	const rawContainer = payload || {};
-	const cDepth = rawContainer.containerDepth || rawContainer.internalDepth || 16000;
-	const cWidth = rawContainer.containerWidth || rawContainer.internalWidth || 2500;
-	const cHeight = rawContainer.containerHeight || rawContainer.internalHeight || 2700;
 
+export default function ContainerSimulator({key, payload}) {
+	const rawPayload = payload || getPayloadFromUrl() || {};
 	const container = {
-		...rawContainer,
-		containerDepth: cDepth,
-		containerWidth: cWidth,
-		containerHeight: cHeight,
-		internalDepth: rawContainer.internalDepth || cDepth,
-		internalWidth: rawContainer.internalWidth || cWidth,
-		internalHeight: rawContainer.internalHeight || cHeight,
+		...rawPayload,
+		containerDepth: rawPayload.containerDepth || rawPayload.internalDepth || 16000,
+		containerWidth: rawPayload.containerWidth || rawPayload.internalWidth || 2500,
+		containerHeight: rawPayload.containerHeight || rawPayload.internalHeight || 2700,
+		internalDepth: rawPayload.internalDepth || rawPayload.containerDepth || 16000,
+		internalWidth: rawPayload.internalWidth || rawPayload.containerWidth || 2500,
+		internalHeight: rawPayload.internalHeight || rawPayload.containerHeight || 2700,
 	};
-
-	const pallets = Array.isArray(container.pallets) ? container.pallets : [];
+	const pallets = container.pallets || [];
 
 	const [viewMode, setViewMode] = useState("iso");
 	const [selectedPalletId, setSelectedPalletId] = useState(null);
@@ -383,7 +367,7 @@ export default function ContainerSimulator({ payload }) {
 
 
 	return (
-		<div style={{ display:"flex", flexDirection:"column", width:"100%", height:"100vh", background:"#e5e7eb" }}>
+		<div style={{ display:"flex", flexDirection:"column", width:"100%", height:"100%", minHeight:"550px", background:"#e5e7eb" }}>
 
 		<div style={{ display:"flex", flex: "1 1 60%", minHeight: 0 }}>
 

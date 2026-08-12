@@ -35,6 +35,9 @@ function generateOfflinePlan(config) {
     const payload = {
       containerId,
       containerType: "53ft Dry Van (US Domestic)",
+      containerWidth: 2500,
+      containerDepth: 16000,
+      containerHeight: 2700,
       internalWidth: 2500,
       internalDepth: 16000,
       internalHeight: 2700,
