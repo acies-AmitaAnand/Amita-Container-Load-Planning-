@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd shipment-planner-ui && npm install && npm run build && node -e \"fs.cpSync('dist', '../dist', {recursive: true})\"",
-    "vercel-build": "cd shipment-planner-ui && npm install && npm run build && node -e \"fs.cpSync('dist', '../dist', {recursive: true})\""
+    "build": "cd shipment-planner-ui && npm install && npm run build && node -e \"fs.cpSync('dist', '../dist', {recursive: true}); fs.cpSync('dist', '../build', {recursive: true})\"",
+    "vercel-build": "cd shipment-planner-ui && npm install && npm run build && node -e \"fs.cpSync('dist', '../dist', {recursive: true}); fs.cpSync('dist', '../build', {recursive: true})\""
   }
 }
