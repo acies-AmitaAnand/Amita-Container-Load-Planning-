@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
-import Topbar from "./Topbar";
 import "./MainLayout.css";
 
 export default function MainLayout() {
@@ -16,14 +15,8 @@ export default function MainLayout() {
 			/>
 
 			<div className="main-shell">
-				<Topbar />
-
-			<main className="page-content">
-				<div className="content">
-					<Outlet />
-				</div> 
-			</main>
+				<Outlet />
+			</div>
 		</div>
-	</div>
 	);
 }

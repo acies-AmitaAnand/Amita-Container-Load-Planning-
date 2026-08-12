@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "./layout/MainLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+import FreightIntelligence from "../pages/freight-intelligence/FreightIntelligence";
 
 import PlannerConfig from "../pages/PlannerConfig";
 import ContainerVisualization from "../pages/container-visualization/ContainerVisualization";
@@ -13,7 +14,11 @@ export default function App() {
 	return (
 		<Routes>
 			<Route element={<MainLayout />}>
-				<Route index element={<Dashboard />} />
+				<Route index element={<FreightIntelligence />} />
+				<Route
+					path="/freight-intelligence"
+					element={<FreightIntelligence />}
+				/>
 
 				<Route
 					path="/shipment-plan"

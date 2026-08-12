@@ -7,7 +7,7 @@ export default function ActivityTimeline() {
 		},
 		{
 			time: "09:45",
-			title: "Truck TN09AB1234 reached Bengaluru Hub",
+			title: "Truck US-IL-4412 reached Chicago Hub",
 			status: "info",
 		},
 		{

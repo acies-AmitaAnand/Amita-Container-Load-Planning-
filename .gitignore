@@ -372,3 +372,4 @@ vite.config.ts.timestamp-*
 
 output/
 debug_snapshots/
+.netlify/

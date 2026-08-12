@@ -2,7 +2,7 @@ export default function AlertsPanel() {
 	const alerts = [
 		{
 			icon: "🔴",
-			text: "Delhi → Kolkata lane delay",
+			text: "Los Angeles → Dallas lane delay",
 		},
 		{
 			icon: "🟠",
@@ -10,7 +10,7 @@ export default function AlertsPanel() {
 		},
 		{
 			icon: "🟢",
-			text: "Bengaluru warehouse healthy",
+			text: "Atlanta warehouse healthy",
 		},
 		{
 			icon: "🟡",

@@ -20,13 +20,13 @@ export const kpis = [
 		stateLbl: "Near",
 	},
 	{
-		icon: "₹",
+		icon: "$",
 		label: "Cost per Shipment",
 		value: "1,284",
 		unit: "",
 		delta: "3.4%",
 		up: false,
-		target: "Target ₹1,200",
+		target: "Target $1,200",
 		state: "a",
 		stateLbl: "Near",
 	},
@@ -85,16 +85,16 @@ export const funnelShip = [
 
 export const carriers = [
 	["In-house Fleet", 100, "48,200"],
-	["BlueDart Logistics", 74, "35,600"],
-	["TCI Freight", 61, "29,400"],
-	["Delhivery 3PL", 43, "20,700"],
-	["Gati Express", 28, "13,500"],
+	["FedEx Freight", 74, "35,600"],
+	["JB Hunt Transport", 61, "29,400"],
+	["XPO Logistics", 43, "20,700"],
+	["Old Dominion Freight", 28, "13,500"],
 ];
 
 export const lanes = [
-	["Chennai → Bengaluru", "1,420", "94.1%", "₹0.82", "g", "Healthy"],
-	["Mumbai → Delhi", "2,180", "88.7%", "₹0.91", "a", "Watch"],
-	["Delhi → Kolkata", "980", "79.4%", "₹1.04", "r", "At Risk"],
-	["Pune → Hyderabad", "1,110", "96.3%", "₹0.77", "g", "Healthy"],
-	["Ahmedabad → Jaipur", "640", "90.2%", "₹0.88", "a", "Watch"],
+	["Chicago → Atlanta", "1,420", "94.1%", "$0.82", "g", "Healthy"],
+	["New York → Chicago", "2,180", "88.7%", "$0.91", "a", "Watch"],
+	["Los Angeles → Dallas", "980", "79.4%", "$1.04", "r", "At Risk"],
+	["Dallas → Houston", "1,110", "96.3%", "$0.77", "g", "Healthy"],
+	["Seattle → San Francisco", "640", "90.2%", "$0.88", "a", "Watch"],
 ];

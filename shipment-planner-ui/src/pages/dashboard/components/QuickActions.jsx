@@ -10,6 +10,11 @@ export default function QuickActions() {
 		// 	path: "/shipment-plan",
 		// },
 		{
+			icon: "⚡",
+			title: "Open Freight Intelligence & Signals",
+			path: "/freight-intelligence",
+		},
+		{
 			icon: "🔧",
 			title: "Build Container Load Planning",
 			path: "/build-load-planning",
@@ -19,11 +24,6 @@ export default function QuickActions() {
 			title: "View Daily Load Planning",
 			path: "/optimized-day-planning",
 		},
-		// {
-		// 	icon: "📊",
-		// 	title: "Generate Report",
-		// 	path: "/", // TODO: Update when report page exists
-		// },
 	];
 
 	return (
