@@ -1,0 +1,10 @@
+# Ignore Python backend & ETL from Vercel deployment
+solver/
+etl/
+io_mvp_1/
+ddl_scripts/
+requirements.txt
+requirements*.txt
+*.py
+__pycache__/
+.venv/
