@@ -244,15 +244,8 @@ function Step1Dates({ tree, onSelectDate }) {
   return (
     <div style={S.stepRoot}>
       <div style={S.stepHeader}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div>
-            <div style={S.stepTitle}>Optimization Summary</div>
-            <div style={S.stepSubtitle}>{dates.length} shipping date{dates.length !== 1 ? "s" : ""} planned</div>
-          </div>
-          <div style={{ background: "#eef3ff", color: "#2563eb", border: "1px solid #cddafc", padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, display: "flex", alignItems: "center", gap: 6 }}>
-            <span>⚖️ Filter: Weight Utilization ≥ 70% only</span>
-          </div>
-        </div>
+        <div style={S.stepTitle}>Optimization Summary</div>
+        <div style={S.stepSubtitle}>{dates.length} shipping date{dates.length !== 1 ? "s" : ""} planned</div>
       </div>
       <div style={S.cardGrid}>
         {dates.map((dk) => {
