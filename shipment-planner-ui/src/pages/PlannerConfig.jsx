@@ -22,6 +22,12 @@ function generateOfflinePlan(config) {
     { origin: "Seattle Fulfillment Center (US-SEA)", dest: "Denver Gateway Depot (US-DEN)", code: "US-DEN_US-SEA" }
   ];
 
+  const plates = [
+    "CA 7KX 482", "TX 4MZ 913", "FL 82P LQ7", "NY K53 8TR", "AZ B7N 294",
+    "OH J4T 781", "WA 6C9 R21", "CO P82 4LM", "NV 3XK 672", "GA R91 5QT",
+    "NC 8FD 321", "MI T72 9KP", "VA 5LM 847", "IL Q63 2RX"
+  ];
+
   for (let d = 0; d < Math.min(horizon, 7); d++) {
     const dateObj = new Date(today);
     dateObj.setDate(today.getDate() + d);
@@ -29,15 +35,14 @@ function generateOfflinePlan(config) {
 
     const lane = sampleLanes[d % sampleLanes.length];
     const containerId = `CONT-2026-PLAN-D${d + 1}`;
+    const licensePlate = plates[d % plates.length];
     const routeId = `GRP_${lane.code}_${dateStr}`;
     const loadedCount = Math.floor(Math.random() * 5) + 22;
 
     const payload = {
       containerId,
+      licensePlate,
       containerType: "53ft Dry Van (US Domestic)",
-      containerWidth: 2500,
-      containerDepth: 16000,
-      containerHeight: 2700,
       internalWidth: 2500,
       internalDepth: 16000,
       internalHeight: 2700,

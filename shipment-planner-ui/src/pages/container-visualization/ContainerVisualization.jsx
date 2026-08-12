@@ -7,10 +7,8 @@ import { useState, useMemo, useCallback } from "react";
 const SAMPLE_CONTAINERS = [
   {
     containerId: "CONT-2026-US01",
+    licensePlate: "CA 7KX 482",
     containerType: "53ft Dry Van (US Domestic)",
-    containerWidth: 2500,
-    containerDepth: 16000,
-    containerHeight: 2700,
     internalWidth: 2500,
     internalDepth: 16000,
     internalHeight: 2700,
@@ -44,6 +42,7 @@ const SAMPLE_CONTAINERS = [
   },
   {
     containerId: "CONT-2026-US02",
+    licensePlate: "TX 4MZ 913",
     containerType: "53ft Dry Van (US Domestic)",
     internalWidth: 2500,
     internalDepth: 16000,
@@ -78,6 +77,7 @@ const SAMPLE_CONTAINERS = [
   },
   {
     containerId: "CONT-2026-US03",
+    licensePlate: "FL 82P LQ7",
     containerType: "40ft High Cube Container",
     internalWidth: 2352,
     internalDepth: 12032,
@@ -318,7 +318,14 @@ function Step3Containers({ containers, date, lane, onSelectContainer }) {
               <div style={S.containerCardLeft}>
                 <div style={S.containerCardNum}>#{idx + 1}</div>
                 <div>
-                  <div style={S.containerCardId}>{c.containerId}</div>
+                  <div style={S.containerCardId}>
+                    {c.containerId}
+                    {c.licensePlate && (
+                      <span style={{ background: "#eef3ff", color: "#2563eb", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 700, marginLeft: 8, border: "1px solid #cddafc" }}>
+                        🚘 {c.licensePlate}
+                      </span>
+                    )}
+                  </div>
                   <div style={S.containerCardType}>{c.containerType}</div>
                 </div>
               </div>
