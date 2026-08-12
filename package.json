@@ -1,8 +1,9 @@
 {
-  "name": "solutions-inventory-optimization",
+  "name": "amita-container-load-planning",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd shipment-planner-ui && npm install && npm run build"
+    "build": "cd shipment-planner-ui && npm install && npm run build",
+    "vercel-build": "cd shipment-planner-ui && npm install && npm run build"
   }
 }

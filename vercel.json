@@ -1,17 +1,6 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "shipment-planner-ui/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/shipment-planner-ui/dist/$1" },
-    { "src": "/(.*)", "dest": "/shipment-planner-ui/dist/index.html" }
+  "outputDirectory": "shipment-planner-ui/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
