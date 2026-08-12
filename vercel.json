@@ -1,10 +1,17 @@
 {
   "version": 2,
-  "framework": "vite",
-  "buildCommand": "cd shipment-planner-ui && npm install && npm run build",
-  "outputDirectory": "shipment-planner-ui/dist",
+  "builds": [
+    {
+      "src": "shipment-planner-ui/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/shipment-planner-ui/dist/$1" },
+    { "src": "/(.*)", "dest": "/shipment-planner-ui/dist/index.html" }
   ]
 }
