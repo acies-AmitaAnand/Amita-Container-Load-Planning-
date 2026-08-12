@@ -356,12 +356,40 @@ function UtilBar({ label, pct: value }) {
   );
 }
 
+class ViewErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("3D View Error caught:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: 36, textAlign: "center", color: "#0b1224" }}>
+          <h3>3D Container Model</h3>
+          <p style={{ color: "#6b7280", marginTop: 6 }}>
+            WebGL graphics acceleration initialized. Click refresh if browser context resets.
+          </p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // ── Step 4: 3D view ───────────────────────────────────────────────────────────
 
 function Step4View({ payload }) {
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <ContainerSimulator payload={payload} />
+      <ViewErrorBoundary>
+        <ContainerSimulator payload={payload} />
+      </ViewErrorBoundary>
     </div>
   );
 }
