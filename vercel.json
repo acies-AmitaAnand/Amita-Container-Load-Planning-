@@ -1,5 +1,6 @@
 {
-  "outputDirectory": "shipment-planner-ui/dist",
+  "buildCommand": "cd shipment-planner-ui && npm install && npm run build && node -e \"fs.cpSync('dist', '../dist', {recursive: true})\"",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
