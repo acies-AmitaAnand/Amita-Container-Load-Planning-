@@ -311,20 +311,12 @@ export default function FreightIntelligence() {
   });
 
   const MASTER_VEHICLES = [
-    { id: 'TRK-US-5301', licensePlate: 'CA 7KX 482', class: '53ft Dry Van', driver: 'R. Miller', baseUtil: 91, nextService: 'in 1,200 km', status: 'Active', pill: 'g', region: 'US Midwest', carrier: 'In-house Fleet' },
-    { id: 'REEF-US-4002', licensePlate: 'TX 4MZ 913', class: '40ft High Cube Reefer', driver: 'S. Davis', baseUtil: 88, nextService: 'in 2,400 km', status: 'Active', pill: 'g', region: 'US South', carrier: 'In-house Fleet' },
-    { id: 'TRK-US-5303', licensePlate: 'FL 82P LQ7', class: '53ft Dry Van', driver: 'A. Johnson', baseUtil: 78, nextService: 'in 800 km', status: 'Active', pill: 'g', region: 'US South', carrier: 'In-house Fleet' },
-    { id: 'TRK-US-5304', licensePlate: 'NY K53 8TR', class: '53ft Dry Van', driver: 'P. Smith', baseUtil: 84, nextService: 'overdue 400 km', status: 'Service Due', pill: 'r', region: 'US East', carrier: '3PL Partners' },
-    { id: 'REEF-US-5305', licensePlate: 'AZ B7N 294', class: '53ft Reefer', driver: 'M. Wilson', baseUtil: 92, nextService: 'in 3,100 km', status: 'Active', pill: 'g', region: 'US West', carrier: 'In-house Fleet' },
-    { id: 'TRK-US-5306', licensePlate: 'OH J4T 781', class: '53ft Dry Van', driver: 'D. Clark', baseUtil: 75, nextService: 'in 1,500 km', status: 'Available', pill: 'g', region: 'US Midwest', carrier: 'In-house Fleet' },
-    { id: 'TRK-US-5307', licensePlate: 'WA 6C9 R21', class: '53ft Dry Van', driver: 'J. Taylor', baseUtil: 89, nextService: 'in 600 km', status: 'Active', pill: 'g', region: 'US West', carrier: '3PL Partners' },
-    { id: 'REEF-US-4008', licensePlate: 'CO P82 4LM', class: '40ft Reefer', driver: 'H. White', baseUtil: 81, nextService: 'in 2,900 km', status: 'Active', pill: 'g', region: 'US West', carrier: 'In-house Fleet' },
-    { id: 'TRK-US-5309', licensePlate: 'NV 3XK 672', class: '53ft Dry Van', driver: 'K. Harris', baseUtil: 72, nextService: 'in 4,200 km', status: 'Idle 2d', pill: 'a', region: 'US West', carrier: '3PL Partners' },
-    { id: 'TRK-US-5310', licensePlate: 'GA R91 5QT', class: '53ft Dry Van', driver: 'E. Martin', baseUtil: 95, nextService: 'in 1,100 km', status: 'Active', pill: 'g', region: 'US South', carrier: 'In-house Fleet' },
-    { id: 'REEF-US-5311', licensePlate: 'NC 8FD 321', class: '53ft Reefer', driver: 'L. Jackson', baseUtil: 33, nextService: 'in 100 km', status: 'Breakdown', pill: 'r', region: 'US East', carrier: 'In-house Fleet' },
-    { id: 'TRK-US-5312', licensePlate: 'MI T72 9KP', class: '53ft Dry Van', driver: 'B. Lee', baseUtil: 86, nextService: 'in 2,000 km', status: 'Active', pill: 'g', region: 'US Midwest', carrier: '3PL Partners' },
-    { id: 'TRK-US-5313', licensePlate: 'VA 5LM 847', class: '53ft Dry Van', driver: 'C. Allen', baseUtil: 90, nextService: 'in 1,800 km', status: 'Active', pill: 'g', region: 'US East', carrier: 'In-house Fleet' },
-    { id: 'REEF-US-5314', licensePlate: 'IL Q63 2RX', class: '53ft Electric Reefer', driver: 'G. Young', baseUtil: 77, nextService: 'in 5,000 km', status: 'Charging', pill: 'a', region: 'US Midwest', carrier: 'In-house Fleet' }
+    { id: 'CA 7KX 482', class: '53ft Dry Van', driver: 'R. Miller', baseUtil: 91, nextService: 'in 1,200 km', status: 'Active', pill: 'g', region: 'US Midwest', carrier: 'In-house Fleet' },
+    { id: 'TX 4MZ 913', class: '40ft High Cube Reefer', driver: 'S. Davis', baseUtil: 88, nextService: 'in 2,400 km', status: 'Active', pill: 'g', region: 'US South', carrier: 'In-house Fleet' },
+    { id: 'FL 82P LQ7', class: '53ft Dry Van', driver: 'A. Johnson', baseUtil: 78, nextService: 'in 800 km', status: 'Active', pill: 'g', region: 'US South', carrier: 'In-house Fleet' },
+    { id: 'NY K53 8TR', class: '53ft Dry Van', driver: 'P. Smith', baseUtil: 84, nextService: 'overdue 400 km', status: 'Service Due', pill: 'r', region: 'US East', carrier: '3PL Partners' },
+    { id: 'AZ B7N 294', class: '53ft Reefer', driver: 'M. Wilson', baseUtil: 92, nextService: 'in 3,100 km', status: 'Active', pill: 'g', region: 'US West', carrier: 'In-house Fleet' },
+    { id: 'OH J4T 781', class: '53ft Dry Van', driver: 'D. Clark', baseUtil: 75, nextService: 'in 1,500 km', status: 'Available', pill: 'g', region: 'US Midwest', carrier: 'In-house Fleet' }
   ];
 
   const filteredVehicles = MASTER_VEHICLES.filter(v => {
@@ -802,14 +794,7 @@ export default function FreightIntelligence() {
                 <tbody>
                   {filteredVehicles.map(v => (
                     <tr key={v.id}>
-                      <td>
-                        <b>{v.id}</b>
-                        {v.licensePlate && (
-                          <span style={{ background: '#eff6ff', color: '#2563eb', border: '1px solid #cddafc', padding: '2px 7px', borderRadius: '4px', fontSize: '11px', fontWeight: '700', marginLeft: '8px' }}>
-                            🚘 {v.licensePlate}
-                          </span>
-                        )}
-                      </td>
+                      <td><b>{v.id}</b></td>
                       <td>{v.class}</td>
                       <td>{v.driver}</td>
                       <td className="num">{v.baseUtil}%</td>
