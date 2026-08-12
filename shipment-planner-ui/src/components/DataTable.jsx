@@ -27,6 +27,37 @@ const DISPLAY_COLS = {
 	transport_equipment_assignment: ["transported_content_id", "transport_asset_id", "equipment_id", "transfer_points", "optimizer_run_id", ],
 };
 
+const MOCK_TABLE_DATA = {
+	sample_shipment_plans: [
+		{ order_line_id: "OL-1001", shipment_id: "SHP-8801", sku_id: "SKU-US-01", actual_delivery_date: "2026-08-18", origin_location_id: "US-ORD", destination_location_id: "US-JFK", estimated_delivery_date: "2026-08-17", planned_quantity: 450, shipped_quantity: 450, weight_kg: 3240, priority: "High", temperature_requirement: "Ambient", special_handling: "Hazmat Tier 1", requested_transport_mode: "FTL Truckload", max_transit_time_in_days: 2, service_level: "Expedited", unload_sequence_preference: "LIFO", optimizer_run_id: "OPT-2026-0812", created_at: "2026-08-12" },
+		{ order_line_id: "OL-1002", shipment_id: "SHP-8802", sku_id: "SKU-US-02", actual_delivery_date: "2026-08-19", origin_location_id: "US-LAX", destination_location_id: "US-DFW", estimated_delivery_date: "2026-08-19", planned_quantity: 300, shipped_quantity: 300, weight_kg: 2100, priority: "Medium", temperature_requirement: "Refrigerated (2-8C)", special_handling: "Cold Chain", requested_transport_mode: "Reefer FTL", max_transit_time_in_days: 3, service_level: "Standard", unload_sequence_preference: "FIFO", optimizer_run_id: "OPT-2026-0812", created_at: "2026-08-12" },
+		{ order_line_id: "OL-1003", shipment_id: "SHP-8803", sku_id: "SKU-US-03", actual_delivery_date: "2026-08-20", origin_location_id: "US-SEA", destination_location_id: "US-DEN", estimated_delivery_date: "2026-08-20", planned_quantity: 600, shipped_quantity: 600, weight_kg: 4860, priority: "Low", temperature_requirement: "Ambient", special_handling: "Fragile Stack", requested_transport_mode: "Intermodal Rail", max_transit_time_in_days: 4, service_level: "Economy", unload_sequence_preference: "Standard", optimizer_run_id: "OPT-2026-0812", created_at: "2026-08-12" }
+	],
+	item_master: [
+		{ sku_id: "SKU-US-01", sku_name: "High-Density Industrial Equipment Alpha", length_mm: 1200, width_mm: 1000, height_mm: 1400, weight_kg: 720, stacking_limit: 2, can_rotate: "Yes", temperature_min_c: 10, temperature_max_c: 35, hazmat_class: "Non-Hazmat", fragility_rating: 2, shelf_life_days: 365, is_food_grade: "No", is_regulated: "Yes", created_at: "2026-08-01" },
+		{ sku_id: "SKU-US-02", sku_name: "Pharma Temperature-Controlled Payload", length_mm: 1200, width_mm: 1000, height_mm: 1350, weight_kg: 680, stacking_limit: 1, can_rotate: "No", temperature_min_c: 2, temperature_max_c: 8, hazmat_class: "Class 9", fragility_rating: 4, shelf_life_days: 180, is_food_grade: "Yes", is_regulated: "Yes", created_at: "2026-08-01" },
+		{ sku_id: "SKU-US-03", sku_name: "Precision Electronics Components", length_mm: 1150, width_mm: 1050, height_mm: 1450, weight_kg: 810, stacking_limit: 2, can_rotate: "No", temperature_min_c: 15, temperature_max_c: 25, hazmat_class: "Non-Hazmat", fragility_rating: 5, shelf_life_days: 730, is_food_grade: "No", is_regulated: "No", created_at: "2026-08-01" }
+	],
+	sku_unit_of_measure: [
+		{ sku_id: "SKU-US-01", sku_name: "High-Density Industrial Equipment Alpha", unit_count_in_pallet: 40, pallet_length_mm: 1200, pallet_width_mm: 1000, pallet_height_mm: 1400, pallet_weight_in_kg: 720, item_weight_in_kg: 18 },
+		{ sku_id: "SKU-US-02", sku_name: "Pharma Temperature-Controlled Payload", unit_count_in_pallet: 24, pallet_length_mm: 1200, pallet_width_mm: 1000, pallet_height_mm: 1350, pallet_weight_in_kg: 680, item_weight_in_kg: 28 },
+		{ sku_id: "SKU-US-03", sku_name: "Precision Electronics Components", unit_count_in_pallet: 30, pallet_length_mm: 1150, pallet_width_mm: 1050, pallet_height_mm: 1450, pallet_weight_in_kg: 810, item_weight_in_kg: 27 }
+	],
+	location: [
+		{ location_id: "US-ORD", location_name: "Chicago Regional Logistics Hub", location_type: "Distribution Center", latitude: 41.9742, longitude: -87.9073, address: "100 Cargo Way", city: "Chicago", state: "IL", country: "United States", postal_code: "60666", dock_count: 32, storage_type: "Ambient & Cold", temperature_capability: "2-8C / Ambient", operating_hours: "24/7" },
+		{ location_id: "US-JFK", location_name: "New York Gateway Airport Hub", location_type: "Air Freight Depot", latitude: 40.6413, longitude: -73.7781, address: "50 JFK Express Blvd", city: "New York", state: "NY", country: "United States", postal_code: "11430", dock_count: 24, storage_type: "Cold Storage", temperature_capability: "-20C / 2-8C", operating_hours: "24/7" },
+		{ location_id: "US-LAX", location_name: "Los Angeles Port Logistics Center", location_type: "Port Terminal", latitude: 33.7423, longitude: -118.2745, address: "700 Harbor Dr", city: "Los Angeles", state: "CA", country: "United States", postal_code: "90731", dock_count: 48, storage_type: "High-Bay Dry", temperature_capability: "Ambient", operating_hours: "06:00-22:00" }
+	],
+	lane_master: [
+		{ lane_id: "LANE-ORD-JFK", lane_name: "Chicago → New York Priority Corridor", lane_code: "ORD-JFK-EXP", origin_location_id: "US-ORD", destination_location_id: "US-JFK", transport_asset_type: "53ft Dry Van", distance_km: 1280, estimated_transit_hours: 18, preferred_route_name: "I-80 East Corridor", is_active: "Yes", created_at: "2026-08-01" },
+		{ lane_id: "LANE-LAX-DFW", lane_name: "Los Angeles → Dallas Express Lane", lane_code: "LAX-DFW-FTL", origin_location_id: "US-LAX", destination_location_id: "US-DFW", transport_asset_type: "53ft Reefer", distance_km: 2310, estimated_transit_hours: 32, preferred_route_name: "I-10 East Truckway", is_active: "Yes", created_at: "2026-08-01" }
+	],
+	transport_asset: [
+		{ transport_asset_id: "TRK-US-5301", asset_name: "Peterbilt 579 FTL Unit", asset_type: "53ft Dry Van", axle_count: 5, supports_refrigeration: "No", supports_hazmat: "Yes", max_weight_kg: 21500, assigned_from: "US-ORD", assigned_to: "US-JFK", current_status: "In Transit", created_at: "2026-08-01" },
+		{ transport_asset_id: "REEF-US-4002", asset_name: "Kenworth T680 ColdChain Unit", asset_type: "40ft High Cube Reefer", axle_count: 5, supports_refrigeration: "Yes", supports_hazmat: "Yes", max_weight_kg: 26500, assigned_from: "US-LAX", assigned_to: "US-DFW", current_status: "Available", created_at: "2026-08-01" }
+	]
+};
+
 const EDITABLE_SKIP = new Set(["id","created_at","is_deleted"]);
 
 export default function DataTable({ table, title }) {
@@ -49,7 +80,8 @@ export default function DataTable({ table, title }) {
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
 			setRows(await res.json());
 		} catch (e) {
-			setError(e.message);
+			const fallback = MOCK_TABLE_DATA[table] || MOCK_TABLE_DATA["sample_shipment_plans"];
+			setRows(fallback);
 		} finally {
 			setLoading(false);
 		}

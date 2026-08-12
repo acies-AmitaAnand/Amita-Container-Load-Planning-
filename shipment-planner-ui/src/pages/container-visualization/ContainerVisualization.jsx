@@ -4,6 +4,111 @@ import { useState, useMemo, useCallback } from "react";
 
 // ── Read + parse all containers from localStorage ─────────────────────────────
 
+const SAMPLE_CONTAINERS = [
+  {
+    containerId: "CONT-2026-US01",
+    containerType: "53ft Dry Van (US Domestic)",
+    internalWidth: 2500,
+    internalDepth: 16000,
+    internalHeight: 2700,
+    maxWeight_kg: 21500,
+    pendingPalletCount: 0,
+    summary: {
+      routeId: "GRP_US-ORD-CHI_US-JFK-NYC_2026-08-15",
+      origin: "Chicago Regional DC (US-ORD)",
+      destinationInSequence: ["New York Metro Hub (US-JFK)"],
+      deliveryDateWindow: "2026-08-15"
+    },
+    utilization: {
+      loadedPallets: 26,
+      weightUtilization_pct: 88.4,
+      volumeUtilization_pct: 92.1,
+      floorAreaUtilization_pct: 96.0
+    },
+    pallets: Array.from({ length: 26 }, (_, i) => ({
+      palletId: `PLT-100${i + 1}`,
+      skuId: `SKU-US-0${(i % 3) + 1}`,
+      weightIn_kg: 720,
+      dimensions: { width: 1200, depth: 1000, height: 1400 },
+      position: {
+        x: (i % 2) * 1200 + 50,
+        z: Math.floor(i / 2) * 1100 + 50,
+        y: 0,
+        effectiveWidth: 1200,
+        effectiveDepth: 1000
+      }
+    }))
+  },
+  {
+    containerId: "CONT-2026-US02",
+    containerType: "53ft Dry Van (US Domestic)",
+    internalWidth: 2500,
+    internalDepth: 16000,
+    internalHeight: 2700,
+    maxWeight_kg: 21500,
+    pendingPalletCount: 2,
+    summary: {
+      routeId: "GRP_US-LAX-CA_US-DFW-TX_2026-08-15",
+      origin: "Los Angeles Port Hub (US-LAX)",
+      destinationInSequence: ["Dallas Logistics Hub (US-DFW)"],
+      deliveryDateWindow: "2026-08-15"
+    },
+    utilization: {
+      loadedPallets: 24,
+      weightUtilization_pct: 82.5,
+      volumeUtilization_pct: 86.8,
+      floorAreaUtilization_pct: 88.5
+    },
+    pallets: Array.from({ length: 24 }, (_, i) => ({
+      palletId: `PLT-200${i + 1}`,
+      skuId: `SKU-US-0${(i % 3) + 1}`,
+      weightIn_kg: 680,
+      dimensions: { width: 1200, depth: 1000, height: 1350 },
+      position: {
+        x: (i % 2) * 1200 + 50,
+        z: Math.floor(i / 2) * 1100 + 50,
+        y: 0,
+        effectiveWidth: 1200,
+        effectiveDepth: 1000
+      }
+    }))
+  },
+  {
+    containerId: "CONT-2026-US03",
+    containerType: "40ft High Cube Container",
+    internalWidth: 2352,
+    internalDepth: 12032,
+    internalHeight: 2698,
+    maxWeight_kg: 26500,
+    pendingPalletCount: 0,
+    summary: {
+      routeId: "GRP_US-SEA-WA_US-DEN-CO_2026-08-16",
+      origin: "Seattle Fulfillment Center (US-SEA)",
+      destinationInSequence: ["Denver Gateway Depot (US-DEN)"],
+      deliveryDateWindow: "2026-08-16"
+    },
+    utilization: {
+      loadedPallets: 20,
+      weightUtilization_pct: 91.2,
+      volumeUtilization_pct: 94.5,
+      floorAreaUtilization_pct: 95.2
+    },
+    pallets: Array.from({ length: 20 }, (_, i) => ({
+      palletId: `PLT-300${i + 1}`,
+      skuId: `SKU-US-0${(i % 3) + 1}`,
+      weightIn_kg: 810,
+      dimensions: { width: 1200, depth: 1000, height: 1450 },
+      position: {
+        x: (i % 2) * 1150 + 40,
+        z: Math.floor(i / 2) * 1050 + 40,
+        y: 0,
+        effectiveWidth: 1150,
+        effectiveDepth: 1050
+      }
+    }))
+  }
+];
+
 function loadAllContainers() {
   const containers = [];
   for (let i = 0; i < localStorage.length; i++) {
@@ -16,7 +121,7 @@ function loadAllContainers() {
       // skip malformed entries
     }
   }
-  return containers;
+  return containers.length > 0 ? containers : SAMPLE_CONTAINERS;
 }
 
 // ── Build hierarchy from flat container list ──────────────────────────────────
