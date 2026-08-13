@@ -624,11 +624,10 @@ export default function ContainerDrillDown() {
           )}
         </div>
 
-        {/* 7-Step Sequential Drill-Down Pipeline */}
+        {/* Sequential Drill-Down Filter Controls */}
         <div className="cdd-steps-grid">
-          {/* Step 1: Source */}
+          {/* Source Location */}
           <div className="drilldown-step">
-            <span className="step-num">1</span>
             <div className="step-content">
               <label>SOURCE LOCATION</label>
               <select value={selectedSource} onChange={handleSourceChange}>
@@ -642,11 +641,8 @@ export default function ContainerDrillDown() {
             </div>
           </div>
 
-          <div className="drilldown-arrow">➔</div>
-
-          {/* Step 2: Destination */}
+          {/* Destination Location */}
           <div className="drilldown-step">
-            <span className="step-num">2</span>
             <div className="step-content">
               <label>TO LOCATION (REFINED)</label>
               <select value={selectedTo} onChange={handleToChange}>
@@ -662,11 +658,8 @@ export default function ContainerDrillDown() {
             </div>
           </div>
 
-          <div className="drilldown-arrow">➔</div>
-
-          {/* Step 3: TransMode */}
+          {/* TransMode */}
           <div className="drilldown-step">
-            <span className="step-num">3</span>
             <div className="step-content">
               <label>TRANS MODE</label>
               <select
@@ -683,11 +676,8 @@ export default function ContainerDrillDown() {
             </div>
           </div>
 
-          <div className="drilldown-arrow">➔</div>
-
-          {/* Step 4: Equipment ID */}
+          {/* Equipment ID */}
           <div className="drilldown-step">
-            <span className="step-num">4</span>
             <div className="step-content">
               <label>EQUIPMENT ID</label>
               <select
@@ -704,11 +694,8 @@ export default function ContainerDrillDown() {
             </div>
           </div>
 
-          <div className="drilldown-arrow">➔</div>
-
-          {/* Step 5: Dispatch Date */}
+          {/* Dispatch Date */}
           <div className="drilldown-step">
-            <span className="step-num">5</span>
             <div className="step-content">
               <label>DISPATCH DATE</label>
               <select
@@ -725,11 +712,8 @@ export default function ContainerDrillDown() {
             </div>
           </div>
 
-          <div className="drilldown-arrow">➔</div>
-
-          {/* Step 6: Load Approval Status */}
+          {/* Load Approval Status */}
           <div className="drilldown-step">
-            <span className="step-num">6</span>
             <div className="step-content">
               <label>LOAD APPROVAL STATUS</label>
               <select
@@ -743,11 +727,8 @@ export default function ContainerDrillDown() {
             </div>
           </div>
 
-          <div className="drilldown-arrow">➔</div>
-
-          {/* Step 7: Min Utilization % */}
+          {/* Min Utilization % */}
           <div className="drilldown-step">
-            <span className="step-num">7</span>
             <div className="step-content">
               <label>MIN AREA UTILIZATION %</label>
               <select
