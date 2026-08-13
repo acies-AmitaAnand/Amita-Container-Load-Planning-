@@ -501,10 +501,25 @@ export default function ContainerDrillDown() {
         ).toFixed(2)
       : "0.00";
 
-  const isCorridorFiltered =
-    selectedSource !== "ALL" ||
-    selectedTo !== "ALL" ||
-    selectedEquipment !== "ALL";
+  let activeFilterCount = 0;
+  if (selectedSource !== "ALL") activeFilterCount++;
+  if (selectedTo !== "ALL") activeFilterCount++;
+  if (selectedEquipment !== "ALL") activeFilterCount++;
+  if (approvalFilter !== "ALL") activeFilterCount++;
+  if (minUtilFilter > 0) activeFilterCount++;
+  if (search.trim()) activeFilterCount++;
+
+  const isAnyFilterActive = activeFilterCount > 0;
+
+  const handleResetAllFilters = () => {
+    setSelectedSource("ALL");
+    setSelectedTo("ALL");
+    setSelectedEquipment("ALL");
+    setApprovalFilter("ALL");
+    setMinUtilFilter(0);
+    setSearch("");
+    setSelectedIds(new Set());
+  };
 
   return (
     <div className="cdd-root">
@@ -564,140 +579,161 @@ export default function ContainerDrillDown() {
         </div>
       </div>
 
-      {/* 📍 Cascading Location Drill-Down Control Panel */}
-      <div className="cdd-drilldown-bar">
-        <div className="drilldown-step">
-          <span className="step-num">1</span>
-          <div className="step-content">
-            <label>SOURCE LOCATION</label>
-            <select value={selectedSource} onChange={handleSourceChange}>
-              <option value="ALL">All Source Locations ({availableSources.length})</option>
-              {availableSources.map((src) => (
-                <option key={src} value={src}>
-                  {src}
+      {/* 📍 UNIFIED INTEGRATED DRILL-DOWN CONTROL PANEL */}
+      <div className="cdd-unified-panel">
+        <div className="cdd-panel-top">
+          <div className="panel-title-group">
+            <span className="panel-badge">DRILL-DOWN PIPELINE</span>
+            <span className="panel-subtext">
+              Sequential Filter Tower — Select Source ➔ Destination ➔ Equipment ➔ Approval ➔ Utilization
+            </span>
+          </div>
+          {isAnyFilterActive && (
+            <button className="cdd-reset-all-btn" onClick={handleResetAllFilters}>
+              ✕ Reset All Filters ({activeFilterCount})
+            </button>
+          )}
+        </div>
+
+        {/* 5-Step Sequential Drill-Down Pipeline */}
+        <div className="cdd-steps-grid">
+          {/* Step 1: Source */}
+          <div className="drilldown-step">
+            <span className="step-num">1</span>
+            <div className="step-content">
+              <label>SOURCE LOCATION</label>
+              <select value={selectedSource} onChange={handleSourceChange}>
+                <option value="ALL">All Sources ({availableSources.length})</option>
+                {availableSources.map((src) => (
+                  <option key={src} value={src}>
+                    {src}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="drilldown-arrow">➔</div>
+
+          {/* Step 2: Destination */}
+          <div className="drilldown-step">
+            <span className="step-num">2</span>
+            <div className="step-content">
+              <label>TO LOCATION (REFINED)</label>
+              <select value={selectedTo} onChange={handleToChange}>
+                <option value="ALL">
+                  All Destinations {selectedSource !== "ALL" ? `(${availableToLocations.length})` : ""}
                 </option>
-              ))}
-            </select>
+                {availableToLocations.map((dest) => (
+                  <option key={dest} value={dest}>
+                    {dest}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="drilldown-arrow">➔</div>
+
+          {/* Step 3: Equipment */}
+          <div className="drilldown-step">
+            <span className="step-num">3</span>
+            <div className="step-content">
+              <label>EQUIPMENT ID</label>
+              <select
+                value={selectedEquipment}
+                onChange={(e) => setSelectedEquipment(e.target.value)}
+              >
+                <option value="ALL">All Equipment ({availableEquipments.length})</option>
+                {availableEquipments.map((eq) => (
+                  <option key={eq} value={eq}>
+                    {eq}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="drilldown-arrow">➔</div>
+
+          {/* Step 4: Load Approval Status */}
+          <div className="drilldown-step">
+            <span className="step-num">4</span>
+            <div className="step-content">
+              <label>LOAD APPROVAL STATUS</label>
+              <select
+                value={approvalFilter}
+                onChange={(e) => setApprovalFilter(e.target.value)}
+              >
+                <option value="ALL">All Approval Statuses</option>
+                <option value="APPROVED">✓ Approved Only</option>
+                <option value="PENDING">⏳ Pending Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="drilldown-arrow">➔</div>
+
+          {/* Step 5: Min Utilization % */}
+          <div className="drilldown-step">
+            <span className="step-num">5</span>
+            <div className="step-content">
+              <label>MIN AREA UTILIZATION %</label>
+              <select
+                value={minUtilFilter}
+                onChange={(e) => setMinUtilFilter(Number(e.target.value))}
+              >
+                <option value={0}>All Utilization %</option>
+                <option value={50}>&ge; 50% Area Util</option>
+                <option value={70}>&ge; 70% Area Util</option>
+                <option value={85}>&ge; 85% Area Util</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div className="drilldown-arrow">➔</div>
-
-        <div className="drilldown-step">
-          <span className="step-num">2</span>
-          <div className="step-content">
-            <label>TO LOCATION (REFINED DESTINATIONS)</label>
-            <select value={selectedTo} onChange={handleToChange}>
-              <option value="ALL">
-                All Destinations {selectedSource !== "ALL" ? `for ${selectedSource.split(" ")[0]}` : ""} ({availableToLocations.length})
-              </option>
-              {availableToLocations.map((dest) => (
-                <option key={dest} value={dest}>
-                  {dest}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className="drilldown-arrow">➔</div>
-
-        <div className="drilldown-step">
-          <span className="step-num">3</span>
-          <div className="step-content">
-            <label>EQUIPMENT ID</label>
-            <select
-              value={selectedEquipment}
-              onChange={(e) => setSelectedEquipment(e.target.value)}
-            >
-              <option value="ALL">All Equipment ({availableEquipments.length})</option>
-              {availableEquipments.map((eq) => (
-                <option key={eq} value={eq}>
-                  {eq}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {isCorridorFiltered && (
-          <button className="cdd-reset-corridor-btn" onClick={handleResetCorridor}>
-            ✕ Reset Corridor Drill Down
-          </button>
-        )}
-      </div>
-
-      {/* Toolbar & Additional Filters */}
-      <div className="cdd-toolbar">
-        <div className="cdd-search-box">
-          <span>🔍</span>
-          <input
-            type="text"
-            placeholder="Search source, destination, equipment ID, shipment #..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {search && <button onClick={() => setSearch("")}>✕</button>}
-        </div>
-
-        <div className="cdd-filter-group">
-          <label>Approval Status:</label>
-          <select
-            value={approvalFilter}
-            onChange={(e) => setApprovalFilter(e.target.value)}
-          >
-            <option value="ALL">All Statuses</option>
-            <option value="APPROVED">Approved Only</option>
-            <option value="PENDING">Pending Only</option>
-          </select>
-
-          <label>Min Utilization:</label>
-          <select
-            value={minUtilFilter}
-            onChange={(e) => setMinUtilFilter(Number(e.target.value))}
-          >
-            <option value={0}>All Utilization %</option>
-            <option value={50}>&ge; 50%</option>
-            <option value={70}>&ge; 70%</option>
-            <option value={85}>&ge; 85%</option>
-          </select>
-
-          <label
-            style={{
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: 13,
-              color: "#374151",
-            }}
-          >
+        {/* Bottom Sub-Toolbar: Instant Search, Merge Cells & Selection Actions */}
+        <div className="cdd-panel-bottom">
+          <div className="cdd-search-box">
+            <span>🔍</span>
             <input
-              type="checkbox"
-              checked={groupConsecutive}
-              onChange={(e) => setGroupConsecutive(e.target.checked)}
+              type="text"
+              placeholder="Instant search source, destination, shipment #, date..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            Merge Duplicate Cells
-          </label>
-        </div>
-
-        {selectedIds.size > 0 && (
-          <div className="cdd-bulk-actions">
-            <span>{selectedIds.size} selected</span>
-            <button
-              className="approve-btn"
-              onClick={() => handleBulkApprove(true)}
-            >
-              ✓ Approve
-            </button>
-            <button
-              className="reject-btn"
-              onClick={() => handleBulkApprove(false)}
-            >
-              ✕ Reset
-            </button>
+            {search && <button onClick={() => setSearch("")}>✕</button>}
           </div>
-        )}
+
+          <div className="cdd-bottom-options">
+            <label className="toggle-label">
+              <input
+                type="checkbox"
+                checked={groupConsecutive}
+                onChange={(e) => setGroupConsecutive(e.target.checked)}
+              />
+              Merge Duplicate Lane Cells in Table
+            </label>
+
+            {selectedIds.size > 0 && (
+              <div className="cdd-bulk-actions">
+                <span>{selectedIds.size} selected</span>
+                <button
+                  className="approve-btn"
+                  onClick={() => handleBulkApprove(true)}
+                >
+                  ✓ Approve
+                </button>
+                <button
+                  className="reject-btn"
+                  onClick={() => handleBulkApprove(false)}
+                >
+                  ✕ Reset
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Main Table Container */}
