@@ -97,6 +97,97 @@
   color: var(--text-muted, #64748b);
 }
 
+/* 📍 Cascading Location Drill-Down Bar */
+.cdd-drilldown-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  flex-wrap: wrap;
+}
+
+.drilldown-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.drilldown-step .step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.drilldown-step .step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.drilldown-step label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.drilldown-step select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.drilldown-step select:hover {
+  border-color: #3b82f6;
+}
+
+.drilldown-arrow {
+  font-size: 18px;
+  color: #64748b;
+  font-weight: 800;
+}
+
+.cdd-reset-corridor-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.cdd-reset-corridor-btn:hover {
+  background: #dc2626;
+}
+
 /* Toolbar & Filters */
 .cdd-toolbar {
   display: flex;

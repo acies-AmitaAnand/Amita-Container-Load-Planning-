@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import "./ContainerDrillDown.css";
 
 const INITIAL_DRILLDOWN_DATA = [
+  // Chicago Corridor (ORD -> JFK)
   {
     id: "LOAD-1001",
     sourceLocation: "6037 - 0030 Chicago Regional DC",
@@ -92,96 +93,66 @@ const INITIAL_DRILLDOWN_DATA = [
     palletAreaUtilizationPct: 89.31,
     utilizedWeightPct: 91.0,
   },
+
+  // Chicago -> Dallas Corridor
   {
-    id: "LOAD-1006",
+    id: "LOAD-1011",
     sourceLocation: "6037 - 0030 Chicago Regional DC",
-    toLocation: "6010 - 0030 New York Metro Hub",
-    transMode: "TRUCK_CH_53FT",
-    equipmentId: "Lane_From_CHI_NY_5301",
-    dispatchDate: "09-Aug-26",
+    toLocation: "5022 - 0012 Dallas Express Depot",
+    transMode: "REEFER_53FT",
+    equipmentId: "Lane_From_CHI_DFW_5302",
+    dispatchDate: "02-Aug-26",
     loadNumber: 1,
-    totalNoPallets: 25.0,
+    totalNoPallets: 26.0,
     partialPallets: 0.0,
     loadApproval: true,
-    shipmentNumber: "SHP-8806",
+    shipmentNumber: "SHP-8811",
     manualLoad: "No",
-    deliveryDate: "10-Aug-2026",
-    utilizedTruckAreaSqM: 34.03,
-    palletAreaUtilizationPct: 91.58,
-    utilizedWeightPct: 93.4,
+    deliveryDate: "04-Aug-2026",
+    utilizedTruckAreaSqM: 35.12,
+    palletAreaUtilizationPct: 94.8,
+    utilizedWeightPct: 92.1,
   },
   {
-    id: "LOAD-1007",
+    id: "LOAD-1012",
     sourceLocation: "6037 - 0030 Chicago Regional DC",
-    toLocation: "6010 - 0030 New York Metro Hub",
-    transMode: "TRUCK_CH_53FT",
-    equipmentId: "Lane_From_CHI_NY_5301",
-    dispatchDate: "11-Aug-26",
-    loadNumber: 1,
-    totalNoPallets: 23.0,
-    partialPallets: 0.0,
-    loadApproval: false,
-    shipmentNumber: "SHP-8807",
-    manualLoad: "No",
-    deliveryDate: "12-Aug-2026",
-    utilizedTruckAreaSqM: 29.91,
-    palletAreaUtilizationPct: 80.47,
-    utilizedWeightPct: 79.2,
-  },
-  {
-    id: "LOAD-1008",
-    sourceLocation: "6037 - 0030 Chicago Regional DC",
-    toLocation: "6010 - 0030 New York Metro Hub",
-    transMode: "TRUCK_CH_53FT",
-    equipmentId: "Lane_From_CHI_NY_5301",
-    dispatchDate: "13-Aug-26",
-    loadNumber: 1,
-    totalNoPallets: 22.0,
-    partialPallets: 0.0,
-    loadApproval: true,
-    shipmentNumber: "SHP-8808",
-    manualLoad: "No",
-    deliveryDate: "14-Aug-2026",
-    utilizedTruckAreaSqM: 28.1,
-    palletAreaUtilizationPct: 75.61,
-    utilizedWeightPct: 77.8,
-  },
-  {
-    id: "LOAD-1009",
-    sourceLocation: "6037 - 0030 Chicago Regional DC",
-    toLocation: "6010 - 0030 New York Metro Hub",
-    transMode: "TRUCK_CH_53FT",
-    equipmentId: "Lane_From_CHI_NY_5301",
-    dispatchDate: "15-Aug-26",
-    loadNumber: 1,
-    totalNoPallets: 23.0,
-    partialPallets: 0.0,
-    loadApproval: true,
-    shipmentNumber: "SHP-8809",
-    manualLoad: "No",
-    deliveryDate: "16-Aug-2026",
-    utilizedTruckAreaSqM: 27.44,
-    palletAreaUtilizationPct: 73.85,
-    utilizedWeightPct: 74.9,
-  },
-  {
-    id: "LOAD-1010",
-    sourceLocation: "6037 - 0030 Chicago Regional DC",
-    toLocation: "6010 - 0030 New York Metro Hub",
-    transMode: "TRUCK_CH_53FT",
-    equipmentId: "Lane_From_CHI_NY_5301",
-    dispatchDate: "16-Aug-26",
+    toLocation: "5022 - 0012 Dallas Express Depot",
+    transMode: "REEFER_53FT",
+    equipmentId: "Lane_From_CHI_DFW_5302",
+    dispatchDate: "05-Aug-26",
     loadNumber: 1,
     totalNoPallets: 24.0,
     partialPallets: 0.0,
     loadApproval: true,
-    shipmentNumber: "SHP-8810",
+    shipmentNumber: "SHP-8812",
     manualLoad: "No",
-    deliveryDate: "17-Aug-2026",
-    utilizedTruckAreaSqM: 30.66,
-    palletAreaUtilizationPct: 82.51,
-    utilizedWeightPct: 84.1,
+    deliveryDate: "07-Aug-2026",
+    utilizedTruckAreaSqM: 32.4,
+    palletAreaUtilizationPct: 87.2,
+    utilizedWeightPct: 88.5,
   },
+
+  // Chicago -> Atlanta Corridor
+  {
+    id: "LOAD-1013",
+    sourceLocation: "6037 - 0030 Chicago Regional DC",
+    toLocation: "4015 - 0088 Atlanta Gateway DC",
+    transMode: "TRUCK_CH_53FT",
+    equipmentId: "Lane_From_CHI_ATL_5303",
+    dispatchDate: "03-Aug-26",
+    loadNumber: 1,
+    totalNoPallets: 25.0,
+    partialPallets: 0.0,
+    loadApproval: true,
+    shipmentNumber: "SHP-8813",
+    manualLoad: "No",
+    deliveryDate: "04-Aug-2026",
+    utilizedTruckAreaSqM: 33.8,
+    palletAreaUtilizationPct: 91.0,
+    utilizedWeightPct: 89.9,
+  },
+
+  // Los Angeles -> Dallas Corridor
   {
     id: "LOAD-2001",
     sourceLocation: "7012 - 0045 Los Angeles Port DC",
@@ -218,18 +189,143 @@ const INITIAL_DRILLDOWN_DATA = [
     palletAreaUtilizationPct: 94.2,
     utilizedWeightPct: 95.8,
   },
+
+  // Los Angeles -> Seattle Corridor
+  {
+    id: "LOAD-2003",
+    sourceLocation: "7012 - 0045 Los Angeles Port DC",
+    toLocation: "9011 - 0023 Seattle Gateway DC",
+    transMode: "TRUCK_CH_53FT",
+    equipmentId: "Lane_From_LAX_SEA_5304",
+    dispatchDate: "04-Aug-26",
+    loadNumber: 1,
+    totalNoPallets: 24.0,
+    partialPallets: 0.0,
+    loadApproval: true,
+    shipmentNumber: "SHP-9003",
+    manualLoad: "No",
+    deliveryDate: "06-Aug-2026",
+    utilizedTruckAreaSqM: 32.1,
+    palletAreaUtilizationPct: 86.4,
+    utilizedWeightPct: 87.0,
+  },
+
+  // Miami -> Atlanta Corridor
+  {
+    id: "LOAD-3001",
+    sourceLocation: "8020 - 0015 Miami Distribution Hub",
+    toLocation: "4015 - 0088 Atlanta Gateway DC",
+    transMode: "TRUCK_CH_53FT",
+    equipmentId: "Lane_From_MIA_ATL_5305",
+    dispatchDate: "02-Aug-26",
+    loadNumber: 1,
+    totalNoPallets: 25.0,
+    partialPallets: 0.0,
+    loadApproval: true,
+    shipmentNumber: "SHP-9501",
+    manualLoad: "No",
+    deliveryDate: "03-Aug-2026",
+    utilizedTruckAreaSqM: 33.6,
+    palletAreaUtilizationPct: 90.5,
+    utilizedWeightPct: 89.0,
+  },
+
+  // Miami -> New York Corridor
+  {
+    id: "LOAD-3002",
+    sourceLocation: "8020 - 0015 Miami Distribution Hub",
+    toLocation: "6010 - 0030 New York Metro Hub",
+    transMode: "REEFER_53FT",
+    equipmentId: "Lane_From_MIA_NY_5306",
+    dispatchDate: "06-Aug-26",
+    loadNumber: 1,
+    totalNoPallets: 23.0,
+    partialPallets: 0.0,
+    loadApproval: false,
+    shipmentNumber: "SHP-9502",
+    manualLoad: "No",
+    deliveryDate: "08-Aug-2026",
+    utilizedTruckAreaSqM: 30.1,
+    palletAreaUtilizationPct: 81.2,
+    utilizedWeightPct: 83.4,
+  },
 ];
 
 export default function ContainerDrillDown() {
   const [data, setData] = useState(INITIAL_DRILLDOWN_DATA);
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState(new Set());
+
+  // Cascading Drill Down Filters
+  const [selectedSource, setSelectedSource] = useState("ALL");
+  const [selectedTo, setSelectedTo] = useState("ALL");
+  const [selectedEquipment, setSelectedEquipment] = useState("ALL");
+
   const [approvalFilter, setApprovalFilter] = useState("ALL");
   const [minUtilFilter, setMinUtilFilter] = useState(0);
   const [groupConsecutive, setGroupConsecutive] = useState(true);
   const [sortField, setSortField] = useState("dispatchDate");
   const [sortAsc, setSortAsc] = useState(true);
   const [selectedRowDetail, setSelectedRowDetail] = useState(null);
+
+  // 1. Unique Sources available
+  const availableSources = useMemo(() => {
+    const set = new Set(data.map((item) => item.sourceLocation));
+    return Array.from(set).sort();
+  }, [data]);
+
+  // 2. Cascading Destinations available (filtered by selectedSource)
+  const availableToLocations = useMemo(() => {
+    const filtered =
+      selectedSource === "ALL"
+        ? data
+        : data.filter((item) => item.sourceLocation === selectedSource);
+    const set = new Set(filtered.map((item) => item.toLocation));
+    return Array.from(set).sort();
+  }, [data, selectedSource]);
+
+  // 3. Cascading Equipment IDs available (filtered by selectedSource & selectedTo)
+  const availableEquipments = useMemo(() => {
+    const filtered = data.filter((item) => {
+      if (selectedSource !== "ALL" && item.sourceLocation !== selectedSource)
+        return false;
+      if (selectedTo !== "ALL" && item.toLocation !== selectedTo)
+        return false;
+      return true;
+    });
+    const set = new Set(filtered.map((item) => item.equipmentId));
+    return Array.from(set).sort();
+  }, [data, selectedSource, selectedTo]);
+
+  // Handle Source Selection Change (Cascades down)
+  const handleSourceChange = (e) => {
+    const newSource = e.target.value;
+    setSelectedSource(newSource);
+
+    // If newSource is picked, check if current selectedTo exists for this source
+    if (newSource !== "ALL") {
+      const validDests = new Set(
+        data
+          .filter((item) => item.sourceLocation === newSource)
+          .map((item) => item.toLocation)
+      );
+      if (!validDests.has(selectedTo)) {
+        setSelectedTo("ALL");
+      }
+    }
+  };
+
+  // Handle Destination Selection Change
+  const handleToChange = (e) => {
+    setSelectedTo(e.target.value);
+  };
+
+  // Reset Cascading Drill Down
+  const handleResetCorridor = () => {
+    setSelectedSource("ALL");
+    setSelectedTo("ALL");
+    setSelectedEquipment("ALL");
+  };
 
   // Toggle individual load approval
   const handleToggleApproval = (id) => {
@@ -254,6 +350,18 @@ export default function ContainerDrillDown() {
   const filteredData = useMemo(() => {
     return data
       .filter((item) => {
+        // Cascading Drill Down Filters
+        if (selectedSource !== "ALL" && item.sourceLocation !== selectedSource)
+          return false;
+        if (selectedTo !== "ALL" && item.toLocation !== selectedTo)
+          return false;
+        if (
+          selectedEquipment !== "ALL" &&
+          item.equipmentId !== selectedEquipment
+        )
+          return false;
+
+        // General Filters
         if (approvalFilter === "APPROVED" && !item.loadApproval) return false;
         if (approvalFilter === "PENDING" && item.loadApproval) return false;
         if (item.palletAreaUtilizationPct < minUtilFilter) return false;
@@ -280,7 +388,17 @@ export default function ContainerDrillDown() {
         if (valA > valB) return sortAsc ? 1 : -1;
         return 0;
       });
-  }, [data, search, approvalFilter, minUtilFilter, sortField, sortAsc]);
+  }, [
+    data,
+    selectedSource,
+    selectedTo,
+    selectedEquipment,
+    search,
+    approvalFilter,
+    minUtilFilter,
+    sortField,
+    sortAsc,
+  ]);
 
   // Bulk actions
   const handleSelectAll = (e) => {
@@ -364,7 +482,10 @@ export default function ContainerDrillDown() {
   // KPI Calculations
   const totalLoads = filteredData.length;
   const approvedLoads = filteredData.filter((d) => d.loadApproval).length;
-  const totalPallets = filteredData.reduce((acc, d) => acc + d.totalNoPallets, 0);
+  const totalPallets = filteredData.reduce(
+    (acc, d) => acc + d.totalNoPallets,
+    0
+  );
   const avgPalletUtil =
     totalLoads > 0
       ? (
@@ -380,6 +501,11 @@ export default function ContainerDrillDown() {
         ).toFixed(2)
       : "0.00";
 
+  const isCorridorFiltered =
+    selectedSource !== "ALL" ||
+    selectedTo !== "ALL" ||
+    selectedEquipment !== "ALL";
+
   return (
     <div className="cdd-root">
       {/* Header Banner */}
@@ -387,7 +513,7 @@ export default function ContainerDrillDown() {
         <div>
           <h2>✦ Container Drill Down</h2>
           <p>
-            Interactive load analysis table — inspect equipment dispatch schedules, pallet counts, truck area utilization &amp; load approvals.
+            Interactive location drill-down — select Source &amp; Destination to refine lane corridors, pallet counts &amp; equipment dispatch schedules.
           </p>
         </div>
         <div className="cdd-actions">
@@ -400,17 +526,23 @@ export default function ContainerDrillDown() {
       {/* KPI Cards */}
       <div className="cdd-kpi-grid">
         <div className="cdd-kpi-card">
-          <span className="cdd-kpi-title">TOTAL CONTAINER LOADS</span>
+          <span className="cdd-kpi-title">MATCHING CONTAINER LOADS</span>
           <div className="cdd-kpi-value">{totalLoads}</div>
-          <span className="cdd-kpi-sub">Across active lanes</span>
+          <span className="cdd-kpi-sub">Refined load records</span>
         </div>
         <div className="cdd-kpi-card">
           <span className="cdd-kpi-title">APPROVED LOADS</span>
           <div className="cdd-kpi-value" style={{ color: "#16a34a" }}>
-            {approvedLoads} <span style={{ fontSize: 13, color: "#6b7280" }}>/ {totalLoads}</span>
+            {approvedLoads}{" "}
+            <span style={{ fontSize: 13, color: "#6b7280" }}>
+              / {totalLoads}
+            </span>
           </div>
           <span className="cdd-kpi-sub">
-            {totalLoads > 0 ? ((approvedLoads / totalLoads) * 100).toFixed(1) : 0}% approved
+            {totalLoads > 0
+              ? ((approvedLoads / totalLoads) * 100).toFixed(1)
+              : 0}
+            % approved
           </span>
         </div>
         <div className="cdd-kpi-card">
@@ -432,7 +564,70 @@ export default function ContainerDrillDown() {
         </div>
       </div>
 
-      {/* Toolbar & Filters */}
+      {/* 📍 Cascading Location Drill-Down Control Panel */}
+      <div className="cdd-drilldown-bar">
+        <div className="drilldown-step">
+          <span className="step-num">1</span>
+          <div className="step-content">
+            <label>SOURCE LOCATION</label>
+            <select value={selectedSource} onChange={handleSourceChange}>
+              <option value="ALL">All Source Locations ({availableSources.length})</option>
+              {availableSources.map((src) => (
+                <option key={src} value={src}>
+                  {src}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="drilldown-arrow">➔</div>
+
+        <div className="drilldown-step">
+          <span className="step-num">2</span>
+          <div className="step-content">
+            <label>TO LOCATION (REFINED DESTINATIONS)</label>
+            <select value={selectedTo} onChange={handleToChange}>
+              <option value="ALL">
+                All Destinations {selectedSource !== "ALL" ? `for ${selectedSource.split(" ")[0]}` : ""} ({availableToLocations.length})
+              </option>
+              {availableToLocations.map((dest) => (
+                <option key={dest} value={dest}>
+                  {dest}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="drilldown-arrow">➔</div>
+
+        <div className="drilldown-step">
+          <span className="step-num">3</span>
+          <div className="step-content">
+            <label>EQUIPMENT ID</label>
+            <select
+              value={selectedEquipment}
+              onChange={(e) => setSelectedEquipment(e.target.value)}
+            >
+              <option value="ALL">All Equipment ({availableEquipments.length})</option>
+              {availableEquipments.map((eq) => (
+                <option key={eq} value={eq}>
+                  {eq}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {isCorridorFiltered && (
+          <button className="cdd-reset-corridor-btn" onClick={handleResetCorridor}>
+            ✕ Reset Corridor Drill Down
+          </button>
+        )}
+      </div>
+
+      {/* Toolbar & Additional Filters */}
       <div className="cdd-toolbar">
         <div className="cdd-search-box">
           <span>🔍</span>
@@ -446,7 +641,7 @@ export default function ContainerDrillDown() {
         </div>
 
         <div className="cdd-filter-group">
-          <label>Approval:</label>
+          <label>Approval Status:</label>
           <select
             value={approvalFilter}
             onChange={(e) => setApprovalFilter(e.target.value)}
@@ -467,23 +662,38 @@ export default function ContainerDrillDown() {
             <option value={85}>&ge; 85%</option>
           </select>
 
-          <label style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#374151" }}>
+          <label
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 13,
+              color: "#374151",
+            }}
+          >
             <input
               type="checkbox"
               checked={groupConsecutive}
               onChange={(e) => setGroupConsecutive(e.target.checked)}
             />
-            Merge Duplicate Lane Cells
+            Merge Duplicate Cells
           </label>
         </div>
 
         {selectedIds.size > 0 && (
           <div className="cdd-bulk-actions">
             <span>{selectedIds.size} selected</span>
-            <button className="approve-btn" onClick={() => handleBulkApprove(true)}>
+            <button
+              className="approve-btn"
+              onClick={() => handleBulkApprove(true)}
+            >
               ✓ Approve
             </button>
-            <button className="reject-btn" onClick={() => handleBulkApprove(false)}>
+            <button
+              className="reject-btn"
+              onClick={() => handleBulkApprove(false)}
+            >
               ✕ Reset
             </button>
           </div>
@@ -505,12 +715,17 @@ export default function ContainerDrillDown() {
                   onChange={handleSelectAll}
                 />
               </th>
+
+              {/* Source Location with Header Drill Down Filter */}
               <th onClick={() => handleSort("sourceLocation")}>
                 Source Location {sortField === "sourceLocation" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
+
+              {/* To Location with Header Drill Down Filter */}
               <th onClick={() => handleSort("toLocation")}>
                 To Location {sortField === "toLocation" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
+
               <th onClick={() => handleSort("transMode")}>
                 TransMode {sortField === "transMode" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
@@ -523,20 +738,29 @@ export default function ContainerDrillDown() {
               <th onClick={() => handleSort("loadNumber")}>
                 Load Number {sortField === "loadNumber" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
-              <th onClick={() => handleSort("totalNoPallets")} style={{ fontStyle: "italic", fontWeight: 700 }}>
+              <th
+                onClick={() => handleSort("totalNoPallets")}
+                style={{ fontStyle: "italic", fontWeight: 700 }}
+              >
                 Total No. Pallets {sortField === "totalNoPallets" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
               <th onClick={() => handleSort("partialPallets")}>
                 Partial Pallets {sortField === "partialPallets" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
               {/* Highlighted Yellow Load Approval Header matching screenshot */}
-              <th className="th-highlight" onClick={() => handleSort("loadApproval")}>
+              <th
+                className="th-highlight"
+                onClick={() => handleSort("loadApproval")}
+              >
                 Load Approval {sortField === "loadApproval" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
               <th onClick={() => handleSort("shipmentNumber")}>
                 Shipment Number {sortField === "shipmentNumber" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
-              <th onClick={() => handleSort("manualLoad")} style={{ fontStyle: "italic" }}>
+              <th
+                onClick={() => handleSort("manualLoad")}
+                style={{ fontStyle: "italic" }}
+              >
                 Manual Load... {sortField === "manualLoad" ? (sortAsc ? "▲" : "▼") : ""}
               </th>
               <th onClick={() => handleSort("deliveryDate")}>
@@ -560,18 +784,33 @@ export default function ContainerDrillDown() {
 
               // Check for grouping repetition (if enabled)
               const prev = filteredData[idx - 1];
-              const sameSource = groupConsecutive && prev && prev.sourceLocation === row.sourceLocation;
-              const sameDest = groupConsecutive && prev && prev.toLocation === row.toLocation;
-              const sameMode = groupConsecutive && prev && prev.transMode === row.transMode;
-              const sameEquip = groupConsecutive && prev && prev.equipmentId === row.equipmentId;
+              const sameSource =
+                groupConsecutive &&
+                prev &&
+                prev.sourceLocation === row.sourceLocation;
+              const sameDest =
+                groupConsecutive &&
+                prev &&
+                prev.toLocation === row.toLocation;
+              const sameMode =
+                groupConsecutive && prev && prev.transMode === row.transMode;
+              const sameEquip =
+                groupConsecutive &&
+                prev &&
+                prev.equipmentId === row.equipmentId;
 
               return (
                 <tr
                   key={row.id}
-                  className={`${isSelected ? "selected-row" : ""} ${isLowUtil ? "low-util-row" : ""}`}
+                  className={`${isSelected ? "selected-row" : ""} ${
+                    isLowUtil ? "low-util-row" : ""
+                  }`}
                   onClick={() => setSelectedRowDetail(row)}
                 >
-                  <td style={{ textAlign: "center" }} onClick={(e) => e.stopPropagation()}>
+                  <td
+                    style={{ textAlign: "center" }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <input
                       type="checkbox"
                       checked={isSelected}
@@ -591,7 +830,9 @@ export default function ContainerDrillDown() {
                     {!sameEquip ? row.equipmentId : ""}
                   </td>
                   <td>{row.dispatchDate}</td>
-                  <td style={{ textAlign: "center", fontWeight: 600 }}>{row.loadNumber}</td>
+                  <td style={{ textAlign: "center", fontWeight: 600 }}>
+                    {row.loadNumber}
+                  </td>
                   <td style={{ textAlign: "right", fontWeight: 700 }}>
                     {row.totalNoPallets.toFixed(2)}
                   </td>
@@ -623,7 +864,11 @@ export default function ContainerDrillDown() {
                     style={{
                       textAlign: "right",
                       fontWeight: 700,
-                      color: isLowUtil ? "#dc2626" : row.palletAreaUtilizationPct >= 85 ? "#16a34a" : "#2563eb",
+                      color: isLowUtil
+                        ? "#dc2626"
+                        : row.palletAreaUtilizationPct >= 85
+                        ? "#16a34a"
+                        : "#2563eb",
                     }}
                   >
                     {row.palletAreaUtilizationPct.toFixed(2)}%
@@ -638,7 +883,7 @@ export default function ContainerDrillDown() {
             {filteredData.length === 0 && (
               <tr>
                 <td colSpan="16" className="no-results">
-                  No container load records match current search or filter criteria.
+                  No container load records match current drill-down or search criteria.
                 </td>
               </tr>
             )}
@@ -648,10 +893,16 @@ export default function ContainerDrillDown() {
 
       {/* Row Detail Modal */}
       {selectedRowDetail && (
-        <div className="cdd-modal-backdrop" onClick={() => setSelectedRowDetail(null)}>
+        <div
+          className="cdd-modal-backdrop"
+          onClick={() => setSelectedRowDetail(null)}
+        >
           <div className="cdd-modal" onClick={(e) => e.stopPropagation()}>
             <div className="cdd-modal-head">
-              <h3>Load Details — {selectedRowDetail.shipmentNumber || selectedRowDetail.id}</h3>
+              <h3>
+                Load Details —{" "}
+                {selectedRowDetail.shipmentNumber || selectedRowDetail.id}
+              </h3>
               <button onClick={() => setSelectedRowDetail(null)}>✕</button>
             </div>
             <div className="cdd-modal-body">
@@ -690,8 +941,17 @@ export default function ContainerDrillDown() {
                 </div>
                 <div>
                   <label>Load Approval Status:</label>
-                  <span style={{ fontWeight: 700, color: selectedRowDetail.loadApproval ? "#16a34a" : "#dc2626" }}>
-                    {selectedRowDetail.loadApproval ? "✓ Approved" : "⏳ Pending Approval"}
+                  <span
+                    style={{
+                      fontWeight: 700,
+                      color: selectedRowDetail.loadApproval
+                        ? "#16a34a"
+                        : "#dc2626",
+                    }}
+                  >
+                    {selectedRowDetail.loadApproval
+                      ? "✓ Approved"
+                      : "⏳ Pending Approval"}
                   </span>
                 </div>
                 <div>
@@ -721,9 +981,14 @@ export default function ContainerDrillDown() {
                     }));
                   }}
                 >
-                  {selectedRowDetail.loadApproval ? "Mark as Pending" : "Approve Load"}
+                  {selectedRowDetail.loadApproval
+                    ? "Mark as Pending"
+                    : "Approve Load"}
                 </button>
-                <button className="cdd-btn-close" onClick={() => setSelectedRowDetail(null)}>
+                <button
+                  className="cdd-btn-close"
+                  onClick={() => setSelectedRowDetail(null)}
+                >
                   Close
                 </button>
               </div>
