@@ -259,7 +259,9 @@ export default function ContainerDrillDown() {
   // Cascading Drill Down Filters
   const [selectedSource, setSelectedSource] = useState("ALL");
   const [selectedTo, setSelectedTo] = useState("ALL");
+  const [selectedTransMode, setSelectedTransMode] = useState("ALL");
   const [selectedEquipment, setSelectedEquipment] = useState("ALL");
+  const [selectedDispatchDate, setSelectedDispatchDate] = useState("ALL");
 
   const [approvalFilter, setApprovalFilter] = useState("ALL");
   const [minUtilFilter, setMinUtilFilter] = useState(0);
@@ -284,8 +286,8 @@ export default function ContainerDrillDown() {
     return Array.from(set).sort();
   }, [data, selectedSource]);
 
-  // 3. Cascading Equipment IDs available (filtered by selectedSource & selectedTo)
-  const availableEquipments = useMemo(() => {
+  // 3. Cascading Trans Modes available (filtered by selectedSource & selectedTo)
+  const availableTransModes = useMemo(() => {
     const filtered = data.filter((item) => {
       if (selectedSource !== "ALL" && item.sourceLocation !== selectedSource)
         return false;
@@ -293,16 +295,55 @@ export default function ContainerDrillDown() {
         return false;
       return true;
     });
-    const set = new Set(filtered.map((item) => item.equipmentId));
+    const set = new Set(filtered.map((item) => item.transMode));
     return Array.from(set).sort();
   }, [data, selectedSource, selectedTo]);
+
+  // 4. Cascading Equipment IDs available (filtered by Source, To, TransMode)
+  const availableEquipments = useMemo(() => {
+    const filtered = data.filter((item) => {
+      if (selectedSource !== "ALL" && item.sourceLocation !== selectedSource)
+        return false;
+      if (selectedTo !== "ALL" && item.toLocation !== selectedTo)
+        return false;
+      if (
+        selectedTransMode !== "ALL" &&
+        item.transMode !== selectedTransMode
+      )
+        return false;
+      return true;
+    });
+    const set = new Set(filtered.map((item) => item.equipmentId));
+    return Array.from(set).sort();
+  }, [data, selectedSource, selectedTo, selectedTransMode]);
+
+  // 5. Cascading Dispatch Dates available (filtered by Source, To, TransMode, Equipment)
+  const availableDispatchDates = useMemo(() => {
+    const filtered = data.filter((item) => {
+      if (selectedSource !== "ALL" && item.sourceLocation !== selectedSource)
+        return false;
+      if (selectedTo !== "ALL" && item.toLocation !== selectedTo)
+        return false;
+      if (
+        selectedTransMode !== "ALL" &&
+        item.transMode !== selectedTransMode
+      )
+        return false;
+      if (
+        selectedEquipment !== "ALL" &&
+        item.equipmentId !== selectedEquipment
+      )
+        return false;
+      return true;
+    });
+    const set = new Set(filtered.map((item) => item.dispatchDate));
+    return Array.from(set).sort();
+  }, [data, selectedSource, selectedTo, selectedTransMode, selectedEquipment]);
 
   // Handle Source Selection Change (Cascades down)
   const handleSourceChange = (e) => {
     const newSource = e.target.value;
     setSelectedSource(newSource);
-
-    // If newSource is picked, check if current selectedTo exists for this source
     if (newSource !== "ALL") {
       const validDests = new Set(
         data
@@ -320,32 +361,6 @@ export default function ContainerDrillDown() {
     setSelectedTo(e.target.value);
   };
 
-  // Reset Cascading Drill Down
-  const handleResetCorridor = () => {
-    setSelectedSource("ALL");
-    setSelectedTo("ALL");
-    setSelectedEquipment("ALL");
-  };
-
-  // Toggle individual load approval
-  const handleToggleApproval = (id) => {
-    setData((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, loadApproval: !item.loadApproval } : item
-      )
-    );
-  };
-
-  // Toggle row selection checkbox
-  const handleSelectRow = (id) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
   // Filtered & sorted data
   const filteredData = useMemo(() => {
     return data
@@ -356,8 +371,18 @@ export default function ContainerDrillDown() {
         if (selectedTo !== "ALL" && item.toLocation !== selectedTo)
           return false;
         if (
+          selectedTransMode !== "ALL" &&
+          item.transMode !== selectedTransMode
+        )
+          return false;
+        if (
           selectedEquipment !== "ALL" &&
           item.equipmentId !== selectedEquipment
+        )
+          return false;
+        if (
+          selectedDispatchDate !== "ALL" &&
+          item.dispatchDate !== selectedDispatchDate
         )
           return false;
 
@@ -504,7 +529,9 @@ export default function ContainerDrillDown() {
   let activeFilterCount = 0;
   if (selectedSource !== "ALL") activeFilterCount++;
   if (selectedTo !== "ALL") activeFilterCount++;
+  if (selectedTransMode !== "ALL") activeFilterCount++;
   if (selectedEquipment !== "ALL") activeFilterCount++;
+  if (selectedDispatchDate !== "ALL") activeFilterCount++;
   if (approvalFilter !== "ALL") activeFilterCount++;
   if (minUtilFilter > 0) activeFilterCount++;
   if (search.trim()) activeFilterCount++;
@@ -514,7 +541,9 @@ export default function ContainerDrillDown() {
   const handleResetAllFilters = () => {
     setSelectedSource("ALL");
     setSelectedTo("ALL");
+    setSelectedTransMode("ALL");
     setSelectedEquipment("ALL");
+    setSelectedDispatchDate("ALL");
     setApprovalFilter("ALL");
     setMinUtilFilter(0);
     setSearch("");
@@ -595,7 +624,7 @@ export default function ContainerDrillDown() {
           )}
         </div>
 
-        {/* 5-Step Sequential Drill-Down Pipeline */}
+        {/* 7-Step Sequential Drill-Down Pipeline */}
         <div className="cdd-steps-grid">
           {/* Step 1: Source */}
           <div className="drilldown-step">
@@ -635,9 +664,30 @@ export default function ContainerDrillDown() {
 
           <div className="drilldown-arrow">➔</div>
 
-          {/* Step 3: Equipment */}
+          {/* Step 3: TransMode */}
           <div className="drilldown-step">
             <span className="step-num">3</span>
+            <div className="step-content">
+              <label>TRANS MODE</label>
+              <select
+                value={selectedTransMode}
+                onChange={(e) => setSelectedTransMode(e.target.value)}
+              >
+                <option value="ALL">All Modes ({availableTransModes.length})</option>
+                {availableTransModes.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="drilldown-arrow">➔</div>
+
+          {/* Step 4: Equipment ID */}
+          <div className="drilldown-step">
+            <span className="step-num">4</span>
             <div className="step-content">
               <label>EQUIPMENT ID</label>
               <select
@@ -656,9 +706,30 @@ export default function ContainerDrillDown() {
 
           <div className="drilldown-arrow">➔</div>
 
-          {/* Step 4: Load Approval Status */}
+          {/* Step 5: Dispatch Date */}
           <div className="drilldown-step">
-            <span className="step-num">4</span>
+            <span className="step-num">5</span>
+            <div className="step-content">
+              <label>DISPATCH DATE</label>
+              <select
+                value={selectedDispatchDate}
+                onChange={(e) => setSelectedDispatchDate(e.target.value)}
+              >
+                <option value="ALL">All Dates ({availableDispatchDates.length})</option>
+                {availableDispatchDates.map((dt) => (
+                  <option key={dt} value={dt}>
+                    {dt}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="drilldown-arrow">➔</div>
+
+          {/* Step 6: Load Approval Status */}
+          <div className="drilldown-step">
+            <span className="step-num">6</span>
             <div className="step-content">
               <label>LOAD APPROVAL STATUS</label>
               <select
@@ -674,9 +745,9 @@ export default function ContainerDrillDown() {
 
           <div className="drilldown-arrow">➔</div>
 
-          {/* Step 5: Min Utilization % */}
+          {/* Step 7: Min Utilization % */}
           <div className="drilldown-step">
-            <span className="step-num">5</span>
+            <span className="step-num">7</span>
             <div className="step-content">
               <label>MIN AREA UTILIZATION %</label>
               <select
