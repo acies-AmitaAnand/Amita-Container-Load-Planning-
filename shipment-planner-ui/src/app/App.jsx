@@ -10,6 +10,8 @@ import MultiContainerView from "../pages/container-visualization/MultiContainerV
 
 import DataTable from "../components/DataTable";
 
+import ContainerDrillDown from "../pages/container-drill-down/ContainerDrillDown";
+
 export default function App() {
 	return (
 		<Routes>
@@ -60,11 +62,6 @@ export default function App() {
 					}
 				/>
 
-				{/* <Route
-					path="/all-container-visualization"
-					element={<MultiContainerView />}
-				/> */}
-
 				<Route
 					path="/optimized-day-planning"
 					element={<ContainerVisualization />}
@@ -73,6 +70,11 @@ export default function App() {
 				<Route
 					path="/build-load-planning"
 					element={<PlannerConfig />}
+				/>
+
+				<Route
+					path="/container-drill-down"
+					element={<ContainerDrillDown />}
 				/>
 			</Route>
 		</Routes>

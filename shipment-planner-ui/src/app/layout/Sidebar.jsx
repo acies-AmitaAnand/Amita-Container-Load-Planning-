@@ -37,6 +37,11 @@ const menus = [
 				path: "/optimized-day-planning",
 				icon: "🚛",
 			},
+			{
+				label: "Container Drill Down",
+				path: "/container-drill-down",
+				icon: "📊",
+			},
 		],
 	},
 	{

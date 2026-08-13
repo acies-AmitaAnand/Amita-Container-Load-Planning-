@@ -34,6 +34,17 @@ export default function OperationsSection() {
 					</div>
 					<div className="ops-btn">Open Load Summary →</div>
 				</div>
+
+				<div className="ops-card" onClick={() => navigate("/container-drill-down")}>
+					<div className="ops-card-top">
+						<div className="ops-icon">📊</div>
+						<div>
+							<h4>Container Drill Down</h4>
+							<p>Interactive load table with dispatch schedules, pallet counts, area utilization, load approvals &amp; shipment details.</p>
+						</div>
+					</div>
+					<div className="ops-btn">Open Drill Down Table →</div>
+				</div>
 			</div>
 		</div>
 	);
