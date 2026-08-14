@@ -556,55 +556,6 @@ export default function ContainerDrillDown() {
       <div className="cdd-header">
         <div>
           <h2>✦ Container Drill Down</h2>
-          <p>
-            Interactive location drill-down — select Source &amp; Destination to refine lane corridors, pallet counts &amp; equipment dispatch schedules.
-          </p>
-        </div>
-        <div className="cdd-actions">
-          <button className="cdd-btn export" onClick={handleExportCSV}>
-            📥 Export CSV
-          </button>
-        </div>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="cdd-kpi-grid">
-        <div className="cdd-kpi-card">
-          <span className="cdd-kpi-title">MATCHING CONTAINER LOADS</span>
-          <div className="cdd-kpi-value">{totalLoads}</div>
-          <span className="cdd-kpi-sub">Refined load records</span>
-        </div>
-        <div className="cdd-kpi-card">
-          <span className="cdd-kpi-title">APPROVED LOADS</span>
-          <div className="cdd-kpi-value" style={{ color: "#16a34a" }}>
-            {approvedLoads}{" "}
-            <span style={{ fontSize: 13, color: "#6b7280" }}>
-              / {totalLoads}
-            </span>
-          </div>
-          <span className="cdd-kpi-sub">
-            {totalLoads > 0
-              ? ((approvedLoads / totalLoads) * 100).toFixed(1)
-              : 0}
-            % approved
-          </span>
-        </div>
-        <div className="cdd-kpi-card">
-          <span className="cdd-kpi-title">TOTAL PALLETS SHIPPED</span>
-          <div className="cdd-kpi-value">{totalPallets.toFixed(0)}</div>
-          <span className="cdd-kpi-sub">Standard pallet units</span>
-        </div>
-        <div className="cdd-kpi-card">
-          <span className="cdd-kpi-title">AVG PALLET AREA UTILIZATION</span>
-          <div className="cdd-kpi-value" style={{ color: "#2563eb" }}>
-            {avgPalletUtil}%
-          </div>
-          <span className="cdd-kpi-sub">Target &gt; 80%</span>
-        </div>
-        <div className="cdd-kpi-card">
-          <span className="cdd-kpi-title">AVG TRUCK AREA UTILIZED</span>
-          <div className="cdd-kpi-value">{avgTruckArea} m²</div>
-          <span className="cdd-kpi-sub">Floor space occupied</span>
         </div>
       </div>
 
